@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using bakeryServer.Models;
 
+
 namespace bakeryServer.Data.DbContexts
 {
-    public class ShiftContext : DbContext
+    public class BakeryContext : DbContext
     {
-        public DbSet<Order> Orders { get; set; }
+        public DbSet<Option> Options { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
@@ -13,4 +14,3 @@ namespace bakeryServer.Data.DbContexts
         }
     }
 }
-

@@ -1,6 +1,6 @@
 ﻿namespace bakeryServer.Models
 {
-    public class Option
+    public class Filling
     {
         public int Id { get; set; }
         public string Name { get; set; }
