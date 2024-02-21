@@ -1,6 +1,0 @@
-@bakeryServer_HostAddress = http://localhost:5279
-
-GET {{bakeryServer_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
