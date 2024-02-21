@@ -1,0 +1,6 @@
+C:\Users\Dante\Desktop\bakery\bakeryServer\Services\obj\Debug\net8.0\Services.csproj.AssemblyReference.cache
+C:\Users\Dante\Desktop\bakery\bakeryServer\Services\obj\Debug\net8.0\Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dante\Desktop\bakery\bakeryServer\Services\obj\Debug\net8.0\Services.AssemblyInfoInputs.cache
+C:\Users\Dante\Desktop\bakery\bakeryServer\Services\obj\Debug\net8.0\Services.AssemblyInfo.cs
+C:\Users\Dante\Desktop\bakery\bakeryServer\Services\obj\Debug\net8.0\Services.csproj.CoreCompileInputs.cache
+C:\Users\Dante\Desktop\bakery\bakeryServer\Services\obj\Debug\net8.0\Services.sourcelink.json
