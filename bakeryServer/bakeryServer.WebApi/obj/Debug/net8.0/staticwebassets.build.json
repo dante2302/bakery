@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "qmo8P+LIGGKZBwRrK0oe6WmMniYMbGykpIa1zRt/EfM=",
+  "Source": "bakeryServer.WebApi",
+  "BasePath": "_content/bakeryServer.WebApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
