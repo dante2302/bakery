@@ -1,6 +1,5 @@
 using bakeryServer.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<BakeryContext>(options =>
 {
     string connectionString = (Configuration.Manager.GetConnectionString("bakery"));
+    // Needs this migrations assembly to manage migrations 
     options.UseSqlServer(connectionString, b => b.MigrationsAssembly("bakeryServer.WebApi"));
 });
 

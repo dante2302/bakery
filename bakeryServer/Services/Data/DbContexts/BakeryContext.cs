@@ -17,6 +17,7 @@ namespace bakeryServer.Data.DbContexts
 
         public BakeryContext(DbContextOptions<BakeryContext> options, IConfiguration configuration): base(options)
         {
+            // This is here for using a configuration dependence injenction in the WebApi
             _configuration = configuration;
         }
     }
