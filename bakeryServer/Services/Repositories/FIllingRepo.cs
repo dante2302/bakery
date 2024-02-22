@@ -27,16 +27,34 @@ public class FillingRepo : IRepository<Filling>
 
     public async Task<IEnumerable<Filling?>> ReadAll()
     {
-        return new List<Filling>();
+        return await _context.Fillings.ToListAsync(); 
     }
-    public async Task<bool> Update(Filling filling)
-    {
-        return false;
+
+    public async Task<bool> Update(Filling newFilling)
+    {         
+        Filling? existingFilling = await _context.Fillings.FirstOrDefaultAsync<Filling>(f =>  f.Id == newFilling.Id); 
+        if(existingFilling is null)
+        {
+            return false;
+        }
+        else
+        {
+            existingFilling.Name = newFilling.Name;
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 
     public async Task<bool> Delete(Filling filling)
     {
-        return false;
+        if(filling is null)
+        {
+            return false;
+        }
+
+        _context.Fillings.Remove(filling);
+        await _context.SaveChangesAsync();
+        return true;
     }
 
 }
