@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("bakeryServer.WebApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95ef1d30f649d6186aa206459b947d23f3897b23")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+356f6395f7c26cc8707ae2ff129c65a5f8f425de")]
 [assembly: System.Reflection.AssemblyProductAttribute("bakeryServer.WebApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("bakeryServer.WebApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

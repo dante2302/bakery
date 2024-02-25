@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9KWcLxbXlEt0SjVJa4w15tIqwPDVjzsk1wAlhLUOo4OgY+CfaqnaEdB96Rera9ovW6Qpvx2gojGRyXgCzSKEKw==",
+  "dgSpecHash": "UcU2QAx7FL4ApWNTNv/m92ZwaBXby+w4ll9g0kg198ILDKX2OBneY9A3qziYSYfam+E7xJXwoDgMNjvZrJF3GQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Dante\\Desktop\\bakery\\bakeryServer\\Models\\bakeryServer.Models.csproj",
+  "projectFilePath": "C:\\Users\\Dante\\Desktop\\bakery\\bakeryServer\\Models\\Models.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

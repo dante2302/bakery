@@ -1522,30 +1522,30 @@
           }
         }
       },
-      "bakeryServer.Models/1.0.0": {
+      "Models/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "compile": {
-          "bin/placeholder/bakeryServer.Models.dll": {}
+          "bin/placeholder/Models.dll": {}
         },
         "runtime": {
-          "bin/placeholder/bakeryServer.Models.dll": {}
+          "bin/placeholder/Models.dll": {}
         }
       },
-      "bakeryServer.Services/1.0.0": {
+      "Services/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "8.0.2",
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.2",
           "Microsoft.Extensions.Configuration": "8.0.0",
-          "bakeryServer.Models": "1.0.0"
+          "Models": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/bakeryServer.Services.dll": {}
+          "bin/placeholder/Services.dll": {}
         },
         "runtime": {
-          "bin/placeholder/bakeryServer.Services.dll": {}
+          "bin/placeholder/Services.dll": {}
         }
       }
     }
@@ -4151,15 +4151,15 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "bakeryServer.Models/1.0.0": {
+    "Models/1.0.0": {
       "type": "project",
-      "path": "../Models/bakeryServer.Models.csproj",
-      "msbuildProject": "../Models/bakeryServer.Models.csproj"
+      "path": "../Models/Models.csproj",
+      "msbuildProject": "../Models/Models.csproj"
     },
-    "bakeryServer.Services/1.0.0": {
+    "Services/1.0.0": {
       "type": "project",
-      "path": "../Services/bakeryServer.Services.csproj",
-      "msbuildProject": "../Services/bakeryServer.Services.csproj"
+      "path": "../Services/Services.csproj",
+      "msbuildProject": "../Services/Services.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -4167,7 +4167,7 @@
       "Microsoft.EntityFrameworkCore.Design >= 8.0.2",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.2",
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.2",
-      "bakeryServer.Services >= 1.0.0"
+      "Services >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -4176,9 +4176,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dante\\Desktop\\bakery\\bakeryServer\\WebApi\\bakeryServer.WebApi.csproj",
-      "projectName": "bakeryServer.WebApi",
-      "projectPath": "C:\\Users\\Dante\\Desktop\\bakery\\bakeryServer\\WebApi\\bakeryServer.WebApi.csproj",
+      "projectUniqueName": "C:\\Users\\Dante\\Desktop\\bakery\\bakeryServer\\WebApi\\WebApi.csproj",
+      "projectName": "WebApi",
+      "projectPath": "C:\\Users\\Dante\\Desktop\\bakery\\bakeryServer\\WebApi\\WebApi.csproj",
       "packagesPath": "C:\\Users\\Dante\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Dante\\Desktop\\bakery\\bakeryServer\\WebApi\\obj\\",
       "projectStyle": "PackageReference",
@@ -4197,8 +4197,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Dante\\Desktop\\bakery\\bakeryServer\\Services\\bakeryServer.Services.csproj": {
-              "projectPath": "C:\\Users\\Dante\\Desktop\\bakery\\bakeryServer\\Services\\bakeryServer.Services.csproj"
+            "C:\\Users\\Dante\\Desktop\\bakery\\bakeryServer\\Services\\Services.csproj": {
+              "projectPath": "C:\\Users\\Dante\\Desktop\\bakery\\bakeryServer\\Services\\Services.csproj"
             }
           }
         }

@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dante\\Desktop\\bakery\\bakeryServer\\Models\\bakeryServer.Models.csproj",
-      "projectName": "bakeryServer.Models",
-      "projectPath": "C:\\Users\\Dante\\Desktop\\bakery\\bakeryServer\\Models\\bakeryServer.Models.csproj",
+      "projectUniqueName": "C:\\Users\\Dante\\Desktop\\bakery\\bakeryServer\\Models\\Models.csproj",
+      "projectName": "Models",
+      "projectPath": "C:\\Users\\Dante\\Desktop\\bakery\\bakeryServer\\Models\\Models.csproj",
       "packagesPath": "C:\\Users\\Dante\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Dante\\Desktop\\bakery\\bakeryServer\\Models\\obj\\",
       "projectStyle": "PackageReference",

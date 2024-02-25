@@ -4,9 +4,10 @@ using bakeryServer.Services.Repositories;
 
 namespace bakeryServer.Services
 {
-    public class FillingService(BakeryContext context)
+    public class FillingService(FillingRepo repo)
     {
-        private readonly FillingRepo _repo = new(context);
+        private readonly FillingRepo _repo = repo;
+
         public async Task<bool> Create(Filling filling)
         {
             return await _repo.Create(filling);
