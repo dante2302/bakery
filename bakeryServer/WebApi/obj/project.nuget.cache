@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ua51rCNkyx47Ohb7HkBozt9RJYUZq0YmvCENnyq22DGL6YF8XZBXYPNipXk0aciVlsILYLJ/7jK2R7mdAKLPHg==",
+  "dgSpecHash": "kI10tNpv9o4mFDhZoPfirJBDIsgGM8akQmbbyYqA8ZrHhfPJa3k4p0XpD4LZQiSTi5bsZk+g1zsFe7gVvSKYKA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Dante\\Desktop\\bakery\\bakeryServer\\WebApi\\bakeryServer.WebApi.csproj",
+  "projectFilePath": "C:\\Users\\Dante\\Desktop\\bakery\\bakeryServer\\WebApi\\WebApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dante\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Dante\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

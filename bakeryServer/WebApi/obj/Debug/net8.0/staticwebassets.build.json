@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "qmo8P+LIGGKZBwRrK0oe6WmMniYMbGykpIa1zRt/EfM=",
-  "Source": "bakeryServer.WebApi",
-  "BasePath": "_content/bakeryServer.WebApi",
+  "Hash": "lAVsf4/XP8OL4a3UKcpKodesbBfBaGYqErDYy8hI7Xs=",
+  "Source": "WebApi",
+  "BasePath": "_content/WebApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
