@@ -15,7 +15,7 @@ namespace bakeryServer.Data.DbContexts
         public DbSet<User> Users { get; set; }
         public DbSet<Order> Orders { get; set; }
 
-        public BakeryContext(DbContextOptions<BakeryContext> options, IConfiguration configuration): base(options)
+        public BakeryContext(IConfiguration configuration, DbContextOptions<BakeryContext> options = null): base(options)
         {
             // This is here for using a configuration dependence injenction in the WebApi
             _configuration = configuration;

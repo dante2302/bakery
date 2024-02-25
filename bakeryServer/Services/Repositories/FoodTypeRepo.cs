@@ -8,11 +8,18 @@ namespace bakeryServer.Services.Repositories
     {
         private readonly BakeryContext _context = context;
 
-        public async Task<FoodType> Create(FoodType foodType)
+        public async Task<bool> Create(FoodType foodType)
         {
-            await _context.AddAsync(foodType);
-            await _context.SaveChangesAsync();
-            return foodType;
+            try
+            {
+                await _context.AddAsync(foodType);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
         }
 
         public async Task<FoodType?> ReadOne(int id)
