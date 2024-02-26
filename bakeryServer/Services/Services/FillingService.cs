@@ -13,18 +13,25 @@ namespace bakeryServer.Services
         {
             try
             {
+                if(filling is null)
+                {
+                    throw new ValidationException();
+                }
 
                 var validator = new EntityValidator<Filling>();
+
                 if (!validator.AssertFields(filling))
                 {
-
+                    throw new ValidationException();
                 }
 
                 return await _repo.Create(filling);
             }
-            catch ()
-            {
 
+            catch (ValidationException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
             }
         }
 

@@ -5,14 +5,18 @@ namespace Services.Validation
 {
     public class EntityValidator<T>
     {
-        private PropertyInfo[] requieredFields = typeof(T).GetProperties();
+        private PropertyInfo[] requieredProperties = typeof(T).GetProperties();
         
         public bool AssertFields(T entity)
         {
-            PropertyInfo[] fields = entity.GetType().GetProperties();
-            return requieredFields.All(
-                requieredField =>
-                    fields.Any(field => field.Name == requieredField.Name));
+            foreach(PropertyInfo prop in requieredProperties) 
+            {
+                if(prop.GetValue(entity) == null)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
