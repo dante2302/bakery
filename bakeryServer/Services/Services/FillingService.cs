@@ -1,19 +1,47 @@
-﻿using bakeryServer.Data.DbContexts;
-using bakeryServer.Models;
+﻿using bakeryServer.Models;
 using bakeryServer.Services.Repositories;
+using Services.Validation;
+using System.Reflection;
 
 namespace bakeryServer.Services
 {
-    public class FillingService(FillingRepo repo)
+    public class FillingService(IRepository<Filling> repo)
     {
-        private readonly FillingRepo _repo = repo;
+        private readonly IRepository<Filling> _repo = repo;
 
         public async Task<bool> Create(Filling filling)
         {
-            return await _repo.Create(filling);
+            try
+            {
+                if(filling is null)
+                {
+                    throw new ValidationException();
+                }
+
+                var validator = new EntityValidator<Filling>();
+
+                if (!validator.AssertFields(filling))
+                {
+                    throw new ValidationException();
+                }
+
+                await _repo.Create(filling);
+                return true;
+            }
+
+            catch (ValidationException ex)
+            {
+                return false;
+            }
+
+            catch(Exception ex)
+            {
+                //log unhandled exception
+                return false;
+            }
         }
 
-        public async Task<Filling> ReadOne(int id)
+        public async Task<Filling?> ReadOne(int id)
         {
             return await _repo.ReadOne(id);  
         }

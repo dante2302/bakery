@@ -11,16 +11,9 @@ namespace bakeryServer.Services.Repositories
 
         public async Task<bool> Create(Filling filling)
         {
-            try
-            {
                 await _context.AddAsync(filling);
                 await _context.SaveChangesAsync();
                 return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
         }
 
         public async Task<Filling?> ReadOne(int id)
@@ -37,25 +30,13 @@ namespace bakeryServer.Services.Repositories
         public async Task<bool> Update(Filling newFilling)
         {
             Filling? existingFilling = await _context.Fillings.FirstOrDefaultAsync(f => f.Id == newFilling.Id);
-            if (existingFilling is null)
-            {
-                return false;
-            }
-            else
-            {
-                existingFilling.Name = newFilling.Name;
-                await _context.SaveChangesAsync();
-                return true;
-            }
+            existingFilling.Name = newFilling.Name;
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> Delete(Filling filling)
         {
-            if (filling is null)
-            {
-                return false;
-            }
-
             _context.Fillings.Remove(filling);
             await _context.SaveChangesAsync();
             return true;
