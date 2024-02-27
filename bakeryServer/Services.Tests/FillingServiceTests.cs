@@ -3,11 +3,10 @@ namespace Services.Tests
 {
     public class FillingServiceTests
     {
+         private readonly FillingService srv = ArrangeService();
         [Fact]
         public async Task Create_ShouldReturnCorrectBool()
         {
-            var srv = ArrangeService();
-
             Filling validFilling = new()
             {
                 Id = 123,
@@ -27,7 +26,6 @@ namespace Services.Tests
         [Fact]
         public async Task ReadOne_ShouldReturnAnEntityOrNull()
         {
-            var srv = ArrangeService();
             Filling tempFilling = new() { Id = 1, Name = "Test" };
             await srv.Create(tempFilling);
 
@@ -38,12 +36,12 @@ namespace Services.Tests
             Assert.Null(nonExistentFilling);
         }
 
-        private FillingService ArrangeService()
+        private static FillingService ArrangeService()
         {
             DbContextOptionsBuilder<BakeryContext> builder = new();
             builder.UseInMemoryDatabase(databaseName: "Test");
 
-            var context = new BakeryContext(configuration: null, options: builder.Options);
+            var context = new BakeryContext(options: builder.Options);
 
             FillingRepo repo = new(context);
             FillingService srv = new(repo);

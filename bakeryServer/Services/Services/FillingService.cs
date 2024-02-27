@@ -25,12 +25,18 @@ namespace bakeryServer.Services
                     throw new ValidationException();
                 }
 
-                return await _repo.Create(filling);
+                await _repo.Create(filling);
+                return true;
             }
 
             catch (ValidationException ex)
             {
-                Console.WriteLine(ex.Message);
+                return false;
+            }
+
+            catch(Exception ex)
+            {
+                //log unhandled exception
                 return false;
             }
         }
