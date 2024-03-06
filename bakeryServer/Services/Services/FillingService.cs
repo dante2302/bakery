@@ -43,22 +43,22 @@ namespace bakeryServer.Services
 
         public async Task Update(Filling newFilling)
         {
+            var fillingForUpdate = await ReadOne(newFilling.Id);
+            if (fillingForUpdate is null)
+            {
+                throw new NotFoundException();
+            }
+
             if(newFilling is null || newFilling.Name is null)
             {
                 throw new ValidationException();    
             }
-            bool isSuccessfull = await _repo.Update(newFilling);
 
-            if (!isSuccessfull)
-            {
-                throw new NotFoundException();
-            }
+            await _repo.Update(newFilling, fillingForUpdate);
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task Delete(int id)
         {
-            Filling fillingForDeletion = await ReadOne(id);
-            return await _repo.Delete(fillingForDeletion);
         }
     }
 }

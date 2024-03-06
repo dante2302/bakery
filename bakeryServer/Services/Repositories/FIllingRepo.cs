@@ -27,23 +27,18 @@ namespace bakeryServer.Services.Repositories
             return await _context.Fillings.ToListAsync();
         }
 
-        public async Task<bool> Update(Filling newFilling)
+        public async Task Update(Filling newFilling, Filling fillingForUpdate)
         {
-            Filling? existingFilling = await _context.Fillings.FirstOrDefaultAsync(f => f.Id == newFilling.Id);
-            if(existingFilling is null)
-            {
-                return false;
-            }
-            existingFilling.Name = newFilling.Name;
+            fillingForUpdate.Name = newFilling.Name;
             await _context.SaveChangesAsync();
-            return true;
+            return;
         }
 
-        public async Task<bool> Delete(Filling filling)
+        public async Task Delete(Filling fillingForDeletion)
         {
-            _context.Fillings.Remove(filling);
+            _context.Fillings.Remove(fillingForDeletion);
             await _context.SaveChangesAsync();
-            return true;
+            return;
         }
 
     }
