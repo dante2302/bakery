@@ -15,22 +15,21 @@ namespace WebApi.Controllers
         [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
-            var fillings = await _service.ReadAll();
-            if(fillings.Count() == 0)
+            try
             {
-                return NotFound();
+                var fillings = await _service.ReadAll();
+                return Ok(fillings);
             }
-            return Ok(fillings);
+            catch (NoContentException)
+            {
+                return NoContent();
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> GetOne([FromQuery] int id)
         {
             var filling = await _service.ReadOne(id);
-            if (filling is null)
-            {
-                return NotFound();            
-            }
             return Ok(filling);
         }
 

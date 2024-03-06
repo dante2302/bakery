@@ -21,7 +21,7 @@ namespace bakeryServer.Services.Repositories
             return topping;
         }
 
-        public async Task<IEnumerable<Topping?>> ReadAll()
+        public async Task<List<Topping?>> ReadAll()
         {
             return await _context.Toppings.ToListAsync();
         }

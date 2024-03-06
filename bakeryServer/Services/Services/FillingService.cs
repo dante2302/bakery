@@ -12,33 +12,31 @@ namespace bakeryServer.Services
 
         public async Task<Filling> Create(Filling filling)
         {
-            try
+            var validator = new EntityValidator<Filling>();
+
+            if (!validator.AssertFields(filling) || filling is null)
             {
-                var validator = new EntityValidator<Filling>();
-
-                if (!validator.AssertFields(filling) || filling is null)
-                {
-                    throw new ValidationException();
-                }
-
-                await _repo.Create(filling);
-                return filling;
+                throw new ValidationException();
             }
 
-            catch (ValidationException)
-            {
-                throw;
-            }
+            await _repo.Create(filling);
+            return filling;
         }
 
         public async Task<Filling?> ReadOne(int id)
         {
-            return await _repo.ReadOne(id);  
+            var fillings = await _repo.ReadOne(id);
+            if (fillings is null)
+            {
+                throw new NotFoundException();
+            }
+            return fillings;
         }
 
         public async Task<IEnumerable<Filling?>> ReadAll()
         {
-            return await _repo.ReadAll();
+            List<Filling?> fList = (await _repo.ReadAll()).ToList();
+            return fList;
         }
 
         public async Task Update(Filling newFilling)

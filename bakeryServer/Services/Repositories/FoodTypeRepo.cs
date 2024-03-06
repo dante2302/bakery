@@ -28,7 +28,7 @@ namespace bakeryServer.Services.Repositories
             return f;
         }
 
-        public async Task<IEnumerable<FoodType?>> ReadAll()
+        public async Task<List<FoodType?>> ReadAll()
         {
             return await _context.FoodTypes.ToListAsync();
         }

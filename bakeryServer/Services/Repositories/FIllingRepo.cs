@@ -22,7 +22,7 @@ namespace bakeryServer.Services.Repositories
             return f;
         }
 
-        public async Task<IEnumerable<Filling?>> ReadAll()
+        public async Task<List<Filling?>> ReadAll()
         {
             return await _context.Fillings.ToListAsync();
         }

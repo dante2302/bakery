@@ -21,7 +21,7 @@ namespace bakeryServer.Services.Repositories
             return order;
         }
 
-        public async Task<IEnumerable<Order?>> ReadAll()
+        public async Task<List<Order?>> ReadAll()
         {
             return await _context.Orders.ToListAsync();
         }

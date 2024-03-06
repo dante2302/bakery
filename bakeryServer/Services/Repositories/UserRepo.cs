@@ -21,7 +21,7 @@ namespace bakeryServer.Services.Repositories
             return user;
         }
 
-        public async Task<IEnumerable<User?>> ReadAll()
+        public async Task<List<User?>> ReadAll()
         {
             return await _context.Users.ToListAsync();
         }
