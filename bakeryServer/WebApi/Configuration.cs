@@ -6,5 +6,5 @@ public static class Configuration
         .AddJsonFile("appsettings.json")
         .Build();
 
-    public static IConfigurationRoot Manager { get { return _manager; } }
+    public static IConfigurationRoot Manager { get => _manager;  }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using bakeryServer.Services;
 using bakeryServer.Models;
+using System.ComponentModel.DataAnnotations;
 namespace WebApi.Controllers
 {
     [ApiController]
@@ -20,7 +21,7 @@ namespace WebApi.Controllers
         public async Task<IActionResult> GetOne(int id)
         {
             var filling = await _service.ReadOne(id);
-            if(filling is null)
+            if (filling is null)
             {
                 return NoContent();
             }
@@ -28,7 +29,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Filling filling)
+        public async Task<IActionResult> Create([FromBody] Filling filling)
         {
             try
             {
@@ -36,11 +37,17 @@ namespace WebApi.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                Filling result = _service.Create(filling);
+                Filling result = await _service.Create(filling);
 
-                return CreatedAtAction(nameof(GetOne), new { id = result });
+                return CreatedAtAction(nameof(GetOne), new { id = result.Id }, result);
             }
-            catch
+
+            catch(ValidationException ex)
+            {
+                return BadRequest(ex);
+            }
+
+            catch(Exception ex)
             {
                 return StatusCode(500, "Internal Server Error.");
             }

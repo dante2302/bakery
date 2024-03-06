@@ -9,35 +9,24 @@ namespace bakeryServer.Services
     {
         private readonly IRepository<Filling> _repo = repo;
 
-        public async Task<bool> Create(Filling filling)
+        public async Task<Filling> Create(Filling filling)
         {
             try
             {
-                if(filling is null)
-                {
-                    throw new ValidationException();
-                }
-
                 var validator = new EntityValidator<Filling>();
 
-                if (!validator.AssertFields(filling))
+                if (!validator.AssertFields(filling) || filling is null)
                 {
                     throw new ValidationException();
                 }
 
                 await _repo.Create(filling);
-                return true;
+                return filling;
             }
 
-            catch (ValidationException ex)
+            catch (ValidationException)
             {
-                return false;
-            }
-
-            catch(Exception ex)
-            {
-                //log unhandled exception
-                return false;
+                throw;
             }
         }
 
