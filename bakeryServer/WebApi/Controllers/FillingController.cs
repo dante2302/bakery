@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using bakeryServer.Services;
 using bakeryServer.Models;
+using Exceptions;
 using System.ComponentModel.DataAnnotations;
+using Services.Exceptions;
 namespace WebApi.Controllers
 {
     [ApiController]
@@ -10,20 +12,24 @@ namespace WebApi.Controllers
     {
         private readonly FillingService _service = service;
 
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
             var fillings = await _service.ReadAll();
+            if(fillings.Count() == 0)
+            {
+                return NotFound();
+            }
             return Ok(fillings);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetOne(int id)
+        [HttpGet]
+        public async Task<IActionResult> GetOne([FromQuery] int id)
         {
             var filling = await _service.ReadOne(id);
             if (filling is null)
             {
-                return NoContent();
+                return NotFound();            
             }
             return Ok(filling);
         }
@@ -35,7 +41,7 @@ namespace WebApi.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return BadRequest(ModelState);
+                    throw new ValidationException($"{ModelState}");
                 }
                 Filling result = await _service.Create(filling);
 
@@ -50,6 +56,29 @@ namespace WebApi.Controllers
             catch(Exception ex)
             {
                 return StatusCode(500, "Internal Server Error.");
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromBody] Filling updatedFilling)
+        {
+            try
+            {
+                await _service.Update(updatedFilling);
+                return Ok();
+            }
+            catch(NotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(ex);
+            }
+
+            catch(Exception ex)
+            {
+                return StatusCode(500,$"Internal Server Error");
             }
         }
     }

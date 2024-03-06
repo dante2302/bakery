@@ -1,7 +1,8 @@
 ﻿using bakeryServer.Models;
 using bakeryServer.Services.Repositories;
 using Services.Validation;
-using System.Reflection;
+using System.ComponentModel.DataAnnotations;
+using Exceptions;
 
 namespace bakeryServer.Services
 {
@@ -40,9 +41,18 @@ namespace bakeryServer.Services
             return await _repo.ReadAll();
         }
 
-        public async Task<bool> Update(Filling newFilling)
+        public async Task Update(Filling newFilling)
         {
-            return await _repo.Update(newFilling);
+            if(newFilling is null || newFilling.Name is null)
+            {
+                throw new ValidationException();    
+            }
+            bool isSuccessfull = await _repo.Update(newFilling);
+
+            if (!isSuccessfull)
+            {
+                throw new NotFoundException();
+            }
         }
 
         public async Task<bool> Delete(int id)

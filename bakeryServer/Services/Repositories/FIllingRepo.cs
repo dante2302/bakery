@@ -30,6 +30,10 @@ namespace bakeryServer.Services.Repositories
         public async Task<bool> Update(Filling newFilling)
         {
             Filling? existingFilling = await _context.Fillings.FirstOrDefaultAsync(f => f.Id == newFilling.Id);
+            if(existingFilling is null)
+            {
+                return false;
+            }
             existingFilling.Name = newFilling.Name;
             await _context.SaveChangesAsync();
             return true;
