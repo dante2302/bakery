@@ -10,16 +10,9 @@ namespace bakeryServer.Services.Repositories
 
         public async Task<bool> Create(Topping topping)
         {
-            try
-            {
-                await _context.AddAsync(topping);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            await _context.AddAsync(topping);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<Topping?> ReadOne(int id)
@@ -33,32 +26,16 @@ namespace bakeryServer.Services.Repositories
             return await _context.Toppings.ToListAsync();
         }
 
-        public async Task<bool> Update(Topping newTopping)
+        public async Task Update(Topping newTopping, Topping toppingForUpdate)
         {
-            Topping? existingTopping = await _context.Toppings.FirstOrDefaultAsync(t => t.Id == newTopping.Id);
-            if (existingTopping is null)
-            {
-                return false;
-            }
-            else
-            {
-                existingTopping.Name = newTopping.Name;
+                toppingForUpdate.Name = newTopping.Name;
                 await _context.SaveChangesAsync();
-                return true;
-            }
         }
 
-        public async Task<bool> Delete(Topping topping)
+        public async Task Delete(Topping topping)
         {
-            if (topping is null)
-            {
-                return false;
-            }
-
             _context.Toppings.Remove(topping);
             await _context.SaveChangesAsync();
-            return true;
-
         }
     }
 }
