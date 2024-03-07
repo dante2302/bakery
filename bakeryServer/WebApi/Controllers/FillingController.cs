@@ -3,6 +3,7 @@ using bakeryServer.Services;
 using bakeryServer.Models;
 using Exceptions;
 using System.ComponentModel.DataAnnotations;
+
 namespace WebApi.Controllers
 {
     [ApiController]
@@ -28,8 +29,15 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetOne([FromQuery] int id)
         {
-            var filling = await _service.ReadOne(id);
-            return Ok(filling);
+            try
+            {
+                var filling = await _service.ReadOne(id);
+                return Ok(filling);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]
