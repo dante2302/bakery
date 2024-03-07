@@ -25,17 +25,21 @@ namespace bakeryServer.Services
 
         public async Task<Filling?> ReadOne(int id)
         {
-            var fillings = await _repo.ReadOne(id);
-            if (fillings is null)
+            var filling = await _repo.ReadOne(id);
+            if (filling is null)
             {
                 throw new NotFoundException();
             }
-            return fillings;
+            return filling;
         }
 
         public async Task<IEnumerable<Filling?>> ReadAll()
         {
-            List<Filling?> fList = (await _repo.ReadAll()).ToList();
+            List<Filling> fList = await _repo.ReadAll();
+            if(fList.Count == 0)
+            {
+                throw new NotFoundException();
+            }
             return fList;
         }
 

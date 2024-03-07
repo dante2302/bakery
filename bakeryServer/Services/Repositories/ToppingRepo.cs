@@ -8,11 +8,10 @@ namespace bakeryServer.Services.Repositories
     {
         private readonly BakeryContext _context = context;
 
-        public async Task<bool> Create(Topping topping)
+        public async Task Create(Topping topping)
         {
             await _context.AddAsync(topping);
             await _context.SaveChangesAsync();
-            return true;
         }
 
         public async Task<Topping?> ReadOne(int id)
@@ -28,8 +27,8 @@ namespace bakeryServer.Services.Repositories
 
         public async Task Update(Topping newTopping, Topping toppingForUpdate)
         {
-                toppingForUpdate.Name = newTopping.Name;
-                await _context.SaveChangesAsync();
+            toppingForUpdate.Name = newTopping.Name;
+            await _context.SaveChangesAsync();
         }
 
         public async Task Delete(Topping topping)

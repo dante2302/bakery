@@ -8,11 +8,10 @@ namespace bakeryServer.Services.Repositories
     {
         private readonly BakeryContext _context = context;
 
-        public async Task<bool> Create(Order order)
+        public async Task Create(Order order)
         {
             await _context.AddAsync(order);
             await _context.SaveChangesAsync();
-            return true;
         }
 
         public async Task<Order?> ReadOne(int id)
@@ -21,7 +20,7 @@ namespace bakeryServer.Services.Repositories
             return order;
         }
 
-        public async Task<List<Order?>> ReadAll()
+        public async Task<List<Order>> ReadAll()
         {
             return await _context.Orders.ToListAsync();
         }

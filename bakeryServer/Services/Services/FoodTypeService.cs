@@ -1,5 +1,8 @@
 ﻿using bakeryServer.Models;
 using bakeryServer.Services.Repositories;
+using System.ComponentModel.DataAnnotations;
+using Services.Validation;
+using Exceptions;
 
 namespace bakeryServer.Services
 {
@@ -7,14 +10,27 @@ namespace bakeryServer.Services
     {
         private readonly FoodTypeRepo _repo = repo;
 
-        public async Task<bool> Create(FoodType foodType)
+        public async Task<FoodType> Create(FoodType foodType)
         {
-            return await _repo.Create(foodType);
+            var validator = new EntityValidator<FoodType>();
+
+            if (!validator.AssertFields(foodType) || foodType is null)
+            {
+                throw new ValidationException();
+            }
+
+            await _repo.Create(foodType);
+            return foodType;
         }
 
         public async Task<FoodType> ReadOne(int id)
         {
-            return await _repo.ReadOne(id);  
+            var foodType = await _repo.ReadOne(id);
+            if (foodType is null)
+            {
+                throw new NotFoundException();
+            }
+            return foodType;
         }
 
         public async Task<IEnumerable<FoodType?>> ReadAll()

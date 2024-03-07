@@ -3,7 +3,6 @@ using bakeryServer.Services;
 using bakeryServer.Models;
 using Exceptions;
 using System.ComponentModel.DataAnnotations;
-using Services.Exceptions;
 namespace WebApi.Controllers
 {
     [ApiController]
@@ -20,7 +19,7 @@ namespace WebApi.Controllers
                 var fillings = await _service.ReadAll();
                 return Ok(fillings);
             }
-            catch (NoContentException)
+            catch (NotFoundException)
             {
                 return NoContent();
             }
@@ -52,13 +51,13 @@ namespace WebApi.Controllers
                 return BadRequest(ex);
             }
 
-            catch(Exception ex)
+            catch(Exception)
             {
                 return StatusCode(500, "Internal Server Error.");
             }
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> Update([FromBody] Filling updatedFilling)
         {
             try
@@ -75,9 +74,27 @@ namespace WebApi.Controllers
                 return BadRequest(ex);
             }
 
-            catch(Exception ex)
+            catch(Exception)
             {
                 return StatusCode(500,$"Internal Server Error");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _service.Delete(id);
+                return Ok();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, $"Internal Server Error");
             }
         }
     }

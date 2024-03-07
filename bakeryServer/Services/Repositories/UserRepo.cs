@@ -8,11 +8,10 @@ namespace bakeryServer.Services.Repositories
     {
         private readonly BakeryContext _context = context;
 
-        public async Task<bool> Create(User user)
+        public async Task Create(User user)
         {
             await _context.AddAsync(user);
             await _context.SaveChangesAsync();
-            return true;
         }
 
         public async Task<User?> ReadOne(int id)
@@ -28,11 +27,11 @@ namespace bakeryServer.Services.Repositories
 
         public async Task Update(User newUser, User userForUpdate)
         {
-                userForUpdate.FirstName = newUser.FirstName;
-                userForUpdate.LastName = newUser.LastName;
-                userForUpdate.PhoneNumber = newUser.PhoneNumber;
-                userForUpdate.Email = newUser.Email;
-                await _context.SaveChangesAsync();
+            userForUpdate.FirstName = newUser.FirstName;
+            userForUpdate.LastName = newUser.LastName;
+            userForUpdate.PhoneNumber = newUser.PhoneNumber;
+            userForUpdate.Email = newUser.Email;
+            await _context.SaveChangesAsync();
         }
 
         public async Task Delete(User user)

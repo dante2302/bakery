@@ -8,18 +8,10 @@ namespace bakeryServer.Services.Repositories
     {
         private readonly BakeryContext _context = context;
 
-        public async Task<bool> Create(FoodType foodType)
+        public async Task Create(FoodType foodType)
         {
-            try
-            {
-                await _context.AddAsync(foodType);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch(Exception ex)
-            {
-                return false;
-            }
+            await _context.AddAsync(foodType);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<FoodType?> ReadOne(int id)
@@ -28,39 +20,24 @@ namespace bakeryServer.Services.Repositories
             return f;
         }
 
-        public async Task<List<FoodType?>> ReadAll()
+        public async Task<List<FoodType>> ReadAll()
         {
             return await _context.FoodTypes.ToListAsync();
         }
 
-        public async Task<bool> Update(FoodType newFoodType)
+        public async Task Update(FoodType newFoodType, FoodType existingFoodType)
         {
-            FoodType? existingFoodType = await _context.FoodTypes.FirstOrDefaultAsync(f => f.Id == newFoodType.Id);
-            if (existingFoodType is null)
-            {
-                return false;
-            }
-            else
-            {
-                existingFoodType.Name = newFoodType.Name;
-                existingFoodType.Fillings = newFoodType.Fillings;
-                existingFoodType.Toppings = newFoodType.Toppings;
-                existingFoodType.ContainsLettering = newFoodType.ContainsLettering;
-                await _context.SaveChangesAsync();
-                return true;
-            }
+            existingFoodType.Name = newFoodType.Name;
+            existingFoodType.Fillings = newFoodType.Fillings;
+            existingFoodType.Toppings = newFoodType.Toppings;
+            existingFoodType.ContainsLettering = newFoodType.ContainsLettering;
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> Delete(FoodType foodType)
+        public async Task Delete(FoodType foodType)
         {
-            if (foodType is null)
-            {
-                return false;
-            }
-
             _context.FoodTypes.Remove(foodType);
             await _context.SaveChangesAsync();
-            return true;
         }
     }
 }
