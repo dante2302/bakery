@@ -10,44 +10,60 @@ namespace bakeryServer.Services
     {
         private readonly FoodTypeRepo _repo = repo;
 
-        public async Task<FoodType> Create(FoodType foodType)
+        public async Task<FoodType> Create(FoodType entity)
         {
             var validator = new EntityValidator<FoodType>();
 
-            if (!validator.AssertFields(foodType) || foodType is null)
+            if (!validator.AssertFields(entity) || entity is null)
             {
                 throw new ValidationException();
             }
 
-            await _repo.Create(foodType);
-            return foodType;
+            await _repo.Create(entity);
+            return entity;
         }
 
         public async Task<FoodType> ReadOne(int id)
         {
-            var foodType = await _repo.ReadOne(id);
-            if (foodType is null)
+            var entity = await _repo.ReadOne(id);
+            if (entity is null)
             {
                 throw new NotFoundException();
             }
-            return foodType;
+            return entity;
         }
 
         public async Task<IEnumerable<FoodType?>> ReadAll()
         {
-            return await _repo.ReadAll();
+            var list = await _repo.ReadAll();
+            if(list.Count == 0)
+            {
+                throw new NotFoundException();
+            }
+            return list;
         }
 
-        public async Task<bool> Update(FoodType newFoodType)
+        public async Task Update(FoodType newEntity)
         {
-            return await _repo.Update(newFoodType);
+            var entityForUpdate = await ReadOne(newEntity.Id);
+            if (entityForUpdate is null)
+            {
+                throw new NotFoundException();
+            }
+
+            if(newEntity is null)
+            {
+                throw new ValidationException();    
+            }
+
+            await _repo.Update(newEntity, entityForUpdate);
+
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task Delete(int id)
         {
-            FoodType foodTypeForDeletion = await ReadOne(id);
-            return await _repo.Delete(foodTypeForDeletion);
+            var entityForDeletion = await ReadOne(id);
+            await _repo.Delete(entityForDeletion);
         }
-
     }
 }

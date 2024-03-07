@@ -61,6 +61,8 @@ namespace bakeryServer.Services
 
         public async Task Delete(int id)
         {
+            Filling fillingForDeletion = await ReadOne(id);
+            await _repo.Delete(fillingForDeletion);
         }
     }
 }
