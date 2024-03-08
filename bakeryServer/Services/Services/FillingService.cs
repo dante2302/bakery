@@ -33,7 +33,7 @@ namespace bakeryServer.Services
             return filling;
         }
 
-        public async Task<IEnumerable<Filling?>> ReadAll()
+        public async Task<IEnumerable<Filling>> ReadAll()
         {
             List<Filling> fList = await _repo.ReadAll();
             if(fList.Count == 0)
