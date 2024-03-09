@@ -2,7 +2,7 @@ import { useState, ChangeEvent } from "react";
 import "./LoginForm.css";
 
 interface loginFormState{
-    email: string,
+    username: string,
     password: string
 }
 
@@ -14,7 +14,7 @@ interface formInput extends HTMLInputElement{
 export default function LoginForm(){
 
     const defaultFormState: loginFormState = {
-        "email" : "",
+        "username" : "",
         "password": ""
     }    
 
@@ -33,13 +33,13 @@ export default function LoginForm(){
     return (
         <form className="login-form">
             <div className="input-container">
-                <label htmlFor="adminEmail">Имейл</label>
+                <label htmlFor="adminUsername">Потребителско име</label>
                 <input 
-                type="email"
-                id="adminEmail"
-                name="email"
-                value={formState.email}
-                onChange={(e) => formInputHandler(e)}
+                    type="text"
+                    id="adminUsername"
+                    name="username"
+                    value={formState.username}
+                    onChange={(e) => formInputHandler(e)}
                 />
             </div>
             <div className="input-container">
@@ -52,7 +52,7 @@ export default function LoginForm(){
                     onChange={(e) => formInputHandler(e)}
                 />
             </div>
-            <button onClick={(e) => submitHandler(e)}></button>
+            <button onClick={(e) => submitHandler(e)}>Вход</button>
         </form>
     )
 }
