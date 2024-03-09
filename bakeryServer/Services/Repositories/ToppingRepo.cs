@@ -8,18 +8,10 @@ namespace bakeryServer.Services.Repositories
     {
         private readonly BakeryContext _context = context;
 
-        public async Task<bool> Create(Topping topping)
+        public async Task Create(Topping topping)
         {
-            try
-            {
-                await _context.AddAsync(topping);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            await _context.AddAsync(topping);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<Topping?> ReadOne(int id)
@@ -28,37 +20,21 @@ namespace bakeryServer.Services.Repositories
             return topping;
         }
 
-        public async Task<IEnumerable<Topping?>> ReadAll()
+        public async Task<List<Topping?>> ReadAll()
         {
             return await _context.Toppings.ToListAsync();
         }
 
-        public async Task<bool> Update(Topping newTopping)
+        public async Task Update(Topping newTopping, Topping toppingForUpdate)
         {
-            Topping? existingTopping = await _context.Toppings.FirstOrDefaultAsync(t => t.Id == newTopping.Id);
-            if (existingTopping is null)
-            {
-                return false;
-            }
-            else
-            {
-                existingTopping.Name = newTopping.Name;
-                await _context.SaveChangesAsync();
-                return true;
-            }
+            toppingForUpdate.Name = newTopping.Name;
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> Delete(Topping topping)
+        public async Task Delete(Topping topping)
         {
-            if (topping is null)
-            {
-                return false;
-            }
-
             _context.Toppings.Remove(topping);
             await _context.SaveChangesAsync();
-            return true;
-
         }
     }
 }

@@ -1,4 +1,7 @@
 
+using Exceptions;
+using System.ComponentModel.DataAnnotations;
+
 namespace Services.Tests
 {
     public class FillingServiceTests
@@ -16,10 +19,10 @@ namespace Services.Tests
             Filling invalidFilling_1 = new();
             Filling invalidFilling_2 = new() {Id = 1};
 
-
-            Assert.True(await srv.Create(validFilling));
-            Assert.False(await srv.Create(invalidFilling_1));
-            Assert.False(await srv.Create(invalidFilling_2));
+            await Assert.ThrowsAsync<ValidationException>(async () => 
+                await srv.Create(invalidFilling_1));
+            await Assert.ThrowsAsync<ValidationException>(async () =>
+                await srv.Create(invalidFilling_2));
         }
 
 
@@ -30,10 +33,11 @@ namespace Services.Tests
             await srv.Create(tempFilling);
 
             var inDatabaseFilling = await srv.ReadOne(1);
-            var nonExistentFilling = await srv.ReadOne(2);
+            int nonExistentId = 0;
 
             Assert.Same(inDatabaseFilling, tempFilling);
-            Assert.Null(nonExistentFilling);
+            await Assert.ThrowsAsync<NotFoundException>(async () =>
+                await srv.ReadOne(nonExistentId));
         }
 
         private static FillingService ArrangeService()

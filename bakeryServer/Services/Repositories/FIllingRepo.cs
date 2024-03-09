@@ -1,6 +1,5 @@
 ﻿using bakeryServer.Data.DbContexts;
 using bakeryServer.Models;
-using bakeryServer.Services.Repositories;
 using Microsoft.EntityFrameworkCore;
 namespace bakeryServer.Services.Repositories
 {
@@ -9,11 +8,10 @@ namespace bakeryServer.Services.Repositories
     {
         private readonly BakeryContext _context = context;
 
-        public async Task<bool> Create(Filling filling)
+        public async Task Create(Filling filling)
         {
                 await _context.AddAsync(filling);
                 await _context.SaveChangesAsync();
-                return true;
         }
 
         public async Task<Filling?> ReadOne(int id)
@@ -22,24 +20,23 @@ namespace bakeryServer.Services.Repositories
             return f;
         }
 
-        public async Task<IEnumerable<Filling?>> ReadAll()
+        public async Task<List<Filling>> ReadAll()
         {
             return await _context.Fillings.ToListAsync();
         }
 
-        public async Task<bool> Update(Filling newFilling)
+        public async Task Update(Filling newFilling, Filling fillingForUpdate)
         {
-            Filling? existingFilling = await _context.Fillings.FirstOrDefaultAsync(f => f.Id == newFilling.Id);
-            existingFilling.Name = newFilling.Name;
+            fillingForUpdate.Name = newFilling.Name;
             await _context.SaveChangesAsync();
-            return true;
+            return;
         }
 
-        public async Task<bool> Delete(Filling filling)
+        public async Task Delete(Filling fillingForDeletion)
         {
-            _context.Fillings.Remove(filling);
+            _context.Fillings.Remove(fillingForDeletion);
             await _context.SaveChangesAsync();
-            return true;
+            return;
         }
 
     }

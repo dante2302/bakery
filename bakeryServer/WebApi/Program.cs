@@ -1,5 +1,7 @@
 using bakeryServer.Data.DbContexts;
+using bakeryServer.Models;
 using bakeryServer.Services;
+using bakeryServer.Services.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,14 +11,12 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<BakeryContext>(options =>
 {
     string connectionString = Configuration.Manager.GetConnectionString("bakery");
-    Console.WriteLine(connectionString);
     // Needs this migrations assembly to manage migrations 
-    options.UseSqlServer("stringConnection", b => b.MigrationsAssembly("bakeryServer.WebApi"));
+    options.UseSqlServer(connectionString, b => b.MigrationsAssembly("bakeryServer.WebApi"));
 });
 
+builder.Services.AddScoped<IRepository<Filling>, FillingRepo>();
 builder.Services.AddScoped<FillingService>();
-builder.Services.AddScoped<ToppingService>();
-builder.Services.AddScoped<FoodTypeService>();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.

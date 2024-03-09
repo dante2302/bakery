@@ -1,35 +1,68 @@
 ﻿using bakeryServer.Models;
 using bakeryServer.Services.Repositories;
+using System.ComponentModel.DataAnnotations;
+using Services.Validation;
+using Exceptions;
 
 namespace bakeryServer.Services
 {
     public class OrderService(OrderRepo repo)
     {
         private readonly OrderRepo _repo = repo;
-        public async Task<bool> Create(Order order)
+        public async Task<Order> Create(Order entity)
         {
-            return await _repo.Create(order);
+            var validator = new EntityValidator<Order>();
+
+            if (!validator.AssertFields(entity) || entity is null)
+            {
+                throw new ValidationException();
+            }
+
+            await _repo.Create(entity);
+            return entity;
         }
 
         public async Task<Order> ReadOne(int id)
         {
-            return await _repo.ReadOne(id);  
+            var entity = await _repo.ReadOne(id);
+            if (entity is null)
+            {
+                throw new NotFoundException();
+            }
+            return entity;
         }
 
         public async Task<IEnumerable<Order?>> ReadAll()
         {
-            return await _repo.ReadAll();
+            var list = await _repo.ReadAll();
+            if(list.Count == 0)
+            {
+                throw new NotFoundException();
+            }
+            return list;
         }
 
-        public async Task<bool> Update(Order newOrder)
+        public async Task Update(Order newEntity)
         {
-            return await _repo.Update(newOrder);
+            var entityForUpdate = await ReadOne(newEntity.Id);
+            if (entityForUpdate is null)
+            {
+                throw new NotFoundException();
+            }
+
+            if(newEntity is null)
+            {
+                throw new ValidationException();    
+            }
+
+            await _repo.Update(newEntity, entityForUpdate);
+
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task Delete(int id)
         {
-            Order orderForDeletion = await ReadOne(id);
-            return await _repo.Delete(orderForDeletion);
+            var entityForDeletion = await ReadOne(id);
+            await _repo.Delete(entityForDeletion);
         }
 
     }

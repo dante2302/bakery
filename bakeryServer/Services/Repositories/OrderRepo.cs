@@ -8,11 +8,10 @@ namespace bakeryServer.Services.Repositories
     {
         private readonly BakeryContext _context = context;
 
-        public async Task<bool> Create(Order order)
+        public async Task Create(Order order)
         {
             await _context.AddAsync(order);
             await _context.SaveChangesAsync();
-            return true;
         }
 
         public async Task<Order?> ReadOne(int id)
@@ -21,26 +20,23 @@ namespace bakeryServer.Services.Repositories
             return order;
         }
 
-        public async Task<IEnumerable<Order?>> ReadAll()
+        public async Task<List<Order>> ReadAll()
         {
             return await _context.Orders.ToListAsync();
         }
 
-        public async Task<bool> Update(Order newOrder)
+        public async Task Update(Order newOrder, Order orderForUpdate)
         {
-            Order? existingOrder = await _context.Orders.FirstOrDefaultAsync(o => o.Id == newOrder.Id);
-            existingOrder.Date = newOrder.Date;
-            existingOrder.FoodId = newOrder.FoodId;
-            existingOrder.UserId = newOrder.UserId;
+            orderForUpdate.Date = newOrder.Date;
+            orderForUpdate.FoodId = newOrder.FoodId;
+            orderForUpdate.UserId = newOrder.UserId;
             await _context.SaveChangesAsync();
-            return true;
         }
 
-        public async Task<bool> Delete(Order order)
+        public async Task Delete(Order order)
         {
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
-            return true;
         }
     }
 }

@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Services.Validation
 {
     public class EntityValidator<T>
     {
-        private PropertyInfo[] requieredProperties = typeof(T).GetProperties();
+        private readonly PropertyInfo[] requieredProperties = typeof(T).GetProperties();
         
         public bool AssertFields(T entity)
         {
