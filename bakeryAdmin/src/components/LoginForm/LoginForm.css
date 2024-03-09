@@ -1,0 +1,12 @@
+.input-container, .login-form{
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form{
+    width: 10%;
+}
+
+.login-form>img{
+    width: 1000px;
+}
