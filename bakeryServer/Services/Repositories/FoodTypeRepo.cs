@@ -13,6 +13,7 @@ namespace bakeryServer.Services.Repositories
             await _context.AddAsync(foodType);
             await _context.SaveChangesAsync();
         }
+        
 
         public async Task<FoodType?> ReadOne(int id)
         {

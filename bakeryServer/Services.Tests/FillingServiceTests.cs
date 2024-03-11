@@ -6,7 +6,7 @@ namespace Services.Tests
 {
     public class FillingServiceTests
     {
-         private readonly FillingService srv = ArrangeService();
+        private readonly FillingService srv = ArrangeService();
         [Fact]
         public async Task Create_ShouldReturnCorrectBool()
         {
