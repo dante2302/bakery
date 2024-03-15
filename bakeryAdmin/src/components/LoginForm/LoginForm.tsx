@@ -32,11 +32,8 @@ export default function LoginForm(){
 
   return (
     <form className="login-form">
-      <div className="admin-top">
-        Admin
-      </div>
       <div className="input-container">
-        {!formState.username && <label htmlFor="adminUsername">Потребителско име</label>}
+        <label htmlFor="adminUsername">Потребителско име</label>
         <input 
           type="text"
           id="adminUsername"
@@ -46,7 +43,7 @@ export default function LoginForm(){
         />
       </div>
       <div className="input-container">
-        {!formState.password && <label htmlFor="adminUsername">Парола</label>}
+        <label htmlFor="adminUsername">Парола</label>
         <input
           type="password"
           id="adminPassword"
