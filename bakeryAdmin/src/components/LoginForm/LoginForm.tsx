@@ -1,7 +1,8 @@
 import { useState, ChangeEvent } from "react";
 import "./LoginForm.css";
+import * as adminService from "../../services/adminService";
 
-interface loginFormState{
+export interface loginFormState{
   username: string,
   password: string
 }
@@ -28,6 +29,7 @@ export default function LoginForm(){
 
   async function submitHandler(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
     e.preventDefault();
+    await adminService.Login();
   }
 
   return (
