@@ -29,7 +29,9 @@ export default function LoginForm(){
 
   async function submitHandler(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
     e.preventDefault();
-    await adminService.Login();
+    //validateForm()
+    await adminService.Login(formState);
+    //context.setLoggedIn;
   }
 
   return (
@@ -42,6 +44,7 @@ export default function LoginForm(){
           name="username"
           value={formState.username}
           onChange={(e) => formInputHandler(e)}
+          //onBlur={() => validate()}
         />
       </div>
       <div className="input-container">
@@ -52,6 +55,7 @@ export default function LoginForm(){
           name="password"
           value={formState.password}
           onChange={(e) => formInputHandler(e)}
+          //onBlur={() => validate()}
         />
       </div>
       <button onClick={(e) => submitHandler(e)}>Вход</button>
