@@ -9,20 +9,25 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services.AddAuthentication(o => {
+        o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
     .AddJwtBearer(x => {
         x.TokenValidationParameters = new TokenValidationParameters(){
-            ValidIssuer = Configuration.Manager["Issuer"],
-            ValidAudience = Configuration.Manager["Audience"],
+            // ValidIssuer = Configuration.Manager["JwtSettings:Issuer"],
+            // ValidAudience = Configuration.Manager["JwtSettings:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(Configuration.Manager["Key"])
+                Encoding.UTF8.GetBytes(Configuration.Manager["JwtSettings:Key"])
             ),
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = false,
+            ValidateIssuerSigningKey = false
         };
     });
+builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<BakeryContext>(options =>

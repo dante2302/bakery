@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("[controller]")]
     public class FillingsController(FillingService service) : ControllerBase
     {
