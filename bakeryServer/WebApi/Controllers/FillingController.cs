@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace WebApi.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class FillingsController(FillingService service) : ControllerBase
     {
@@ -36,8 +37,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetOne([FromQuery] int id)
         {
-            return Ok(
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.Manager["JwtSettings:Key"])));
+            return Ok("maikamudaiba");
             // try
             // {
             //     var filling = await _service.ReadOne(id);

@@ -16,7 +16,7 @@ public class TokenController : ControllerBase
     [HttpGet("token")]
     public async Task<IActionResult> getToken(){
         var handler = new JwtSecurityTokenHandler();
-        var key = Encoding.UTF8.GetBytes("asdasd12939939%129");
+        var key = Encoding.UTF8.GetBytes("asdasd12939939%129-21809410925%)(12094)");
         var claims = new List<Claim>{
             new (JwtRegisteredClaimNames.Jti, "asd"),
         };
@@ -25,7 +25,7 @@ public class TokenController : ControllerBase
             Expires = DateTime.UtcNow.AddDays(2),
             Issuer = "http://localhost:5279",
             Audience = "http://localhost:5279",
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
         };
         var token = handler.CreateToken(tokenD);
         var jwt = handler.WriteToken(token);

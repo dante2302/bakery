@@ -8,13 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
-
-
-
-
-
-
-
+<<<<<<< HEAD
+=======
 // Add services to the container.
 builder.Services.AddAuthentication(o => {
         o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -23,19 +18,28 @@ builder.Services.AddAuthentication(o => {
     })
     .AddJwtBearer(x => {
         x.TokenValidationParameters = new TokenValidationParameters(){
-            // ValidIssuer = Configuration.Manager["JwtSettings:Issuer"],
-            // ValidAudience = Configuration.Manager["JwtSettings:Audience"],
+            ValidIssuer = Configuration.Manager["JwtSettings:Issuer"],
+            ValidAudience = Configuration.Manager["JwtSettings:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(Configuration.Manager["JwtSettings:Key"])
             ),
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = false,
-            ValidateIssuerSigningKey = false
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true 
         };
     });
-builder.Services.AddAuthorization();
 
+builder.Services.AddAuthorization();
+>>>>>>> 4e42c0d (add token controllerto test jwt generation)
+
+
+
+
+
+
+
+// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddDbContext<BakeryContext>(options =>
 {
