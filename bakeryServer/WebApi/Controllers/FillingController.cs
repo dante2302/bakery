@@ -4,6 +4,8 @@ using bakeryServer.Models;
 using Exceptions;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WebApi.Controllers
 {
@@ -34,19 +36,21 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetOne([FromQuery] int id)
         {
-            try
-            {
-                var filling = await _service.ReadOne(id);
-                return Ok(filling);
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
-            catch (Exception)
-            {
-                return StatusCode(500);
-            }
+            return Ok(
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.Manager["JwtSettings:Key"])));
+            // try
+            // {
+            //     var filling = await _service.ReadOne(id);
+            //     return Ok(filling);
+            // }
+            // catch (NotFoundException)
+            // {
+            //     return NotFound();
+            // }
+            // catch (Exception)
+            // {
+            //     return StatusCode(500);
+            // }
         }
 
         [HttpPost]

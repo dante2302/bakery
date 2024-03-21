@@ -30,7 +30,7 @@ export default function LoginForm(){
   async function submitHandler(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
     e.preventDefault();
     //validateForm()
-    await adminService.Login(formState);
+    await adminService.Login();
     //context.setLoggedIn;
   }
 
