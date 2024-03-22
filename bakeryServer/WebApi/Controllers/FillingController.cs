@@ -3,6 +3,7 @@ using bakeryServer.Services;
 using bakeryServer.Models;
 using Exceptions;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
@@ -24,6 +25,10 @@ namespace WebApi.Controllers
             {
                 return NoContent();
             }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
 
         [HttpGet]
@@ -37,6 +42,10 @@ namespace WebApi.Controllers
             catch (NotFoundException)
             {
                 return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
             }
         }
 
