@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using bakeryServer.Models;
-using bakeryServer.Services;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 
 namespace bakeryServer.Data.DbContexts
 {

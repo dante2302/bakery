@@ -35,7 +35,7 @@ builder.Services.AddDbContext<BakeryContext>(options =>
 {
     string connectionString = Configuration.Manager.GetConnectionString("bakery");
     // Needs this migrations assembly to manage migrations 
-    options.UseSqlServer(connectionString, b => b.MigrationsAssembly("bakeryServer.WebApi"));
+    options.UseNpgsql(connectionString, b => b.MigrationsAssembly("bakeryServer.WebApi"));
 });
 
 builder.Services.AddScoped<IRepository<Filling>, FillingRepo>();
