@@ -16,23 +16,26 @@ builder.Services.AddAuthentication(o => {
     })
     .AddJwtBearer(x => {
         x.TokenValidationParameters = new TokenValidationParameters(){
-            // ValidIssuer = Configuration.Manager["JwtSettings:Issuer"],
-            // ValidAudience = Configuration.Manager["JwtSettings:Audience"],
-            IssuerSigningKey = new SymmetricSecation.Manager["JwtSettings:Key"])
+            ValidIssuer = Configuration.Manager["JwtSettings:Issuer"],
+            ValidAudience = Configuration.Manager["JwtSettings:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(Configuration.Manager["JwtSettings:Key"])
             ),
             ValidateIssuer = true,
             ValidateAudience = true,
-            ValidateLifetime = true,
+            ValidateLifetime = false,
             ValidateIssuerSigningKey = true
         };
     });
+
 builder.Services.AddAuthorization();
+// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddDbContext<BakeryContext>(options =>
 {
     string connectionString = Configuration.Manager.GetConnectionString("bakery");
     // Needs this migrations assembly to manage migrations 
-    options.UseSqlServer(connectionString, b => b.MigrationsAssembly("bakeryServer.WebApi"));
+    options.UseNpgsql(connectionString, b => b.MigrationsAssembly("WebApi"));
 });
 
 builder.Services.AddScoped<IRepository<Filling>, FillingRepo>();
