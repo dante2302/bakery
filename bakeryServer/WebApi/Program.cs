@@ -18,13 +18,12 @@ builder.Services.AddAuthentication(o => {
         x.TokenValidationParameters = new TokenValidationParameters(){
             // ValidIssuer = Configuration.Manager["JwtSettings:Issuer"],
             // ValidAudience = Configuration.Manager["JwtSettings:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(Configuration.Manager["JwtSettings:Key"])
+            IssuerSigningKey = new SymmetricSecation.Manager["JwtSettings:Key"])
             ),
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = false,
-            ValidateIssuerSigningKey = false
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true
         };
     });
 builder.Services.AddAuthorization();
