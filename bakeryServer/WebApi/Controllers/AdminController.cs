@@ -10,11 +10,15 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 [ApiController]
-[Route("controller")]
-public class TokenController : ControllerBase 
+[Route("[controller]")]
+public class AdminController : ControllerBase 
 {
-    [HttpGet("token")]
-    public async Task<IActionResult> getToken(){
+    [HttpPost]
+    public async Task<IActionResult> LogIn()
+    {
+        return Ok();
+    }
+    public string Generate(){
         var handler = new JwtSecurityTokenHandler();
         var key = Encoding.UTF8.GetBytes("asdasd12939939%129-21809410925%)(12094)");
         var claims = new List<Claim>{
@@ -29,6 +33,6 @@ public class TokenController : ControllerBase
         };
         var token = handler.CreateToken(tokenD);
         var jwt = handler.WriteToken(token);
-        return Ok(jwt);
+        return jwt;
     }
 }
