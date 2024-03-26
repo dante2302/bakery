@@ -37,7 +37,7 @@ namespace WebApi.Controllers
             byte[] key = Encoding.UTF8.GetBytes(Configuration.Manager["JwtSettings:Key"]);
             if (key is null)
             {
-                throw new NotFoundException();
+                throw new Exception();
             }
 
             List<Claim> claims = [
