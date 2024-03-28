@@ -1,6 +1,7 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useContext } from "react";
 import "./LoginForm.css";
 import * as adminService from "../../services/adminService";
+import { AuthContext } from "../../contexts/authContext";
 
 export interface loginFormState{
   username: string,
@@ -19,6 +20,7 @@ export default function LoginForm(){
     "password": ""
   }    
 
+  const { setAuthData } = useContext(AuthContext);
   const [formState, setFormState]  = useState<loginFormState>(defaultFormState);
 
   function formInputHandler(e: ChangeEvent<formInput>){
