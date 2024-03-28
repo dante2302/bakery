@@ -1,10 +1,14 @@
+import { loginFormState } from "../components/LoginForm/LoginForm";
+
 const BASE_URL = "http://localhost:5279/fillings";
 interface LoginResponse extends Response{
   Jwt?: string
 }
-export async function Login({username, password}: {username: string, password: string}){
+
+export async function Login({username, password}: loginFormState){
   try{
     const raw = await fetch(BASE_URL, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -13,15 +17,12 @@ export async function Login({username, password}: {username: string, password: s
           username, password
         })
     })
-    const response: Response = await raw.json(); 
-    if(response.status !== 200)
-    {
-      throw new Error();
-    }
-    return response;
+    const response: LoginResponse = await raw.json(); 
+    console.log(response);
+    return response.Jwt;
   }
-
-  catch{
-
+  catch(e){
+    console.log(e);
+    return new Response();
   }
 }

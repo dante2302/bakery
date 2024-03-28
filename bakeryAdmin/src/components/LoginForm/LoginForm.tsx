@@ -1,7 +1,7 @@
-import { useState, ChangeEvent, useContext } from "react";
+import { useState, ChangeEvent, useContext, ReactNode } from "react";
 import "./LoginForm.css";
 import * as adminService from "../../services/adminService";
-import { AuthContext } from "../../contexts/authContext";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export interface loginFormState{
   username: string,
@@ -22,6 +22,8 @@ export default function LoginForm(){
 
   const { setAuthData } = useContext(AuthContext);
   const [formState, setFormState]  = useState<loginFormState>(defaultFormState);
+  const [loginFail, setLoginFail] = useState<Boolean>(false);
+  const [internalError, setInternalError] = useState<Boolean>(false);
 
   function formInputHandler(e: ChangeEvent<formInput>){
     setFormState((state: loginFormState) => (
@@ -31,13 +33,31 @@ export default function LoginForm(){
 
   async function submitHandler(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
     e.preventDefault();
-    //validateForm()
-    await adminService.Login();
-    //context.setLoggedIn;
+    const result = await adminService.Login(formState);
+    if(result == "500")
+    {
+      setInternalError(true);
+    }
+    else if(!result)
+    {
+      setLoginFail(true);
+    }
+    else
+    {
+      setAuthData(result);
+    }
   }
 
   return (
     <form className="login-form">
+        {
+          loginFail && 
+          <p>greshni vhodni danni</p>
+        }
+        {
+          internalError &&
+          <p>Vutreshna greshka</p>
+        }
       <div className="input-container">
         <label htmlFor="adminUsername">Потребителско име</label>
         <input 

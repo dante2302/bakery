@@ -19,7 +19,7 @@ body{
 
 .bg-overlay{
     background-color: #CCCCCC;
-    opacity: 0.6;
+    opacity: 0.45;
     position: absolute;
     width: 100vw;
     height: 100vh;

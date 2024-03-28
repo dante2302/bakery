@@ -1,8 +1,10 @@
 import LoginForm from "./LoginForm/LoginForm";
 import bgimg from "../assets/bg-big.jpg";
-import { AuthProvider } from "../contexts/authContext";
+import { AuthContext, AuthProvider } from "../contexts/AuthContext";
+import { useContext } from "react";
 
 export default function App() {
+  const {authData} = useContext(AuthContext);
   return (
     //add routes
     //add user context
@@ -12,13 +14,16 @@ export default function App() {
     // adding data - fillings, toppings, foodtypes
     // respond back option
     <AuthProvider>
-      <div>
-        <img src={bgimg} className="bg-img"/>
-        <div className="bg-overlay"></div>
-        <div className="center-container">
-          <LoginForm />
+      {
+        !authData && 
+        <div>
+          <img src={bgimg} className="bg-img" />
+          <div className="bg-overlay"></div>
+          <div className="center-container">
+            <LoginForm />
+          </div>
         </div>
-      </div>
+      }
     </AuthProvider>
   )
 }
