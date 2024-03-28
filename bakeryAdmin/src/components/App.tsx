@@ -1,5 +1,6 @@
 import LoginForm from "./LoginForm/LoginForm";
 import bgimg from "../assets/bg-big.jpg";
+import { AuthProvider } from "../contexts/authContext";
 
 export default function App() {
   return (
@@ -10,13 +11,15 @@ export default function App() {
     // Filtering ^
     // adding data - fillings, toppings, foodtypes
     // respond back option
-    <div>
-      <img src={bgimg} className="bg-img"/>
-      <div className="bg-overlay"></div>
-      <div className="center-container">
-        <LoginForm />
+    <AuthProvider>
+      <div>
+        <img src={bgimg} className="bg-img"/>
+        <div className="bg-overlay"></div>
+        <div className="center-container">
+          <LoginForm />
+        </div>
       </div>
-    </div>
+    </AuthProvider>
   )
 }
 
