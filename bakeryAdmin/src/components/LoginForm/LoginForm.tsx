@@ -33,20 +33,25 @@ export default function LoginForm(){
 
   async function submitHandler(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
     e.preventDefault();
-    const result = await adminService.Login(formState);
-    if(result == "500")
+    const response = await adminService.Login(formState);
+    handleResponse(response);
+  }
+
+  function handleResponse(response: adminService.LoginResponse | undefined){
+    if(!response)
     {
       setInternalError(true);
     }
-    else if(!result)
+    else if(response.status == 401)
     {
       setLoginFail(true);
     }
-    else
+    else if(response.status == 201)
     {
-      setAuthData(result);
+      setAuthData(response.Jwt);
     }
   }
+
 
   return (
     <form className="login-form">

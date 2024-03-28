@@ -1,7 +1,7 @@
 import { loginFormState } from "../components/LoginForm/LoginForm";
 
 const BASE_URL = "http://localhost:5279/fillings";
-interface LoginResponse extends Response{
+export interface LoginResponse extends Response{
   Jwt?: string
 }
 
@@ -18,11 +18,9 @@ export async function Login({username, password}: loginFormState){
         })
     })
     const response: LoginResponse = await raw.json(); 
-    console.log(response);
-    return response.Jwt;
+    return response;
   }
   catch(e){
     console.log(e);
-    return new Response();
   }
 }
