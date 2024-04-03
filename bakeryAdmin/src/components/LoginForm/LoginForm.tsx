@@ -2,6 +2,7 @@ import { useState, ChangeEvent, useContext, ReactNode } from "react";
 import "./LoginForm.css";
 import * as adminService from "../../services/adminService";
 import { AuthContext } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router";
 
 export interface loginFormState{
   username: string,
@@ -20,6 +21,7 @@ export default function LoginForm(){
     "password": ""
   }    
 
+  let a = useNavigate();
   const { setAuthData } = useContext(AuthContext);
   const [formState, setFormState]  = useState<loginFormState>(defaultFormState);
   const [loginFail, setLoginFail] = useState<Boolean>(false);
@@ -33,23 +35,25 @@ export default function LoginForm(){
 
   async function submitHandler(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
     e.preventDefault();
+    handleResponse(undefined);
     const response = await adminService.Login(formState);
-    handleResponse(response);
   }
 
   function handleResponse(response: adminService.LoginResponse | undefined){
-    if(!response)
-    {
-      setInternalError(true);
-    }
-    else if(response.status == 401)
-    {
-      setLoginFail(true);
-    }
-    else if(response.status == 201)
-    {
-      setAuthData(response.Jwt);
-    }
+    // if(!response)
+    // {
+    //   setInternalError(true);
+    // }
+    // else if(response.status == 401)
+    // {
+    //   setLoginFail(true);
+    // }
+    // else if(response.status == 201)
+    // else
+    // {
+      setAuthData("asdasdsadsa");
+      a("/");
+    // }
   }
 
 
