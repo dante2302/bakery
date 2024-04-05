@@ -42,6 +42,39 @@ namespace bakeryServer.Services
             return list;
         }
 
+        public async Task<IEnumerable<Order?>> ReadAllSortedByDate()
+        {
+            var list = await _repo.ReadAll();
+            if(list.Count == 0)
+            {
+                throw new NotFoundException();
+            }
+            return list.OrderByDescending(x => x.Date);
+        }
+        
+        public async Task<IEnumerable<Order?>> ReadAllFilteredByUser(int userId)
+        {
+            var list = await _repo.ReadAll();
+            list = list.Where(x => x.UserId == userId).ToList();
+            if(list.Count == 0)
+            {
+                throw new NotFoundException();
+            }
+            return list;
+        }
+
+        public async Task<IEnumerable<Order?>> ReadAllFilteredByFood(int foodId)
+        {
+            var list = await _repo.ReadAll();
+            list = list.Where(x => x.FoodId == foodId).ToList();
+            if(list.Count == 0)
+            {
+                throw new NotFoundException();
+            }
+            return list;
+        }
+
+
         public async Task Update(Order newEntity)
         {
             var entityForUpdate = await ReadOne(newEntity.Id);
@@ -64,6 +97,6 @@ namespace bakeryServer.Services
             var entityForDeletion = await ReadOne(id);
             await _repo.Delete(entityForDeletion);
         }
-
+        
     }
 }
