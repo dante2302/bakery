@@ -42,38 +42,26 @@ namespace bakeryServer.Services
             return list;
         }
 
-        public async Task<IEnumerable<Order?>> ReadAllSortedByDate()
+        public async Task<IEnumerable<Order?>> ReadAllSortedByDate(bool ascending)
         {
             var list = await _repo.ReadAll();
             if(list.Count == 0)
             {
                 throw new NotFoundException();
             }
-            return list.OrderByDescending(x => x.Date);
+            return ascending ? list.OrderBy(x => x.Date) : list.OrderByDescending(x => x.Date);
         }
         
-        public async Task<IEnumerable<Order?>> ReadAllFilteredByUser(int userId)
+        public async Task<IEnumerable<Order?>> ReadAllFiltered(Func<Order, bool> predicate)
         {
             var list = await _repo.ReadAll();
-            list = list.Where(x => x.UserId == userId).ToList();
+            list = list.Where(predicate).ToList();
             if(list.Count == 0)
             {
                 throw new NotFoundException();
             }
             return list;
         }
-
-        public async Task<IEnumerable<Order?>> ReadAllFilteredByFood(int foodId)
-        {
-            var list = await _repo.ReadAll();
-            list = list.Where(x => x.FoodId == foodId).ToList();
-            if(list.Count == 0)
-            {
-                throw new NotFoundException();
-            }
-            return list;
-        }
-
 
         public async Task Update(Order newEntity)
         {
