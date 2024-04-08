@@ -9,8 +9,6 @@ export default function App() {
   const { authData } = useContext(AuthContext);
   console.log(authData);
   return (
-    //add routes
-    //add user context
     // Main content - requests;
     // Sorting ^
     // Filtering ^

@@ -5,16 +5,14 @@ import { useNavigate } from "react-router";
 export default function Home(){
     const { authData } = useContext(AuthContext);
     const navigate = useNavigate();
-    useEffect(() => {
-        if(!authData){
-           navigate("/login");
-        }
-        console.log(authData);
-    }, [authData])
+
+    useEffect(() => {!authData && navigate("/login")}
+    , [authData])
 
     return (
-        <p>
-            asdashdaskj
-        </p>
+        <div>
+            <button>Requests</button>
+            <button>Foods</button>
+        </div>
     );
 }
