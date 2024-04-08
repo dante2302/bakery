@@ -13,7 +13,7 @@ namespace WebApi.Controllers
     public class AdminController : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> LogIn([FromBody]ILoginDetails loginDetails)
+        public async Task<IActionResult> LogIn([FromBody]LoginDetails loginDetails)
         {
             try
             {
@@ -23,7 +23,7 @@ namespace WebApi.Controllers
             }
             catch(NotFoundException)
             {
-                return NotFound();
+                return Unauthorized();
             }
             catch(Exception ex)
             {
@@ -31,17 +31,17 @@ namespace WebApi.Controllers
             }
         }
 
-        private string Generate(string AdminKey)
+        private string Generate(string adminKey)
         {
             JwtSecurityTokenHandler handler = new();
             byte[] key = Encoding.UTF8.GetBytes(Configuration.Manager["JwtSettings:Key"]);
             if (key is null)
             {
-                throw new NotFoundException();
+                throw new Exception();
             }
 
             List<Claim> claims = [
-                new (JwtRegisteredClaimNames.Jti, "asd"),
+                new ("adminKey", adminKey),
         ];
             var tokenD = new SecurityTokenDescriptor()
             {
@@ -56,11 +56,12 @@ namespace WebApi.Controllers
             return jwt;
         }
 
-        private string Authenticate(ILoginDetails loginDetails)
+        private string Authenticate(LoginDetails loginDetails)
         {
-            return "";
-            if ("" is null)
-            {
+            if(loginDetails.Username == "asdadmin" && loginDetails.Password == "123123"){
+               return "123123";
+            }
+            else {
                 throw new NotFoundException();
             }
         }

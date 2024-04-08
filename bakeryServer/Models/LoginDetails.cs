@@ -1,7 +1,7 @@
 ﻿namespace bakeryServer.Models;
 
-public interface ILoginDetails
+public class LoginDetails
 {
-    string Username { get; set; }
-    string Password { get; set; }
+    public required string Username { get; set; }
+    public required string Password { get; set; }
 }
