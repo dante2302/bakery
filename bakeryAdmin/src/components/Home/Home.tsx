@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router";
+import OrderTable from "../Order/OrderTable";
 
 
 type currentTab = "Orders" | "Foods";
@@ -13,7 +14,6 @@ export default function Home(){
     useEffect(() => {!authData && navigate("/login")}
     , [authData])
 
-
     return (
         <div>
             <div>
@@ -22,9 +22,9 @@ export default function Home(){
             </div>
             {
                 currentTab == "Orders" && 
-                <table>
-                    <th></th>
-                </table>
+                <OrderTable>
+
+                </OrderTable>
             }
             {
                 currentTab == "Foods" &&

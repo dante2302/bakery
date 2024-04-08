@@ -1,4 +1,4 @@
-export default function OrderRow()
+export default function OrderRow({data})
 {
     return (
         <tr>

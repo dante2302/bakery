@@ -1,0 +1,14 @@
+.order-row{
+    display: grid;
+    grid-template-columns: 20% 20% 20% 30% 10%;
+    background-color: #e5c1be;
+    text-align: center;
+}
+
+.order-row *{
+    font-size: 15px;
+}
+.order-grid{
+    display: flex;
+    flex-direction: column;
+}
