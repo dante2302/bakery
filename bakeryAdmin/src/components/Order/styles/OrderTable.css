@@ -1,0 +1,18 @@
+.order-table{
+    border-spacing: 0;
+    border-collapse: separate;
+    background-color: #fffffe;
+    border-radius: 15px;
+    margin: 15px;
+}
+tr>td, th{
+    padding: 10px 15px;
+}
+tr{
+    border-bottom: 1px solid black;
+    border-radius: 20px
+}
+
+thead{
+    background-color: #e5c09c;
+}

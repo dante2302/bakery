@@ -7,7 +7,6 @@ import { Route, Routes } from "react-router-dom";
 
 export default function App() {
   const { authData } = useContext(AuthContext);
-  console.log(authData);
   return (
     // Main content - requests;
     // Sorting ^
