@@ -22,14 +22,14 @@ export default function OrderTable(){
     }, [])
 
     return (
-        <div className="order-grid">
-            <div className="order-row">
-                <h1>First Name</h1>
-                <h1>PhoneNumber</h1>
-                <h1>Food Type</h1>
-                <h1>Bonus</h1>
-                <h1>Date</h1>
-            </div>
-        </div>
+        <table>
+            <tr>
+                <th>First Name</th>
+                <th>PhoneNumber</th>
+                <th>Food Type</th>
+                <th>Bonus</th>
+                <th>Date</th>
+            </tr>
+        </table>
     )
 }
