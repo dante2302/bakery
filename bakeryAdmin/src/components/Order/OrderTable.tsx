@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import * as orderService from "../../services/orderService";
 import "./styles/OrderTable.css";
 import { dateToString } from "../../utils/dateUtils";
+import { useNavigate } from "react-router";
 
 interface Order{
+    id: number,
     name: string,
     foodType: string,
     email?: string
@@ -12,18 +14,13 @@ interface Order{
 }
 
 export default function OrderTable(){
+    const navigate = useNavigate();
     const [currentOrders, setCurrentOrders] = useState<Order[]>([]);
 
     useEffect(() => {
-        const a: Order = {
-            name: "asd",
-            foodType: "myAss",
-            date: new Date(Date.now())
-        }
-
         async function asyncEffect(){
             let requestList = await orderService.ReadAll();
-            requestList && setCurrentOrders([...requestList, a]);
+            requestList && setCurrentOrders([...requestList]);
         }
         asyncEffect();
     }, [])
@@ -34,6 +31,7 @@ export default function OrderTable(){
                 <tr>
                     <th>First Name</th>
                     <th>PhoneNumber</th>
+                    <th>Email</th>
                     <th>Food Type</th>
                     <th>Bonus</th>
                     <th>Date</th>
@@ -41,36 +39,15 @@ export default function OrderTable(){
             </thead>
             <tbody>
                 {currentOrders.map((order) => 
-                    <tr>
+                    <tr onClick={() => navigate(`orders/${order.id}`)}>
                         <td>{order.name}</td>
                         <td>{order.phoneNumber}</td>
                         <td>{order.email}</td>
                         <td>{order.foodType}</td>
-                        <td>{order.foodType}</td>
+                        <td>Bonus</td>
                         <td>{dateToString(order.date)}</td>
                     </tr> 
                 )}
-                <tr>
-                    <td>First Name</td>
-                    <td>PhoneNumber</td>
-                    <td>Food Type</td>
-                    <td>Bonus</td>
-                    <td>Date</td>
-                </tr>
-                <tr>
-                    <td>First Name</td>
-                    <td>PhoneNumber</td>
-                    <td>Food Type</td>
-                    <td>Bonus</td>
-                    <td>Date</td>
-                </tr>
-                <tr>
-                    <td>First Name</td>
-                    <td>PhoneNumber</td>
-                    <td>Food Type</td>
-                    <td>Bonus</td>
-                    <td>Date</td>
-                </tr>
             </tbody>
         </table>
     )
