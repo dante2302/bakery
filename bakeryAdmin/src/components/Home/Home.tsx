@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router";
-import OrdersPage from "../Order/OrdersPage";
 import "./Home.css";
+import AllOrderPage from "../Order/AllOrdersPage";
 
 
 type currentTab = "Orders" | "Foods";
@@ -32,7 +32,7 @@ export default function Home(){
             </div>
             {
                 currentTab == "Orders" &&
-                <OrdersPage />
+                <AllOrderPage />
             }
             {
                 currentTab == "Foods" &&
