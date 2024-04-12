@@ -1,0 +1,29 @@
+.home-outer-grid{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-areas: "a a" 
+                         "b c";
+}
+
+.home-outer-grid>*{
+    border: 1px solid black
+}
+
+.home-upper{
+    display: flex;
+    flex-direction: row;
+    grid-area: a;
+    border-bottom: 1px solid black;
+    padding: 10px;
+}
+
+.buttons{
+    grid-area: b;
+    background-color: #ededed;
+    padding: 10px;
+}
+
+.Home-c{
+    padding: 10px;
+    grid-area: c;
+}

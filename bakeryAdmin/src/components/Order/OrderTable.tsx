@@ -47,7 +47,7 @@ export default function OrderTable(){
                         <td>{order.email}</td>
                         <td>{order.foodType}</td>
                         <td>{order.foodType}</td>
-                        <td>{dateToString(order.Date)}</td>
+                        <td>{dateToString(order.date)}</td>
                     </tr> 
                 )}
                 <tr>

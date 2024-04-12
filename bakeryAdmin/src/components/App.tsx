@@ -1,12 +1,11 @@
-import LoginForm from "./LoginForm/LoginForm";
-import bgimg from "../assets/bg-big.jpg";
 import { AuthContext, AuthProvider } from "../contexts/AuthContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Home from "./Home/Home";
-import { Route, Routes } from "react-router-dom";
-
+import { Navigate, Route, Routes } from "react-router-dom";
+import LoginPage from "./LoginForm/LoginPage";
 export default function App() {
   const { authData } = useContext(AuthContext);
+
   return (
     // Main content - requests;
     // Sorting ^
@@ -15,17 +14,8 @@ export default function App() {
     // respond back option
     <AuthProvider>
         <Routes>
-          <Route path="/" element={<Home />}>
-          </Route>
-          <Route path="login" element={
-            <div>
-              <img src={bgimg} className="bg-img" />
-              <div className="bg-overlay"></div>
-              <div className="center-container">
-                <LoginForm />
-              </div>
-            </div>
-          }>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="login" element={<LoginPage />}>
           </Route>
         </Routes>
     </AuthProvider>
