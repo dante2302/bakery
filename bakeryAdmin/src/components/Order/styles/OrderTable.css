@@ -2,8 +2,9 @@
     border-spacing: 0;
     border-collapse: separate;
     background-color: #fffffe;
-    margin: 15px;
+    margin-block: 15px;
 }
+
 tr>td, th{
     padding: 10px 15px;
 }

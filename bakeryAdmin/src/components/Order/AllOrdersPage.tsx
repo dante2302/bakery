@@ -5,11 +5,13 @@ export default function AllOrderPage(){
         <div className="Home-c">
             <form className="order-form">
                 <input type="search" />
-                    <select id="sel">
-                        <option selected disabled>Filter</option>
+                <select id="sel" defaultValue={"Filter"}>
+                    <option>Filter</option>
+                    <optgroup label="Food Types">
                         <option>FoodType</option>
                         <option>Darin</option>
-                    </select>
+                    </optgroup>
+                </select>
             </form>
             <OrderTable></OrderTable>
         </div>

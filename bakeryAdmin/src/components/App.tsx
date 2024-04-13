@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 
 import Home from "./Home/Home";
 import LoginPage from "./LoginForm/LoginPage";
-import OrdersPage from "./Order/AllOrdersPage";
+import OrderPage from "./Order/OrderPage";
 
 export default function App() {
 
@@ -16,7 +16,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="login" element={<LoginPage />}></Route>
-          <Route path="orders/:id" element={<OrdersPage />}></Route>
+          <Route path="orders/:id" element={<OrderPage />}></Route>
         </Routes>
     </AuthProvider>
   )
