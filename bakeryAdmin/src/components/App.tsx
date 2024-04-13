@@ -1,14 +1,13 @@
-import { AuthContext, AuthProvider } from "../contexts/AuthContext";
-import { useContext, useEffect } from "react";
+import { AuthProvider } from "../contexts/AuthContext";
+import { Route, Routes } from "react-router-dom";
+
 import Home from "./Home/Home";
-import { Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from "./LoginForm/LoginPage";
 import OrdersPage from "./Order/AllOrdersPage";
+
 export default function App() {
-  const { authData } = useContext(AuthContext);
 
   return (
-    // Main content - requests;
     // Sorting ^
     // Filtering ^
     // adding data - fillings, toppings, foodtypes

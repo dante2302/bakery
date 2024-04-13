@@ -26,9 +26,15 @@ export default function Home(){
                 <h6>Admin</h6>
                 <button>Logout</button>
             </div>
-            <div className="buttons">
-                <button onClick={() => setCurrentTab("Orders")}>Orders</button>
-                <button onClick={() => setCurrentTab("Foods")}>Foods</button>
+            <div className="home-buttons">
+                <button 
+                    onClick={() => setCurrentTab("Orders")}
+                    className={`${currentTab == "Orders" ? "curr-tab" : ""}`}
+                >Orders</button>
+                <button 
+                    onClick={() => setCurrentTab("Foods")}
+                    className={`${currentTab == "Foods" ? "curr-tab" : ""}`}
+                >Foods</button>
             </div>
             {
                 currentTab == "Orders" &&

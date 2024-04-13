@@ -28,6 +28,10 @@ export async function ReadAll(): Promise<Order[]>{
     }
     catch(e){
         console.log(e);
-        return [defaultOrder];
+        return [defaultOrder, defaultOrder, defaultOrder, defaultOrder];
     }
+}
+
+export async function ReadAllFiltered(filter: string){
+
 }

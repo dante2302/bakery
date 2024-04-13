@@ -1,6 +1,6 @@
 .home-outer-grid{
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 20% 80%;
     grid-template-areas: "a a" 
                          "b c";
 }
@@ -17,10 +17,27 @@
     padding: 10px;
 }
 
-.buttons{
+.home-buttons{
     grid-area: b;
     background-color: #ededed;
-    padding: 10px;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.home-buttons>*{
+    width:100%;
+    background-color: #ededed;
+    border: none;
+    cursor: pointer;
+}
+
+.home-buttons>*:hover{
+    background-color: lightgray;
+}
+
+.curr-tab{
+    background-color: white;
 }
 
 .Home-c{

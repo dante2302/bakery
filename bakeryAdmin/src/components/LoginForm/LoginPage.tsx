@@ -1,6 +1,16 @@
 import LoginForm from "./LoginForm";
 import bgimg from '../../assets/bg-big.jpg';
+import { useEffect } from "react";
+
 export default function LoginPage() {
+
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+        return () => {
+            document.body.style.overflow = "scroll"
+        };
+    }, []);
+
     return (
         <div>
             <img src={bgimg} className="bg-img" />
