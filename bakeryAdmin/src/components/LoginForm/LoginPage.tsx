@@ -1,6 +1,7 @@
 import LoginForm from "./LoginForm";
 import bgimg from '../../assets/bg-big.jpg';
 import { useEffect } from "react";
+import "./LoginPage.css"
 
 export default function LoginPage() {
 
