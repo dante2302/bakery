@@ -40,5 +40,9 @@ namespace bakeryServer.Services.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public List<User> SearchByPhone(string phoneNumber)
+        {
+            return [.. _context.Users.Where(x => x.PhoneNumber == phoneNumber)];
+        }
     }
 }
