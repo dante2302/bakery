@@ -57,16 +57,16 @@ namespace WebApi.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    throw new ValidationException($"{ModelState}");
+                    throw new ArgumentException($"Invalid Entity: {ModelState}");
                 }
                 Filling result = await _service.Create(filling);
 
                 return CreatedAtAction(nameof(GetOne), new { id = result.Id }, result);
             }
 
-            catch(ValidationException ex)
+            catch(ArgumentException ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.Message);
             }
 
             catch(Exception)
@@ -87,9 +87,9 @@ namespace WebApi.Controllers
             {
                 return NotFound();
             }
-            catch (ValidationException ex)
+            catch (ArgumentException ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.Message);
             }
 
             catch(Exception)

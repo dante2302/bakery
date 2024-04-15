@@ -16,7 +16,7 @@ namespace bakeryServer.Services
 
             if (!validator.AssertFields(entity) || entity is null)
             {
-                throw new ValidationException();
+                throw new ArgumentException("Invalid entity");    
             }
 
             await _repo.Create(entity);
@@ -53,7 +53,7 @@ namespace bakeryServer.Services
 
             if(newEntity is null)
             {
-                throw new ValidationException();    
+                throw new ValidationException();
             }
 
             await _repo.Update(newEntity, entityForUpdate);
