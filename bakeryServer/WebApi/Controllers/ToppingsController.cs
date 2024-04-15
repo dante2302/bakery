@@ -10,17 +10,17 @@ namespace WebApi.Controllers
     [ApiController]
     [Authorize]
     [Route("[controller]")]
-    public class FillingsController(IEntityService<Filling> service) : ControllerBase
+    public class ToppingsController(IEntityService<Topping> service) : ControllerBase
     {
-        private readonly IEntityService<Filling> _service = service;
+        private readonly IEntityService<Topping> _service = service;
 
         [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
             try
             {
-                var fillings = await _service.ReadAll();
-                return Ok(fillings);
+                var toppings = await _service.ReadAll();
+                return Ok(toppings);
             }
             catch (NotFoundException)
             {
@@ -37,8 +37,8 @@ namespace WebApi.Controllers
         {
             try
             {
-                var filling = await _service.ReadOne(id);
-                return Ok(filling);
+                var topping = await _service.ReadOne(id);
+                return Ok(topping);
             }
             catch (NotFoundException)
             {
@@ -51,7 +51,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Filling filling)
+        public async Task<IActionResult> Create([FromBody] Topping topping)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace WebApi.Controllers
                 {
                     throw new ValidationException($"{ModelState}");
                 }
-                Filling result = await _service.Create(filling);
+                Topping result = await _service.Create(topping);
 
                 return CreatedAtAction(nameof(GetOne), new { id = result.Id }, result);
             }
@@ -76,11 +76,11 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Filling updatedFilling)
+        public async Task<IActionResult> Update([FromBody] Topping updatedTopping)
         {
             try
             {
-                await _service.Update(updatedFilling);
+                await _service.Update(updatedTopping);
                 return Ok();
             }
             catch(NotFoundException)
@@ -117,3 +117,4 @@ namespace WebApi.Controllers
         }
     }
 }
+

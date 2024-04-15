@@ -3,10 +3,11 @@ using bakeryServer.Services.Repositories;
 using Services.Validation;
 using System.ComponentModel.DataAnnotations;
 using Exceptions;
+using Services;
 
 namespace bakeryServer.Services
 {
-    public class FillingService(IRepository<Filling> repo)
+    public class FillingService(IRepository<Filling> repo): IEntityService<Filling> 
     {
         private readonly IRepository<Filling> _repo = repo;
 
