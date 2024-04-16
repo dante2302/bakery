@@ -2,7 +2,7 @@
 
 namespace Services;
 
-public interface IExtendedUserService
+public interface IExtendedUserService : IEntityService<User>
 {
     User CheckIfUserExists(User user);
 }

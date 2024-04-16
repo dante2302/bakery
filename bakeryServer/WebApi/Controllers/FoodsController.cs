@@ -1,8 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
-using bakeryServer.Services;
+﻿using Microsoft.AspNetCore.Mvc;
 using bakeryServer.Models;
 using Exceptions;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Services;
 
@@ -11,27 +9,17 @@ namespace WebApi.Controllers
     [ApiController]
     [Authorize]
     [Route("[controller]")]
-    public class OrdersController : ControllerBase
+    public class FoodTypesController(IEntityService<FoodType> service) : ControllerBase
     {
-        private readonly IExtendedUserService _userService;
-        private readonly IEntityService<Order> _orderService;
-
-
-        public OrdersController
-            (IEntityService<Order> orderService, IExtendedUserService userService)
-        {
-
-            _orderService = orderService;
-            _userService = userService;
-        }
+        private readonly IEntityService<FoodType> _service = service;
 
         [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
             try
             {
-                var orders = await _orderService.ReadAll();
-                return Ok(orders);
+                var foodType = await _service.ReadAll();
+                return Ok(foodType);
             }
             catch (NotFoundException)
             {
@@ -48,8 +36,8 @@ namespace WebApi.Controllers
         {
             try
             {
-                var order = await _orderService.ReadOne(id);
-                return Ok(order);
+                var foodType = await _service.ReadOne(id);
+                return Ok(foodType);
             }
             catch (NotFoundException)
             {
@@ -62,7 +50,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] OrderSubmission orderSubmission)
+        public async Task<IActionResult> Create([FromBody] FoodType foodType)
         {
             try
             {
@@ -70,35 +58,14 @@ namespace WebApi.Controllers
                 {
                     throw new ArgumentException($"Invalid Entity: {ModelState}");
                 }
-            
+                FoodType result = await _service.Create(foodType);
 
-                User existingUser  = _userService.CheckIfUserExists(orderSubmission.User);
-                if(existingUser is not null)
-                {
-                    if
-                    (
-                     string.Compare(
-                        existingUser.FirstName,
-                        orderSubmission.User.FirstName,
-                        StringComparison.OrdinalIgnoreCase) != 0
-                     ||
-                     string.Compare(
-                        existingUser.LastName,
-                        orderSubmission.User.LastName,
-                        StringComparison.OrdinalIgnoreCase) != 0
-                    )
-                    {
-                        await _userService.Update(orderSubmission.User);
-                    }
-                }
-
-                Order result = await _orderService.Create(orderSubmission.Order);
                 return CreatedAtAction(nameof(GetOne), new { id = result.Id }, result);
             }
 
             catch(ArgumentException ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.Message);
             }
 
             catch(Exception)
@@ -108,11 +75,11 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Order updatedOrder)
+        public async Task<IActionResult> Update([FromBody] FoodType updatedFoodType)
         {
             try
             {
-                await _orderService.Update(updatedOrder);
+                await _service.Update(updatedFoodType);
                 return Ok();
             }
             catch(NotFoundException)
@@ -121,7 +88,7 @@ namespace WebApi.Controllers
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.Message);
             }
 
             catch(Exception)
@@ -135,7 +102,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                await _orderService.Delete(id);
+                await _service.Delete(id);
                 return Ok();
             }
             catch (NotFoundException)
@@ -149,3 +116,5 @@ namespace WebApi.Controllers
         }
     }
 }
+
+

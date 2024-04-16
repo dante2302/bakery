@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using bakeryServer.Models;
 using Exceptions;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Services;
 
