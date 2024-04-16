@@ -70,7 +70,6 @@ namespace WebApi.Controllers
                     throw new ArgumentException($"Invalid Entity: {ModelState}");
                 }
             
-
                 User existingUser  = _userService.CheckIfUserExists(orderSubmission.User);
                 if(existingUser is not null)
                 {
@@ -90,7 +89,6 @@ namespace WebApi.Controllers
                         await _userService.Update(orderSubmission.User);
                     }
                 }
-
                 Order result = await _orderService.Create(orderSubmission.Order);
                 return CreatedAtAction(nameof(GetOne), new { id = result.Id }, result);
             }
@@ -100,9 +98,9 @@ namespace WebApi.Controllers
                 return BadRequest(ex);
             }
 
-            catch(Exception)
+            catch(Exception ex)
             {
-                return StatusCode(500, "Internal Server Error.");
+                return StatusCode(500, ex);
             }
         }
 

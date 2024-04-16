@@ -6,7 +6,7 @@ using Services;
 
 namespace bakeryServer.Services
 {
-    public class UserService(IRepository<User> repo): IEntityService<User>
+    public class UserService(IRepository<User> repo): IExtendedUserService
     {
         private readonly IRepository<User> _repo = repo;
         public async Task<User> Create(User entity)
@@ -63,13 +63,14 @@ namespace bakeryServer.Services
             await _repo.Delete(entityForDeletion);
         }
 
-        public User? CheckIfUserExists(User user)
+        public User CheckIfUserExists(User user)
         {
-            if (_repo is IUserExtendedRepo extendedRepo)
+            
+            if (_repo is IExtendedUserRepo extendedRepo)
             {
                 List<User> users = extendedRepo.SearchByPhone(user.PhoneNumber);
 
-                if (users.Count < 0)
+                if (users.Count == 0)
                 {
                     return null;
                 }

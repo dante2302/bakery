@@ -33,8 +33,7 @@ builder.Services.AddAuthentication(o => {
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddControllers();
-
+builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddDbContext<BakeryContext>(options =>
 {
     string connectionString = Configuration.Manager.GetConnectionString("bakery");
@@ -53,10 +52,8 @@ builder.Services.AddScoped<IRepository<FoodType>, FoodTypeRepo>();
 builder.Services.AddScoped<IEntityService<FoodType>, FoodTypeService>();
 
 builder.Services.AddScoped<IRepository<User>, UserRepo>();
-builder.Services.AddScoped<IEntityService<User>, UserService>();
-
-builder.Services.AddScoped<IRepository<User>, UserRepo>();
-builder.Services.AddScoped<IEntityService<User>, UserService>();
+builder.Services.AddScoped<IExtendedUserRepo, UserRepo>();
+builder.Services.AddScoped<IExtendedUserService, UserService>();
 
 builder.Services.AddScoped<IRepository<Order>, OrderRepo>();
 builder.Services.AddScoped<IEntityService<Order>, OrderService>();
@@ -65,7 +62,7 @@ builder.Services.AddScoped<IEntityService<Order>, OrderService>();
 var app = builder.Build();
 
 // ***      MIDDLEWARE      ***
-
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

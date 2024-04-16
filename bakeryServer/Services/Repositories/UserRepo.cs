@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace bakeryServer.Services.Repositories
 {
-    public class UserRepo(BakeryContext context) : IRepository<User>
+    public class UserRepo(BakeryContext context) : IExtendedUserRepo 
     {
         private readonly BakeryContext _context = context;
 
