@@ -7,7 +7,6 @@ using Services;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("[controller]")]
     public class FillingsController(IEntityService<Filling> service) : ControllerBase
     {

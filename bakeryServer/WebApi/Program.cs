@@ -6,6 +6,7 @@ using bakeryServer.Services.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -39,7 +40,17 @@ builder.Services.AddDbContext<BakeryContext>(options =>
 });
 
 builder.Services.AddScoped<IRepository<Filling>, FillingRepo>();
-builder.Services.AddScoped<FillingService>();
+builder.Services.AddScoped<IEntityService<Filling>, FillingService>();
+
+builder.Services.AddScoped<IRepository<Topping>, ToppingRepo>();
+builder.Services.AddScoped<IEntityService<Topping>, ToppingService>();
+
+builder.Services.AddScoped<IRepository<FoodType>, FoodTypeRepo>();
+builder.Services.AddScoped<IEntityService<FoodType>, FoodTypeService>();
+
+
+builder.Services.AddScoped<IRepository<Order>, OrderRepo>();
+builder.Services.AddScoped<IEntityService<Order>, OrderService>();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.

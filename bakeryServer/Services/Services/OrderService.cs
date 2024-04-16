@@ -3,10 +3,11 @@ using bakeryServer.Services.Repositories;
 using System.ComponentModel.DataAnnotations;
 using Services.Validation;
 using Exceptions;
+using Services;
 
 namespace bakeryServer.Services
 {
-    public class OrderService(OrderRepo repo)
+    public class OrderService(OrderRepo repo) : IEntityService<Order>
     {
         private readonly OrderRepo _repo = repo;
         public async Task<Order> Create(Order entity)

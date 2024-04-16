@@ -9,7 +9,6 @@ using Services;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("[controller]")]
     public class OrdersController : ControllerBase
     {

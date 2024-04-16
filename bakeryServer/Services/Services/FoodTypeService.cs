@@ -3,10 +3,11 @@ using bakeryServer.Services.Repositories;
 using System.ComponentModel.DataAnnotations;
 using Services.Validation;
 using Exceptions;
+using Services;
 
 namespace bakeryServer.Services
 {
-    public class FoodTypeService(FoodTypeRepo repo)
+    public class FoodTypeService(FoodTypeRepo repo) : IEntityService<FoodType>
     {
         private readonly FoodTypeRepo _repo = repo;
 
