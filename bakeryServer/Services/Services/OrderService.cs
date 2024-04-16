@@ -7,9 +7,9 @@ using Services;
 
 namespace bakeryServer.Services
 {
-    public class OrderService(OrderRepo repo) : IEntityService<Order>
+    public class OrderService(IRepository<Order> repo) : IEntityService<Order>
     {
-        private readonly OrderRepo _repo = repo;
+        private readonly IRepository<Order> _repo = repo;
         public async Task<Order> Create(Order entity)
         {
             var validator = new EntityValidator<Order>();

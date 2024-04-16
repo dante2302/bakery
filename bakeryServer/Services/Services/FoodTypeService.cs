@@ -7,9 +7,9 @@ using Services;
 
 namespace bakeryServer.Services
 {
-    public class FoodTypeService(FoodTypeRepo repo) : IEntityService<FoodType>
+    public class FoodTypeService(IRepository<FoodType> repo) : IEntityService<FoodType>
     {
-        private readonly FoodTypeRepo _repo = repo;
+        private readonly IRepository<FoodType> _repo = repo;
 
         public async Task<FoodType> Create(FoodType entity)
         {
