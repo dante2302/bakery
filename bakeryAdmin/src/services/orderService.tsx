@@ -18,18 +18,23 @@ interface Order{
     date: Date
 }
 
-export async function ReadAll(): Promise<Order[]>{
+export async function ReadAll(){
     try{
         const raw = await fetch(`${BASE_URL}/all`,{
             method: "GET",
         });
-        const response = await raw.json();
-        return response;
+        let orderList: Order[] = await raw.json();
+        mapOrderDates(orderList);
+        return orderList;
     }
     catch(e){
         console.log(e);
-        return [defaultOrder, defaultOrder, defaultOrder, defaultOrder];
     }
+}
+
+function mapOrderDates(orders: Order[]) {
+  orders.map((order, index) => 
+    orders[index] = {...order, "date": new Date(order.date)}); 
 }
 
 export async function ReadAllFiltered(filter: string){

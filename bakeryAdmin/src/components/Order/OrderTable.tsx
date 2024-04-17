@@ -19,8 +19,9 @@ export default function OrderTable(){
 
     useEffect(() => {
         async function asyncEffect(){
-            let requestList = await orderService.ReadAll();
-            requestList && setCurrentOrders([...requestList]);
+            let orderList = await orderService.ReadAll();
+            console.log(orderList);
+            orderList && setCurrentOrders(orderList);
         }
         asyncEffect();
     }, [])
