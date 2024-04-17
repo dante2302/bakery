@@ -1,26 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using bakeryServer.Services;
 using bakeryServer.Models;
 using Exceptions;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
+using Services;
 
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("[controller]")]
-    public class FillingsController(FillingService service) : ControllerBase
+    public class FoodTypesController(IEntityService<FoodType> service) : ControllerBase
     {
-        private readonly FillingService _service = service;
+        private readonly IEntityService<FoodType> _service = service;
 
         [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
             try
             {
-                var fillings = await _service.ReadAll();
-                return Ok(fillings);
+                var foodType = await _service.ReadAll();
+                return Ok(foodType);
             }
             catch (NotFoundException)
             {
@@ -37,8 +35,8 @@ namespace WebApi.Controllers
         {
             try
             {
-                var filling = await _service.ReadOne(id);
-                return Ok(filling);
+                var foodType = await _service.ReadOne(id);
+                return Ok(foodType);
             }
             catch (NotFoundException)
             {
@@ -51,22 +49,22 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Filling filling)
+        public async Task<IActionResult> Create([FromBody] FoodType foodType)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    throw new ValidationException($"{ModelState}");
+                    throw new ArgumentException($"Invalid Entity: {ModelState}");
                 }
-                Filling result = await _service.Create(filling);
+                FoodType result = await _service.Create(foodType);
 
                 return CreatedAtAction(nameof(GetOne), new { id = result.Id }, result);
             }
 
-            catch(ValidationException ex)
+            catch(ArgumentException ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.Message);
             }
 
             catch(Exception)
@@ -76,20 +74,20 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Filling updatedFilling)
+        public async Task<IActionResult> Update([FromBody] FoodType updatedFoodType)
         {
             try
             {
-                await _service.Update(updatedFilling);
+                await _service.Update(updatedFoodType);
                 return Ok();
             }
             catch(NotFoundException)
             {
                 return NotFound();
             }
-            catch (ValidationException ex)
+            catch (ArgumentException ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.Message);
             }
 
             catch(Exception)
@@ -117,3 +115,5 @@ namespace WebApi.Controllers
         }
     }
 }
+
+

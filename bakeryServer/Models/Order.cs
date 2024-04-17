@@ -9,6 +9,7 @@ namespace bakeryServer.Models
         public int Id { get; set; }
 
         public int FoodId { get; set; }
+
         public DateTime Date { get; set; }
 
         [ForeignKey("User")] 

@@ -3,12 +3,13 @@ using bakeryServer.Services.Repositories;
 using System.ComponentModel.DataAnnotations;
 using Services.Validation;
 using Exceptions;
+using Services;
 
 namespace bakeryServer.Services
 {
-    public class FoodTypeService(FoodTypeRepo repo)
+    public class FoodTypeService(IRepository<FoodType> repo) : IEntityService<FoodType>
     {
-        private readonly FoodTypeRepo _repo = repo;
+        private readonly IRepository<FoodType> _repo = repo;
 
         public async Task<FoodType> Create(FoodType entity)
         {
@@ -16,7 +17,7 @@ namespace bakeryServer.Services
 
             if (!validator.AssertFields(entity) || entity is null)
             {
-                throw new ValidationException();
+                throw new ArgumentException("Invalid entity");    
             }
 
             await _repo.Create(entity);
@@ -53,7 +54,7 @@ namespace bakeryServer.Services
 
             if(newEntity is null)
             {
-                throw new ValidationException();    
+                throw new ValidationException();
             }
 
             await _repo.Update(newEntity, entityForUpdate);

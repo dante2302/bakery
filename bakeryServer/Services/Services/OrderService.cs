@@ -3,19 +3,20 @@ using bakeryServer.Services.Repositories;
 using System.ComponentModel.DataAnnotations;
 using Services.Validation;
 using Exceptions;
+using Services;
 
 namespace bakeryServer.Services
 {
-    public class OrderService(OrderRepo repo)
+    public class OrderService(IRepository<Order> repo) : IEntityService<Order>
     {
-        private readonly OrderRepo _repo = repo;
+        private readonly IRepository<Order> _repo = repo;
         public async Task<Order> Create(Order entity)
         {
             var validator = new EntityValidator<Order>();
 
             if (!validator.AssertFields(entity) || entity is null)
             {
-                throw new ValidationException();
+                throw new ArgumentException();
             }
 
             await _repo.Create(entity);
@@ -73,7 +74,7 @@ namespace bakeryServer.Services
 
             if(newEntity is null)
             {
-                throw new ValidationException();    
+                throw new ArgumentException();    
             }
 
             await _repo.Update(newEntity, entityForUpdate);
