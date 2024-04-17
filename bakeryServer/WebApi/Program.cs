@@ -6,9 +6,12 @@ using bakeryServer.Services.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
-// Add services to the container.
+
+// ***      SERVICES        ***
+
 builder.Services.AddAuthentication(o => {
         o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -29,21 +32,37 @@ builder.Services.AddAuthentication(o => {
     });
 
 builder.Services.AddAuthorization();
-// Add services to the container.
-builder.Services.AddControllers();
+
+builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddDbContext<BakeryContext>(options =>
 {
     string connectionString = Configuration.Manager.GetConnectionString("bakery");
+
     // Needs this migrations assembly to manage migrations 
     options.UseNpgsql(connectionString, b => b.MigrationsAssembly("WebApi"));
 });
 
 builder.Services.AddScoped<IRepository<Filling>, FillingRepo>();
-builder.Services.AddScoped<FillingService>();
+builder.Services.AddScoped<IEntityService<Filling>, FillingService>();
+
+builder.Services.AddScoped<IRepository<Topping>, ToppingRepo>();
+builder.Services.AddScoped<IEntityService<Topping>, ToppingService>();
+
+builder.Services.AddScoped<IRepository<FoodType>, FoodTypeRepo>();
+builder.Services.AddScoped<IEntityService<FoodType>, FoodTypeService>();
+
+builder.Services.AddScoped<IRepository<User>, UserRepo>();
+builder.Services.AddScoped<IExtendedUserRepo, UserRepo>();
+builder.Services.AddScoped<IExtendedUserService, UserService>();
+
+builder.Services.AddScoped<IRepository<Order>, OrderRepo>();
+builder.Services.AddScoped<IEntityService<Order>, OrderService>();
+
 
 var app = builder.Build();
-// Configure the HTTP request pipeline.
 
+// ***      MIDDLEWARE      ***
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

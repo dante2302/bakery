@@ -3,10 +3,11 @@ using bakeryServer.Services.Repositories;
 using Services.Validation;
 using System.ComponentModel.DataAnnotations;
 using Exceptions;
+using Services;
 
 namespace bakeryServer.Services
 {
-    public class FillingService(IRepository<Filling> repo)
+    public class FillingService(IRepository<Filling> repo): IEntityService<Filling> 
     {
         private readonly IRepository<Filling> _repo = repo;
 
@@ -16,7 +17,7 @@ namespace bakeryServer.Services
 
             if (!validator.AssertFields(filling) || filling is null)
             {
-                throw new ValidationException();
+                throw new ArgumentException("Invalid entity");    
             }
 
             await _repo.Create(filling);
@@ -53,7 +54,7 @@ namespace bakeryServer.Services
 
             if(newFilling is null || newFilling.Name is null)
             {
-                throw new ValidationException();    
+                throw new ArgumentException("Invalid entity");    
             }
 
             await _repo.Update(newFilling, fillingForUpdate);

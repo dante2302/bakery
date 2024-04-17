@@ -1,29 +1,26 @@
 ﻿using bakeryServer.Models;
 using bakeryServer.Services.Repositories;
-using System.ComponentModel.DataAnnotations;
 using Services.Validation;
 using Exceptions;
 using Services;
 
 namespace bakeryServer.Services
 {
-    public class ToppingService(IRepository<Topping> repo): IEntityService<Topping>
+    public class UserService(IRepository<User> repo): IExtendedUserService
     {
-        private readonly IRepository<Topping> _repo = repo;
-        public async Task<Topping> Create(Topping entity)
+        private readonly IRepository<User> _repo = repo;
+        public async Task<User> Create(User entity)
         {
-            var validator = new EntityValidator<Topping>();
-
-            if (!validator.AssertFields(entity) || entity is null)
+            if (entity is null)
             {
                 throw new ArgumentException("Invalid Entity");
             }
-
+            
             await _repo.Create(entity);
             return entity;
         }
 
-        public async Task<Topping> ReadOne(int id)
+        public async Task<User> ReadOne(int id)
         {
             var entity = await _repo.ReadOne(id);
             if (entity is null)
@@ -33,7 +30,7 @@ namespace bakeryServer.Services
             return entity;
         }
 
-        public async Task<IEnumerable<Topping?>> ReadAll()
+        public async Task<IEnumerable<User?>> ReadAll()
         {
             var list = await _repo.ReadAll();
             if(list.Count == 0)
@@ -43,7 +40,7 @@ namespace bakeryServer.Services
             return list;
         }
 
-        public async Task Update(Topping newEntity)
+        public async Task Update(User newEntity)
         {
             var entityForUpdate = await ReadOne(newEntity.Id);
             if (entityForUpdate is null)
@@ -51,7 +48,7 @@ namespace bakeryServer.Services
                 throw new NotFoundException();
             }
 
-            if(newEntity is null || newEntity.Name is null)
+            if(newEntity is null)
             {
                 throw new ArgumentException("Invalid Entity");
             }
@@ -64,6 +61,36 @@ namespace bakeryServer.Services
         {
             var entityForDeletion = await ReadOne(id);
             await _repo.Delete(entityForDeletion);
+        }
+
+        public User CheckIfUserExists(User user)
+        {
+            
+            if (_repo is IExtendedUserRepo extendedRepo)
+            {
+                List<User> users = extendedRepo.SearchByPhone(user.PhoneNumber);
+
+                if (users.Count == 0)
+                {
+                    return null;
+                }
+
+                else if(users.Count > 1)
+                {
+                    // cleanup
+                    return null;
+                }
+
+                else
+                {
+                    return users[0];
+                }
+            }
+
+            else 
+            {
+                throw new Exception("Error with dependencies");
+            }
         }
     }
 }
