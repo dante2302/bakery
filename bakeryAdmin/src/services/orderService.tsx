@@ -1,34 +1,38 @@
 const BASE_URL = "http://localhost:5279/orders";
 
-const defaultOrder = {
-    id: 1,
-    name: "asd",
-    foodType: "My Ass",
-    email: "asd@edgind",
-    phoneNumber: "asd",
-    date: new Date(Date.now())
+interface UserDTO{
+
 }
 
-interface Order{
+interface FoodTypeDTO{
+
+}
+
+interface OrderDTO{
     id: number,
-    name: string,
-    foodType: string,
-    email?: string
-    phoneNumber?: string
-    date: Date
+    userData: UserDTO,
+    date: Date,
+    foodData: FoodTypeDTO,
+    fillings: string[],
+    toppings: string[]
 }
 
-export async function ReadAll(): Promise<Order[]>{
+export async function ReadAll(): Promise<OrderDTO[] | undefined>{
     try{
         const raw = await fetch(`${BASE_URL}/all`,{
             method: "GET",
         });
+        console.log(raw);
+        if(raw.status == 204){
+          return;
+        }
         const response = await raw.json();
+        console.log(response);
         return response;
     }
     catch(e){
         console.log(e);
-        return [defaultOrder, defaultOrder, defaultOrder, defaultOrder];
+        return;
     }
 }
 
