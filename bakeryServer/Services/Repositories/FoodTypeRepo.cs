@@ -31,7 +31,7 @@ namespace bakeryServer.Services.Repositories
             existingFoodType.Name = newFoodType.Name;
             existingFoodType.Fillings = newFoodType.Fillings;
             existingFoodType.Toppings = newFoodType.Toppings;
-            existingFoodType.ContainsLettering = newFoodType.ContainsLettering;
+            existingFoodType.CanContainLettering = newFoodType.CanContainLettering;
             await _context.SaveChangesAsync();
         }
 

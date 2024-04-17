@@ -1,28 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
-using bakeryServer.Services;
 using bakeryServer.Models;
 using Exceptions;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Authorization;
 using Services;
 
 namespace WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class OrdersController : ControllerBase
+    public class OrdersController(IEntityService<Order> orderService, IExtendedUserService userService, OrderDTOMapper orderDTOMapper) : ControllerBase
     {
         private readonly IExtendedUserService _userService;
         private readonly IEntityService<Order> _orderService;
-
-
-        public OrdersController
-            (IEntityService<Order> orderService, IExtendedUserService userService)
-        {
-
-            _orderService = orderService;
-            _userService = userService;
-        }
+        private readonly OrderDTOMapper _orderDTOMapper = orderDTOMapper;
 
         [HttpGet("all")]
         public async Task<IActionResult> GetAll()
@@ -30,13 +19,12 @@ namespace WebApi.Controllers
             try
             {
                 var orders = await _orderService.ReadAll();
-                List<OrderSubmission> osList = new();
+                List<OrderDTO> orderDTOs = [];    
                 foreach(Order order in orders)
                 {
-                    User userData = await _userService.ReadOne(order.UserId);
-                    osList.Add(new OrderSubmission(){Order = order, User= userData});
+                    orderDTOs.Add(await _orderDTOMapper.MapDTO(order));
                 }
-                return Ok(osList);
+                return Ok(orderDTOs);
             }
             catch (NotFoundException)
             {
@@ -54,7 +42,8 @@ namespace WebApi.Controllers
             try
             {
                 var order = await _orderService.ReadOne(id);
-                return Ok(order);
+                var odto = _orderDTOMapper.MapDTO(order);
+                return Ok(odto);
             }
             catch (NotFoundException)
             {

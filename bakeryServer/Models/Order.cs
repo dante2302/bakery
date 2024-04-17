@@ -9,9 +9,9 @@ namespace bakeryServer.Models
         public int Id { get; set; }
         
         [ForeignKey("FoodType")]
-        public int FoodId { get; set; }
+        public required int FoodId { get; set; }
 
-        public DateTime Date { get; set; }
+        public required DateTime Date { get; set; }
 
         public int[] Fillings { get; set; }
         public int[] Toppings { get; set; }
@@ -19,6 +19,6 @@ namespace bakeryServer.Models
         public required bool ContainsLettering {get; set;}
 
         [ForeignKey("User")] 
-        public int UserId { get; set; }
+        public required int UserId { get; set; }
     }
 }
