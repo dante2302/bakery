@@ -17,18 +17,3 @@ body{
     margin: 0 auto;
 }
 
-.bg-overlay{
-    background-color: #CCCCCC;
-    opacity: 0.6;
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-}
-
-.bg-img{
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    z-index: -2;
-}

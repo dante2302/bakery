@@ -1,11 +1,26 @@
-const BASE_URL = "http://localhost:5279/fillings";
+import { loginFormState } from "../components/LoginForm/LoginForm";
 
-export async function Login(){
-  const response = await fetch(BASE_URL,{
-    headers:{
-      "Content-Type": "application/json",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwianRpIjoiMTIzMTI1ODkxMjg1OXkxMjUiLCJuYmYiOiIxMjMiLCJuYW1lIjoiSm9obiBEb2UiLCJpYXQiOjE5MDE2MjM5MDIyLCJleHAiOjIxNTkxMjUwOTEyNTA5MTIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTI3OSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTI3OSJ9.rLb5cv94BK7z70ToI-2F64cFdXHmLcQcsUBxZ9S_SW4"
-    },
-  }) 
-  console.log(await response.json());
+const BASE_URL = "http://localhost:5279/fillings";
+export interface LoginResponse extends Response{
+  Jwt?: string
+}
+
+export async function Login({username, password}: loginFormState){
+  try{
+    const raw = await fetch(BASE_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(
+        {
+          username, password
+        })
+    })
+    const response: LoginResponse = await raw.json(); 
+    return response;
+  }
+  catch(e){
+    console.log(e);
+  }
 }

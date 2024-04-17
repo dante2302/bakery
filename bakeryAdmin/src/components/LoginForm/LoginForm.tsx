@@ -1,6 +1,8 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useContext, ReactNode, useEffect } from "react";
 import "./LoginForm.css";
 import * as adminService from "../../services/adminService";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router";
 
 export interface loginFormState{
   username: string,
@@ -18,8 +20,11 @@ export default function LoginForm(){
     "username" : "",
     "password": ""
   }    
-
+  const navigate = useNavigate();
+  const { setAuthData } = useContext(AuthContext);
   const [formState, setFormState]  = useState<loginFormState>(defaultFormState);
+  const [loginFail, setLoginFail] = useState<Boolean>(false);
+  const [internalError, setInternalError] = useState<Boolean>(false);
 
   function formInputHandler(e: ChangeEvent<formInput>){
     setFormState((state: loginFormState) => (
@@ -29,13 +34,39 @@ export default function LoginForm(){
 
   async function submitHandler(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
     e.preventDefault();
-    //validateForm()
-    await adminService.Login();
-    //context.setLoggedIn;
+    handleResponse(undefined);
+    navigate("/");
+    return;
+    // const response = await adminService.Login(formState);
   }
+
+  function handleResponse(response: adminService.LoginResponse | undefined){
+    // if(!response)
+    // {
+    //   setInternalError(true);
+    // }
+    // else if(response.status == 401)
+    // {
+    //   setLoginFail(true);
+    // }
+    // else if(response.status == 201)
+    // else
+    // {
+      setAuthData("aaaa");
+    // }
+  }
+
 
   return (
     <form className="login-form">
+        {
+          loginFail && 
+          <p>greshni vhodni danni</p>
+        }
+        {
+          internalError &&
+          <p>Vutreshna greshka</p>
+        }
       <div className="input-container">
         <label htmlFor="adminUsername">Потребителско име</label>
         <input 
