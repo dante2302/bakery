@@ -7,10 +7,15 @@ namespace bakeryServer.Models
     {
         [Key] 
         public int Id { get; set; }
-
+        
+        [ForeignKey("FoodType")]
         public int FoodId { get; set; }
 
         public DateTime Date { get; set; }
+
+        public int[] Bonuses { get; set; }
+
+        public required bool ContainsLettering {get; set;}
 
         [ForeignKey("User")] 
         public int UserId { get; set; }

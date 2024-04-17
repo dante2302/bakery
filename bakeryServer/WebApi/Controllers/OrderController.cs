@@ -30,7 +30,13 @@ namespace WebApi.Controllers
             try
             {
                 var orders = await _orderService.ReadAll();
-                return Ok(orders);
+                List<OrderSubmission> osList = new();
+                foreach(Order order in orders)
+                {
+                    User userData = await _userService.ReadOne(order.UserId);
+                    osList.Add(new OrderSubmission(){Order = order, User= userData});
+                }
+                return Ok(osList);
             }
             catch (NotFoundException)
             {

@@ -87,5 +87,9 @@ namespace bakeryServer.Services
             await _repo.Delete(entityForDeletion);
         }
         
+        public async Task MapExternalDataToDTO()
+        {
+            
+        }
     }
 }
