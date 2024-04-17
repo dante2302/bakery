@@ -71,6 +71,7 @@ namespace WebApi.Controllers
                 }
             
                 User existingUser  = _userService.CheckIfUserExists(orderSubmission.User);
+                int newOrderUserId;
                 if(existingUser is not null)
                 {
                     if
@@ -86,9 +87,18 @@ namespace WebApi.Controllers
                         StringComparison.OrdinalIgnoreCase) != 0
                     )
                     {
+                        orderSubmission.User.Id = existingUser.Id;
                         await _userService.Update(orderSubmission.User);
                     }
+                    newOrderUserId = existingUser.Id;
                 }
+                else
+                {
+                    User newUser = await _userService.Create(orderSubmission.User);
+                    newOrderUserId = newUser.Id;
+                }
+
+                orderSubmission.Order.UserId = newOrderUserId;
                 Order result = await _orderService.Create(orderSubmission.Order);
                 return CreatedAtAction(nameof(GetOne), new { id = result.Id }, result);
             }
