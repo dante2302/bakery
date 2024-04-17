@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useContext, ReactNode } from "react";
+import { useState, ChangeEvent, useContext, ReactNode, useEffect } from "react";
 import "./LoginForm.css";
 import * as adminService from "../../services/adminService";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -20,8 +20,7 @@ export default function LoginForm(){
     "username" : "",
     "password": ""
   }    
-
-  let a = useNavigate();
+  const navigate = useNavigate();
   const { setAuthData } = useContext(AuthContext);
   const [formState, setFormState]  = useState<loginFormState>(defaultFormState);
   const [loginFail, setLoginFail] = useState<Boolean>(false);
@@ -36,7 +35,9 @@ export default function LoginForm(){
   async function submitHandler(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
     e.preventDefault();
     handleResponse(undefined);
-    const response = await adminService.Login(formState);
+    navigate("/");
+    return;
+    // const response = await adminService.Login(formState);
   }
 
   function handleResponse(response: adminService.LoginResponse | undefined){
@@ -51,8 +52,7 @@ export default function LoginForm(){
     // else if(response.status == 201)
     // else
     // {
-      setAuthData("asdasdsadsa");
-      a("/");
+      setAuthData("aaaa");
     // }
   }
 
