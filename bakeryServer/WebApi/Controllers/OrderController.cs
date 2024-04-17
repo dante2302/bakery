@@ -9,8 +9,8 @@ namespace WebApi.Controllers
     [Route("[controller]")]
     public class OrdersController(IEntityService<Order> orderService, IExtendedUserService userService, OrderDTOMapper orderDTOMapper) : ControllerBase
     {
-        private readonly IExtendedUserService _userService;
-        private readonly IEntityService<Order> _orderService;
+        private readonly IExtendedUserService _userService = userService;
+        private readonly IEntityService<Order> _orderService = orderService;
         private readonly OrderDTOMapper _orderDTOMapper = orderDTOMapper;
 
         [HttpGet("all")]

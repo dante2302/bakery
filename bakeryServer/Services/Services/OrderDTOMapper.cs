@@ -21,7 +21,7 @@ public class OrderDTOMapper(IEntityService<Filling> fs, IEntityService<Topping> 
 
     private async Task<UserDTO> MapUserData(Order order)
     {
-        User userData = await _us.ReadOne(order.UserId);
+        User? userData = await _us.ReadOne(order.UserId);
         if(userData == null)
         {
             throw new Exception("Non existent user!");

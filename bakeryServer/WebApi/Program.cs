@@ -53,11 +53,12 @@ builder.Services.AddScoped<IEntityService<FoodType>, FoodTypeService>();
 
 builder.Services.AddScoped<IRepository<User>, UserRepo>();
 builder.Services.AddScoped<IExtendedUserRepo, UserRepo>();
+builder.Services.AddScoped<IEntityService<User>, UserService>();
 builder.Services.AddScoped<IExtendedUserService, UserService>();
 
 builder.Services.AddScoped<IRepository<Order>, OrderRepo>();
 builder.Services.AddScoped<IEntityService<Order>, OrderService>();
-
+builder.Services.AddScoped<OrderDTOMapper, OrderDTOMapper>();
 
 var app = builder.Build();
 
