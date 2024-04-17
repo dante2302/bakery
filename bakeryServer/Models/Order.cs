@@ -13,7 +13,8 @@ namespace bakeryServer.Models
 
         public DateTime Date { get; set; }
 
-        public int[] Bonuses { get; set; }
+        public int[] Fillings { get; set; }
+        public int[] Toppings { get; set; }
 
         public required bool ContainsLettering {get; set;}
 

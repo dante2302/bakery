@@ -1,6 +1,5 @@
 ﻿using bakeryServer.Models;
 using bakeryServer.Services.Repositories;
-using System.ComponentModel.DataAnnotations;
 using Services.Validation;
 using Exceptions;
 using Services;
@@ -85,11 +84,6 @@ namespace bakeryServer.Services
         {
             var entityForDeletion = await ReadOne(id);
             await _repo.Delete(entityForDeletion);
-        }
-        
-        public async Task MapExternalDataToDTO()
-        {
-            
         }
     }
 }

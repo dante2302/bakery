@@ -2,8 +2,8 @@
 
 namespace Models;
 
-public class OrderSubmissionDTO(OrderSubmission os)
+public class OrderSubmissionDTO(OrderDTO o, UserDTO u)
 {
-   public OrderDTO Order =  new (os.Order);
-   public UserDTO User = new (os.User);
+   public OrderDTO Order =  o;
+   public UserDTO User = u;
 }
