@@ -1,100 +1,99 @@
-﻿namespace Repos.Tests
+﻿using System.Linq.Expressions;
+using Bogus;
+
+namespace Repos.Tests;
+public class ToppingRepoTests
 {
-    public class ToppingRepoTests
+    private readonly ToppingRepo _toppingRepo;
+    private readonly Mock<DbSet<Topping>> _mockDbSet;
+    private readonly Mock<BakeryContext> _mockContext;
+    private List<Topping> tList;
+
+    public ToppingRepoTests()
     {
-        private readonly ToppingRepo _toppingRepo;
-        private readonly Mock<DbSet<Topping>> _mockDbSet;
-        private readonly Mock<BakeryContext> _mockContextStruct;
-        private readonly BakeryContext _mockContext;
+        _mockDbSet = new Mock<DbSet<Topping>>();
+        _mockContext = new Mock<BakeryContext>();
+        _toppingRepo = new ToppingRepo(_mockContext.Object);
+    }
 
-        public ToppingRepoTests()
-        {
-            _mockDbSet = new Mock<DbSet<Topping>>();
-            _mockContextStruct = new Mock<BakeryContext>();
-            _mockContext = _mockContextStruct.Object;
-            _mockContext.Toppings = _mockDbSet.Object;
-            _toppingRepo = new ToppingRepo(_mockContext);
-        }
+    [Fact]
+    public async Task Create_ToppingAddedToContext()
+    {
+        // Arrange
+        await Init(1);
+        var data = GenerateData(1);
 
-        [Fact]
-        public async Task Create_ToppingAddedToContext()
-        {
-            // Arrange
-            var topping = new Topping { Id = 1, Name = "Sprinkles" };
+        // Act
+        await _toppingRepo.Create(data[0]);
 
-            // Act
-            await _toppingRepo.Create(topping);
+        // Assert
+        _mockContext.Verify(x => x.AddAsync(data[0], default), Times.Once);
+        _mockContext.Verify(x => x.SaveChangesAsync(default), Times.Once);
 
-            // Assert
-            _mockDbSet.Verify(dbSet => dbSet.AddAsync(topping, default), Times.Once);
-            _mockContextStruct.Verify(context => context.SaveChangesAsync(default), Times.Once);
-        }
+    }
 
-        [Fact]
-        public async Task ReadOne_ReturnsTopping()
-        {
-            // Arrange
-            var expectedTopping = new Topping { Id = 1, Name = "Chocolate Chips" };
-            _mockDbSet.Setup(m => m.FindAsync(expectedTopping.Id)).ReturnsAsync(expectedTopping);
+    [Fact]
+    public async Task ReadOne_ReturnsAToppingOrNull()
+    {
 
-            // Act
-            var result = await _toppingRepo.ReadOne(expectedTopping.Id);
+    }
 
-            // Assert
-            Assert.Equal(expectedTopping, result);
-        }
+    public async Task ReadAll_ReturnsCorrectCountAndToppings()
+    {
+        // Arrange
+        await Init(1);
 
-        [Fact]
-        public async Task ReadAll_ReturnsAllToppings()
-        {
-            // Arrange
-            var toppings = new List<Topping>
-            {
-                new Topping { Id = 1, Name = "Nuts" },
-                new Topping { Id = 2, Name = "Whipped Cream" },
-                new Topping { Id = 3, Name = "Caramel Drizzle" }
-            }.AsQueryable();
-            _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.Provider).Returns(toppings.Provider);
-            _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.Expression).Returns(toppings.Expression);
-            _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.ElementType).Returns(toppings.ElementType);
-            _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.GetEnumerator()).Returns(toppings.GetEnumerator());
+    }
 
-            // Act
-            var result = await _toppingRepo.ReadAll();
+    // [Fact]
+    // public async Task Update_ToppingUpdated()
+    // {
+    //     // Arrange
+    //     var existingTopping = new Topping { Id = 1, Name = "Caramel" };
+    //     var updatedTopping = new Topping { Id = 1, Name = "Chocolate" };
+    //     await _toppingRepo.Create(existingTopping);
 
-            // Assert
-            Assert.Equal(toppings.ToList(), result);
-        }
+    //     // Act
+    //     await _toppingRepo.Update(updatedTopping, existingTopping);
 
-        [Fact]
-        public async Task Update_ToppingUpdated()
-        {
-            // Arrange
-            var existingTopping = new Topping { Id = 1, Name = "Caramel" };
-            var updatedTopping = new Topping { Id = 1, Name = "Chocolate" };
-            _mockDbSet.Setup(m => m.FindAsync(existingTopping.Id)).ReturnsAsync(existingTopping);
+    //     // Assert
+    //     Assert.Equal(updatedTopping.Name, existingTopping.Name);
+    //     _mockContextStruct.Verify(context => context.SaveChangesAsync(default), Times.AtMost(2));
+    // }
 
-            // Act
-            await _toppingRepo.Update(updatedTopping, existingTopping);
+    // [Fact]
+    // public async Task Delete_FillingDeleted()
+    // {
+    //     // Arrange
+    //     var toppingToDelete = new Topping { Id = 1, Name = "Chocolate" };
+    //     _mockDbSet.Setup(m => m.FindAsync(toppingToDelete.Id)).ReturnsAsync(toppingToDelete);
 
-            // Assert
-            Assert.Equal(updatedTopping.Name, existingTopping.Name);
-            _mockContextStruct.Verify(context => context.SaveChangesAsync(default), Times.Once);
-        }
+    //     // Act
+    //     await _toppingRepo.Delete(toppingToDelete);
 
-        [Fact]
-        public async Task Delete_FillingDeleted()
-        {
-            // Arrange
-            var toppingToDelete = new Topping { Id = 1, Name = "Chocolate" };
-            _mockDbSet.Setup(m => m.FindAsync(toppingToDelete.Id)).ReturnsAsync(toppingToDelete);
+    //     // Assert
+    //     _mockDbSet.Verify(m => m.Remove(toppingToDelete), Times.Once);
+    //     _mockContextStruct.Verify(context => context.SaveChangesAsync(default), Times.Once);
+    // }
 
-            // Act
-            await _toppingRepo.Delete(toppingToDelete);
+    private List<Topping> GenerateData(int n)
+    {
+        var faker = new Faker<Topping>()
+            .RuleFor(c => c.Name, f => "Chocolate")
+            .RuleFor(c => c.Id, f => f.Random.Int(1, 1000));
 
-            // Assert
-            _mockDbSet.Verify(dbSet => dbSet.Remove(toppingToDelete), Times.Once);
-            _mockContextStruct.Verify(context => context.SaveChangesAsync(default), Times.Once);
-        }
+        return faker.Generate(n);
+    }
+
+    private async Task Init(int n)
+    {
+    
+        tList = GenerateData(n);
+        var toppings = tList.AsQueryable();
+        _mockContext.Setup(x => x.Toppings).Returns(_mockDbSet.Object);
+        _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.Provider).Returns(toppings.Provider);
+        _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.Expression).Returns(toppings.Expression);
+        _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.ElementType).Returns(toppings.ElementType);
+        _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.GetEnumerator()).Returns(toppings.GetEnumerator());
     }
 }

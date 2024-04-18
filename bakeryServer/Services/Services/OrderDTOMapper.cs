@@ -2,7 +2,7 @@
 
 namespace Services;
 
-public class OrderDTOMapper(IEntityService<Filling> fs, IEntityService<Topping> ts, IEntityService<FoodType> fts, IEntityService<Order> o, IEntityService<User> us)
+public class OrderDTOMapper(IEntityService<Filling> fs, IEntityService<Topping> ts, IEntityService<FoodType> fts, IEntityService<User> us)
 {
     private readonly IEntityService<Filling> _fs = fs;
     private readonly IEntityService<Topping> _ts = ts;
@@ -24,7 +24,7 @@ public class OrderDTOMapper(IEntityService<Filling> fs, IEntityService<Topping> 
         User? userData = await _us.ReadOne(order.UserId);
         if(userData == null)
         {
-            throw new Exception("Non existent user!");
+            throw new NullReferenceException("Non existent user!");
             //log;
         }
         UserDTO udto = new(userData);
@@ -39,7 +39,7 @@ public class OrderDTOMapper(IEntityService<Filling> fs, IEntityService<Topping> 
             Topping topping = await _ts.ReadOne(toppingId);
             if(topping is null)
             {
-                throw new Exception($"Topping no longer exists. ToppingId:{toppingId}");
+                throw new NullReferenceException($"Topping no longer exists. ToppingId:{toppingId}");
             }
             toppingNames.Add(topping.Name);
         }
@@ -54,7 +54,7 @@ public class OrderDTOMapper(IEntityService<Filling> fs, IEntityService<Topping> 
             Filling filling = await _fs.ReadOne(fillingId);
             if(filling is null)
             {
-                throw new Exception($"Topping no longer exists. ToppingId:{fillingId}");
+                throw new NullReferenceException($"Filling no longer exists. ToppingId:{fillingId}");
             }
             fillingNames.Add(filling.Name);
         }
