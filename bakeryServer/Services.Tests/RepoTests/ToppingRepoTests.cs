@@ -1,95 +1,146 @@
 ﻿using Bogus;
-using EntityFrameworkCoreMock;
-using MockQueryable.Moq;
 
-namespace Repos.Tests;
-public class ToppingRepoTests
+namespace BakeryServer.Tests.Services.Repositories
 {
-    private readonly ToppingRepo _toppingRepo;
-    private readonly Mock<DbSet<Topping>> _mockDbSet;
-    private readonly Mock<BakeryContext> _mockContext;
-    private readonly List<Topping> tList;
-
-    public ToppingRepoTests()
+    public class ToppingRepoTests
     {
-        _mockContext = new DbContextMock<BakeryContext>();
-        _mockDbSet = new DbSetMock<Topping>(null, (x, _) => x.Id);
-        _toppingRepo = new ToppingRepo(_mockContext.Object);
-        tList = GenerateData(10);
-        var toppings = tList.BuildMock();
-        _mockContext.Setup(x => x.Toppings).Returns(_mockDbSet.Object);
-        _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.Provider).Returns(toppings.Provider);
-        _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.Expression).Returns(toppings.Expression);
-        _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.ElementType).Returns(toppings.ElementType);
-        _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.GetEnumerator()).Returns(toppings.GetEnumerator());
-    }
+        private DbContextOptions<BakeryContext> CreateNewContextOptions()
+        {
+            // Create a fresh DbContextOptionsBuilder with an in-memory database
+            return new DbContextOptionsBuilder<BakeryContext>()
+                .UseInMemoryDatabase(databaseName: "TestDb")
+                .Options;
+        }
 
-    [Fact]
-    public async Task Create_ToppingAddedToContext()
-    {
-        // Arrange
-        var data = GenerateData(1);
+        [Fact]
+        public async Task Create_AddsNewToppingToDatabase()
+        {
+            // Arrange
+            var options = CreateNewContextOptions();
+            using (var context = new BakeryContext(options))
+            {
+                var repository = new ToppingRepo(context);
+                var newTopping = GenerateData(1)[0];
 
-        // Act
-        await _toppingRepo.Create(data[0]);
+                // Act
+                await repository.Create(newTopping);
 
-        // Assert
-        _mockContext.Verify(x => x.AddAsync(data[0], default), Times.Once);
-        _mockContext.Verify(x => x.SaveChangesAsync(default), Times.Once);
+                // Assert
+                var savedTopping = await context.Toppings.FindAsync(newTopping.Id);
+                Assert.NotNull(savedTopping);
+                Assert.Equal(newTopping.Name, savedTopping.Name);
+            }
+        }
 
-    }
+        [Fact]
+        public async Task ReadOne_ReturnsToppingIfExists()
+        {
+            // Arrange
+            var options = CreateNewContextOptions();
+            using (var context = new BakeryContext(options))
+            {
+                var repository = new ToppingRepo(context);
+                var topping = GenerateData(1)[0];
+                context.Toppings.Add(topping);
+                await context.SaveChangesAsync();
 
-    [Fact]
-    public async Task ReadOne_ReturnsAToppingOrNull()
-    {
-        var result = await _toppingRepo.ReadAll();
-    }
+                // Act
+                var retrievedTopping = await repository.ReadOne(topping.Id);
 
-    [Fact]
-    public async Task ReadAll_ReturnsCorrectCountAndToppings()
-    {
-        // Arrange
-        var result = await _toppingRepo.ReadAll();
-        Assert.Equal(11, result.Count);
-    }
+                // Assert
+                Assert.NotNull(retrievedTopping);
+                Assert.Equal(topping.Name, retrievedTopping!.Name);
+            }
+        }
 
-    // [Fact]
-    // public async Task Update_ToppingUpdated()
-    // {
-    //     // Arrange
-    //     var existingTopping = new Topping { Id = 1, Name = "Caramel" };
-    //     var updatedTopping = new Topping { Id = 1, Name = "Chocolate" };
-    //     await _toppingRepo.Create(existingTopping);
+        [Fact]
+        public async Task ReadOne_ReturnsNullIfNotFound()
+        {
+            // Arrange
+            var options = CreateNewContextOptions();
+            using (var context = new BakeryContext(options))
+            {
+                var repository = new ToppingRepo(context);
 
-    //     // Act
-    //     await _toppingRepo.Update(updatedTopping, existingTopping);
+                // Act
+                var retrievedTopping = await repository.ReadOne(999);
 
-    //     // Assert
-    //     Assert.Equal(updatedTopping.Name, existingTopping.Name);
-    //     _mockContextStruct.Verify(context => context.SaveChangesAsync(default), Times.AtMost(2));
-    // }
+                // Assert
+                Assert.Null(retrievedTopping);
+            }
+        }
 
-    // [Fact]
-    // public async Task Delete_FillingDeleted()
-    // {
-    //     // Arrange
-    //     var toppingToDelete = new Topping { Id = 1, Name = "Chocolate" };
-    //     _mockDbSet.Setup(m => m.FindAsync(toppingToDelete.Id)).ReturnsAsync(toppingToDelete);
+        [Fact]
+        public async Task ReadAll_ReturnsListOfToppings()
+        {
+            // Arrange
+            var options = CreateNewContextOptions();
+            using (var context = new BakeryContext(options))
+            {
+                var repository = new ToppingRepo(context);
+                var toppings = GenerateData(2);
+                context.Toppings.AddRange(toppings);
+                await context.SaveChangesAsync();
 
-    //     // Act
-    //     await _toppingRepo.Delete(toppingToDelete);
+                // Act
+                var retrievedToppings = await repository.ReadAll();
 
-    //     // Assert
-    //     _mockDbSet.Verify(m => m.Remove(toppingToDelete), Times.Once);
-    //     _mockContextStruct.Verify(context => context.SaveChangesAsync(default), Times.Once);
-    // }
+                // Assert
+                Assert.NotNull(retrievedToppings);
+                Assert.Equal(2, retrievedToppings.Count);
+            }
+        }
 
-    private List<Topping> GenerateData(int n)
-    {
-        var faker = new Faker<Topping>()
-            .RuleFor(c => c.Name, f => "Chocolate")
-            .RuleFor(c => c.Id, f => f.Random.Int(1, 1000));
+        [Fact]
+        public async Task Update_UpdatesExistingTopping()
+        {
+            // Arrange
+            var options = CreateNewContextOptions();
+            using (var context = new BakeryContext(options))
+            {
+                var repository = new ToppingRepo(context);
+                var topping = GenerateData(1)[0];
+                context.Toppings.Add(topping);
+                await context.SaveChangesAsync();
 
-        return faker.Generate(n);
+                // Act
+                var updatedTopping = GenerateData(1)[0];
+                await repository.Update(updatedTopping, topping);
+
+                // Assert
+                var retrievedTopping = await context.Toppings.FindAsync(topping.Id);
+                Assert.Equal(updatedTopping.Name, retrievedTopping.Name);
+            }
+        }
+
+        [Fact]
+        public async Task Delete_RemovesToppingFromDatabase()
+        {
+            // Arrange
+            var options = CreateNewContextOptions();
+            using (var context = new BakeryContext(options))
+            {
+                var repository = new ToppingRepo(context);
+                var topping = GenerateData(1)[0];
+                context.Toppings.Add(topping);
+                await context.SaveChangesAsync();
+
+                // Act
+                await repository.Delete(topping);
+
+                // Assert
+                var retrievedTopping = await context.Toppings.FindAsync(1);
+                Assert.Null(retrievedTopping);
+            }
+        }
+
+        private List<Topping> GenerateData(int n)
+        {
+            var faker = new Faker<Topping>()
+                .RuleFor(x => x.Id, f => f.Random.Int(0, 1000000))
+                .RuleFor(x => x.Name, f => f.Random.String());
+
+            return faker.Generate(n);
+        }
     }
 }
