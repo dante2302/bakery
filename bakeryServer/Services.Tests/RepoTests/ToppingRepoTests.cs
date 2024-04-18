@@ -1,5 +1,6 @@
-﻿using System.Linq.Expressions;
-using Bogus;
+﻿using Bogus;
+using EntityFrameworkCoreMock;
+using MockQueryable.Moq;
 
 namespace Repos.Tests;
 public class ToppingRepoTests
@@ -7,20 +8,26 @@ public class ToppingRepoTests
     private readonly ToppingRepo _toppingRepo;
     private readonly Mock<DbSet<Topping>> _mockDbSet;
     private readonly Mock<BakeryContext> _mockContext;
-    private List<Topping> tList;
+    private readonly List<Topping> tList;
 
     public ToppingRepoTests()
     {
-        _mockDbSet = new Mock<DbSet<Topping>>();
-        _mockContext = new Mock<BakeryContext>();
+        _mockContext = new DbContextMock<BakeryContext>();
+        _mockDbSet = new DbSetMock<Topping>(null, (x, _) => x.Id);
         _toppingRepo = new ToppingRepo(_mockContext.Object);
+        tList = GenerateData(10);
+        var toppings = tList.BuildMock();
+        _mockContext.Setup(x => x.Toppings).Returns(_mockDbSet.Object);
+        _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.Provider).Returns(toppings.Provider);
+        _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.Expression).Returns(toppings.Expression);
+        _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.ElementType).Returns(toppings.ElementType);
+        _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.GetEnumerator()).Returns(toppings.GetEnumerator());
     }
 
     [Fact]
     public async Task Create_ToppingAddedToContext()
     {
         // Arrange
-        await Init(1);
         var data = GenerateData(1);
 
         // Act
@@ -35,14 +42,15 @@ public class ToppingRepoTests
     [Fact]
     public async Task ReadOne_ReturnsAToppingOrNull()
     {
-
+        var result = await _toppingRepo.ReadAll();
     }
 
+    [Fact]
     public async Task ReadAll_ReturnsCorrectCountAndToppings()
     {
         // Arrange
-        await Init(1);
-
+        var result = await _toppingRepo.ReadAll();
+        Assert.Equal(11, result.Count);
     }
 
     // [Fact]
@@ -83,17 +91,5 @@ public class ToppingRepoTests
             .RuleFor(c => c.Id, f => f.Random.Int(1, 1000));
 
         return faker.Generate(n);
-    }
-
-    private async Task Init(int n)
-    {
-    
-        tList = GenerateData(n);
-        var toppings = tList.AsQueryable();
-        _mockContext.Setup(x => x.Toppings).Returns(_mockDbSet.Object);
-        _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.Provider).Returns(toppings.Provider);
-        _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.Expression).Returns(toppings.Expression);
-        _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.ElementType).Returns(toppings.ElementType);
-        _mockDbSet.As<IQueryable<Topping>>().Setup(m => m.GetEnumerator()).Returns(toppings.GetEnumerator());
     }
 }
