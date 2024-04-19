@@ -6,12 +6,12 @@
         {
             // Create a fresh DbContextOptionsBuilder with an in-memory database
             return new DbContextOptionsBuilder<BakeryContext>()
-                .UseInMemoryDatabase(databaseName: "TestDb")
+                .UseInMemoryDatabase(databaseName: "TestDbFillings")
                 .Options;
         }
 
         [Fact]
-        public async Task Create_AddsNewToppingToDatabase()
+        public async Task Create_AddsNewFillingToDatabase()
         {
             // Arrange
             var options = CreateNewContextOptions();
@@ -23,13 +23,13 @@
             await repository.Create(newFilling);
 
             // Assert
-            var savedFilling = await context.Toppings.FindAsync(newFilling.Id);
+            var savedFilling = await context.Fillings.FindAsync(newFilling.Id);
             Assert.NotNull(savedFilling);
             Assert.Equal(newFilling.Name, savedFilling.Name);
         }
 
         [Fact]
-        public async Task ReadOne_ReturnsToppingIfExists()
+        public async Task ReadOne_ReturnsFillingIfExists()
         {
             // Arrange
             var options = CreateNewContextOptions();
@@ -63,13 +63,13 @@
         }
 
         [Fact]
-        public async Task ReadAll_ReturnsListOfToppings()
+        public async Task ReadAll_ReturnsListOfFillings()
         {
             // Arrange
             var options = CreateNewContextOptions();
             using var context = new BakeryContext(options);
             var repository = new FillingRepo(context);
-            var fillings = GenerateData(2);
+            var fillings = GenerateData(3);
             context.Fillings.AddRange(fillings);
             await context.SaveChangesAsync();
 
@@ -78,11 +78,11 @@
 
             // Assert
             Assert.NotNull(retrievedFillings);
-            Assert.Equal(2, retrievedFillings.Count);
+            Assert.Equal(3, retrievedFillings.Count);
         }
 
         [Fact]
-        public async Task Update_UpdatesExistingTopping()
+        public async Task Update_UpdatesExistingFilling()
         {
             // Arrange
             var options = CreateNewContextOptions();
@@ -102,7 +102,7 @@
         }
 
         [Fact]
-        public async Task Delete_RemovesToppingFromDatabase()
+        public async Task Delete_RemovesFillingFromDatabase()
         {
             // Arrange
             var options = CreateNewContextOptions();
