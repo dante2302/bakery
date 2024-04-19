@@ -1,6 +1,4 @@
-﻿using Bogus;
-
-namespace BakeryServer.Tests.Services.Repositories
+﻿namespace BakeryServer.Tests.Services.Repositories
 {
     public class ToppingRepoTests
     {
@@ -17,19 +15,17 @@ namespace BakeryServer.Tests.Services.Repositories
         {
             // Arrange
             var options = CreateNewContextOptions();
-            using (var context = new BakeryContext(options))
-            {
-                var repository = new ToppingRepo(context);
-                var newTopping = GenerateData(1)[0];
+            using var context = new BakeryContext(options);
+            var repository = new ToppingRepo(context);
+            var newTopping = GenerateData(1)[0];
 
-                // Act
-                await repository.Create(newTopping);
+            // Act
+            await repository.Create(newTopping);
 
-                // Assert
-                var savedTopping = await context.Toppings.FindAsync(newTopping.Id);
-                Assert.NotNull(savedTopping);
-                Assert.Equal(newTopping.Name, savedTopping.Name);
-            }
+            // Assert
+            var savedTopping = await context.Toppings.FindAsync(newTopping.Id);
+            Assert.NotNull(savedTopping);
+            Assert.Equal(newTopping.Name, savedTopping.Name);
         }
 
         [Fact]
@@ -37,20 +33,18 @@ namespace BakeryServer.Tests.Services.Repositories
         {
             // Arrange
             var options = CreateNewContextOptions();
-            using (var context = new BakeryContext(options))
-            {
-                var repository = new ToppingRepo(context);
-                var topping = GenerateData(1)[0];
-                context.Toppings.Add(topping);
-                await context.SaveChangesAsync();
+            using var context = new BakeryContext(options);
+            var repository = new ToppingRepo(context);
+            var topping = GenerateData(1)[0];
+            context.Toppings.Add(topping);
+            await context.SaveChangesAsync();
 
-                // Act
-                var retrievedTopping = await repository.ReadOne(topping.Id);
+            // Act
+            var retrievedTopping = await repository.ReadOne(topping.Id);
 
-                // Assert
-                Assert.NotNull(retrievedTopping);
-                Assert.Equal(topping.Name, retrievedTopping!.Name);
-            }
+            // Assert
+            Assert.NotNull(retrievedTopping);
+            Assert.Equal(topping.Name, retrievedTopping!.Name);
         }
 
         [Fact]
@@ -58,16 +52,14 @@ namespace BakeryServer.Tests.Services.Repositories
         {
             // Arrange
             var options = CreateNewContextOptions();
-            using (var context = new BakeryContext(options))
-            {
-                var repository = new ToppingRepo(context);
+            using var context = new BakeryContext(options);
+            var repository = new ToppingRepo(context);
 
-                // Act
-                var retrievedTopping = await repository.ReadOne(999);
+            // Act
+            var retrievedTopping = await repository.ReadOne(999);
 
-                // Assert
-                Assert.Null(retrievedTopping);
-            }
+            // Assert
+            Assert.Null(retrievedTopping);
         }
 
         [Fact]
@@ -75,20 +67,18 @@ namespace BakeryServer.Tests.Services.Repositories
         {
             // Arrange
             var options = CreateNewContextOptions();
-            using (var context = new BakeryContext(options))
-            {
-                var repository = new ToppingRepo(context);
-                var toppings = GenerateData(2);
-                context.Toppings.AddRange(toppings);
-                await context.SaveChangesAsync();
+            using var context = new BakeryContext(options);
+            var repository = new ToppingRepo(context);
+            var toppings = GenerateData(2);
+            context.Toppings.AddRange(toppings);
+            await context.SaveChangesAsync();
 
-                // Act
-                var retrievedToppings = await repository.ReadAll();
+            // Act
+            var retrievedToppings = await repository.ReadAll();
 
-                // Assert
-                Assert.NotNull(retrievedToppings);
-                Assert.Equal(2, retrievedToppings.Count);
-            }
+            // Assert
+            Assert.NotNull(retrievedToppings);
+            Assert.Equal(2, retrievedToppings.Count);
         }
 
         [Fact]
@@ -96,21 +86,19 @@ namespace BakeryServer.Tests.Services.Repositories
         {
             // Arrange
             var options = CreateNewContextOptions();
-            using (var context = new BakeryContext(options))
-            {
-                var repository = new ToppingRepo(context);
-                var topping = GenerateData(1)[0];
-                context.Toppings.Add(topping);
-                await context.SaveChangesAsync();
+            using var context = new BakeryContext(options);
+            var repository = new ToppingRepo(context);
+            var topping = GenerateData(1)[0];
+            context.Toppings.Add(topping);
+            await context.SaveChangesAsync();
 
-                // Act
-                var updatedTopping = GenerateData(1)[0];
-                await repository.Update(updatedTopping, topping);
+            // Act
+            var updatedTopping = GenerateData(1)[0];
+            await repository.Update(updatedTopping, topping);
 
-                // Assert
-                var retrievedTopping = await context.Toppings.FindAsync(topping.Id);
-                Assert.Equal(updatedTopping.Name, retrievedTopping.Name);
-            }
+            // Assert
+            var retrievedTopping = await context.Toppings.FindAsync(topping.Id);
+            Assert.Equal(updatedTopping.Name, retrievedTopping.Name);
         }
 
         [Fact]
@@ -118,20 +106,18 @@ namespace BakeryServer.Tests.Services.Repositories
         {
             // Arrange
             var options = CreateNewContextOptions();
-            using (var context = new BakeryContext(options))
-            {
-                var repository = new ToppingRepo(context);
-                var topping = GenerateData(1)[0];
-                context.Toppings.Add(topping);
-                await context.SaveChangesAsync();
+            using var context = new BakeryContext(options);
+            var repository = new ToppingRepo(context);
+            var topping = GenerateData(1)[0];
+            context.Toppings.Add(topping);
+            await context.SaveChangesAsync();
 
-                // Act
-                await repository.Delete(topping);
+            // Act
+            await repository.Delete(topping);
 
-                // Assert
-                var retrievedTopping = await context.Toppings.FindAsync(1);
-                Assert.Null(retrievedTopping);
-            }
+            // Assert
+            var retrievedTopping = await context.Toppings.FindAsync(1);
+            Assert.Null(retrievedTopping);
         }
 
         private List<Topping> GenerateData(int n)
