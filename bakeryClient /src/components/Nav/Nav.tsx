@@ -15,7 +15,7 @@ export default function Nav() {
                             <img src={cardboard} alt="Dostavki" />
                             <span>Доставки: 10:00 - 17:00</span>
                         </div>
-                        <div>
+                        <div className="email-div">
                             <img src={emailSvg} alt="Email: " />
                             <span>bakery123@bkr.com</span>
                         </div>

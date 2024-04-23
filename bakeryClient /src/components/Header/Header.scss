@@ -1,0 +1,53 @@
+@import "../styles_partials/flex";
+@import "../styles_partials/fonts";
+@import "../styles_partials/colors";
+
+$p-pink: map-get($accent-colors, pale-pink);
+
+header {
+    width: 100%;
+    padding-block: 2em;
+
+    .wrap {
+        @include flex;
+        padding-block: 3.5em;
+        gap: 2.5em;
+        width: 85%;
+        margin: auto;
+        border-bottom: 1px solid lightgray;
+        margin-bottom: 10px;
+
+        .img-temp {
+            width: 400px;
+            flex-shrink: 0;
+            height: 270px;
+            background-color: $p-pink;
+        }
+
+        div {
+            @include flex($direction: column, $place_vertical: start);
+            gap: 20px;
+        }
+
+        button {
+            color: white;
+            background-color: $p-pink;
+            border: 2px solid $p-pink;
+            border-radius: 6px;
+            transition: .2s ease-in;
+            cursor: pointer;
+            padding: 10px 20px;
+            font-weight: map-get($font-weights, bold);
+        }
+
+        button:hover{
+            color: $p-pink;
+            background-color: white;
+        }
+
+        h1{
+            font-size: map-get($font-sizes, x-lg);
+        }
+    }
+
+}
