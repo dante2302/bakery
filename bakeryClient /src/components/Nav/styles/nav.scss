@@ -1,0 +1,74 @@
+@import "../../styles_partials/colors";
+@import "../../styles_partials/flex";
+@import "../../styles_partials/fonts";
+
+nav{
+    border-bottom: 1px solid lightgray;
+}
+.upper-nav-wrap, .lower-nav-wrap{
+    width: 100%;
+}
+
+.upper-nav-wrap{
+    background-color: map-get($accent-colors, pale-pink);
+}
+
+.upper-nav, .lower-nav{
+    width: 85%;
+    margin: auto;
+    font-weight: map-get($font-weights, bold);
+}
+
+.upper-nav{
+    @include flex($place_horizontal: space-between);
+    padding-block: 15px;
+    color: map-get($text-colors, white);
+
+    img{
+        width: 25px;
+    }
+    div{
+        @include flex;
+        gap: 10px;
+    }
+
+    span{
+        cursor: default;
+        font-size: map-get($font-sizes, sm );
+    }
+}
+
+.lower-nav{
+    padding-block: 20px;
+    .logo{
+        width: 200px;
+        height: 50px;
+        background-color: orange;
+    }
+    div{
+        @include flex;
+        gap: 2em;
+    }
+    a{
+        color: black;
+        transition: .2s ease-in;
+    }
+    a:hover{
+        color: map-get($accent-colors, pale-pink);
+    }
+
+    & > a{
+        border: 2px solid map-get($accent-colors, pale-pink);
+        color: map-get($accent-colors, pale-pink);
+        background-color: white;
+        padding: 6px 15px;
+        border-radius: 6px;
+        font-size: calc(map-get($font-sizes, sm) + 0.15rem);
+    }
+    & > a:hover{
+        color: white;
+        background-color: map-get($accent-colors, pale-pink);
+    }
+
+    @include flex($place_horizontal: space-between);
+}

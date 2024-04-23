@@ -17,6 +17,10 @@ img, picture, video, canvas, svg {
   max-width: 100%;
 }
 
+a, a:visited, a:active, a:focus{
+  text-decoration: none;
+}
+
 input, button, textarea, select {
   font: inherit;
 }
