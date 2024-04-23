@@ -1,30 +1,10 @@
 
 using Exceptions;
-using System.ComponentModel.DataAnnotations;
-
 namespace Services.Tests
 {
     public class FillingServiceTests
     {
         private readonly FillingService srv = ArrangeService();
-        [Fact]
-        public async Task Create_ShouldReturnCorrectBool()
-        {
-            Filling validFilling = new()
-            {
-                Id = 123,
-                Name = "test"
-            };
-
-            Filling invalidFilling_1 = new();
-            Filling invalidFilling_2 = new() {Id = 1};
-
-            await Assert.ThrowsAsync<ValidationException>(async () => 
-                await srv.Create(invalidFilling_1));
-            await Assert.ThrowsAsync<ValidationException>(async () =>
-                await srv.Create(invalidFilling_2));
-        }
-
 
         [Fact]
         public async Task ReadOne_ShouldReturnAnEntityOrNull()

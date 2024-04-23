@@ -1,4 +1,6 @@
 global using Xunit;
+global using Moq;
+global using Bogus;
 global using bakeryServer.Data.DbContexts;
 global using bakeryServer.Models;
 global using bakeryServer.Services.Repositories;
