@@ -17,7 +17,7 @@
     padding: 10px;
 }
 
-.home-buttons{
+.home-buttons-outer{
     grid-area: b;
     background-color: #ededed;
     padding-top: 10px;
@@ -25,19 +25,15 @@
     flex-direction: column;
 }
 
-.home-buttons>*{
-    width:100%;
-    background-color: #ededed;
-    border: none;
-    cursor: pointer;
+.home-buttons-inner>img{
+    width: 50px;
 }
 
-.home-buttons>*:hover{
-    background-color: lightgray;
-}
-
-.curr-tab{
-    background-color: white;
+.home-buttons-inner{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .Home-c{

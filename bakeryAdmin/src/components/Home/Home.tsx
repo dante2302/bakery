@@ -3,9 +3,9 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router";
 import "./Home.css";
 import AllOrderPage from "../Order/AllOrdersPage";
+import orderSvg from "../../assets/order.svg";
 
-
-type currentTab = "Orders" | "Foods";
+type currentTab = "Orders" | "Foods" | "";
 
 export default function Home(){
     const { authData } = useContext(AuthContext);
@@ -26,15 +26,26 @@ export default function Home(){
                 <h6>Admin</h6>
                 <button>Logout</button>
             </div>
-            <div className="home-buttons">
-                <button 
-                    onClick={() => setCurrentTab("Orders")}
-                    className={`${currentTab == "Orders" ? "curr-tab" : ""}`}
-                >Orders</button>
+            <div className="home-buttons-outer">
+                <div className="home-buttons-inner">
+                    <img src={orderSvg}/>
+                    <button
+                        onClick={() => setCurrentTab("Orders")}
+                        className={`${currentTab == "Orders" ? "curr-tab" : ""}`}
+                    >Orders</button>
+                </div>
+                <div className="home-buttons-inner">
                 <button 
                     onClick={() => setCurrentTab("Foods")}
                     className={`${currentTab == "Foods" ? "curr-tab" : ""}`}
                 >Foods</button>
+                </div>
+                <div className="home-buttons-inner">
+                <button 
+                    onClick={() => setCurrentTab("Foods")}
+                    className={`${currentTab == "Foods" ? "curr-tab" : ""}`}
+                >Foods</button>
+                </div>
             </div>
             {
                 currentTab == "Orders" &&

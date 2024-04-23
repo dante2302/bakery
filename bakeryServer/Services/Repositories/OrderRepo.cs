@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace bakeryServer.Services.Repositories
 {
+    
     public class OrderRepo(BakeryContext context) : IRepository<Order>
     {
         private readonly BakeryContext _context = context;
