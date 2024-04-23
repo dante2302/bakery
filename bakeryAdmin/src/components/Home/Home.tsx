@@ -5,7 +5,7 @@ import "./Home.css";
 import AllOrderPage from "../Order/AllOrdersPage";
 
 
-type currentTab = "Orders" | "Foods";
+type currentTab = "Orders" | "Foods" | "";
 
 export default function Home(){
     const { authData } = useContext(AuthContext);
@@ -31,6 +31,10 @@ export default function Home(){
                     onClick={() => setCurrentTab("Orders")}
                     className={`${currentTab == "Orders" ? "curr-tab" : ""}`}
                 >Orders</button>
+                <button 
+                    onClick={() => setCurrentTab("Foods")}
+                    className={`${currentTab == "Foods" ? "curr-tab" : ""}`}
+                >Foods</button>
                 <button 
                     onClick={() => setCurrentTab("Foods")}
                     className={`${currentTab == "Foods" ? "curr-tab" : ""}`}
