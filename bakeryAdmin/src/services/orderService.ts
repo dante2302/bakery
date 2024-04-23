@@ -1,5 +1,29 @@
 const BASE_URL = "http://localhost:5279/orders";
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ADD FOOD TYPE OPTIONS -> CRUD FILLINGS/TOPPINGS, CRUD FOODTYPE
+// FILTER ORDERS
+// COMPLETE / DELETE ORDER
+// ?FOR LATER ORDERS
+// ORDER DETAIL PAGE
+
 const defaultOrder = {
     id: 1,
     name: "asd",
