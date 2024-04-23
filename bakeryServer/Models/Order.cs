@@ -15,8 +15,10 @@ namespace bakeryServer.Models
 
         public int[] Fillings { get; set; }
         public int[] Toppings { get; set; }
+        public int[] Base { get; set; }
 
         public required bool ContainsLettering {get; set;}
+        public required bool IsCompleted { get; set; }
 
         [ForeignKey("User")] 
         public required int UserId { get; set; }

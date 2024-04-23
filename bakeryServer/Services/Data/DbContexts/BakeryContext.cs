@@ -10,11 +10,12 @@ namespace bakeryServer.Data.DbContexts
         public virtual DbSet<FoodType> FoodTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Base> Bases { get; set; }
 
-       public BakeryContext()
-       {
+        public BakeryContext()
+        {
 
-       }
+        }
 
         public BakeryContext(DbContextOptions<BakeryContext> options): base(options)
         {

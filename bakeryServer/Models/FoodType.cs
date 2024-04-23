@@ -8,6 +8,7 @@ namespace bakeryServer.Models
         public required string Name { get; set; }
         public required int[] Fillings { get; set; }
         public required int[] Toppings { get; set; }
+        public required int[] Bases { get; set; }
         public bool CanContainLettering { get; set; }
     }
 }
