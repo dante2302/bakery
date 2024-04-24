@@ -1,0 +1,70 @@
+@import "../../styles_partials/flex";
+@import "../../styles_partials/breakpoints";
+@import "../../styles_partials/fonts";
+
+.main-service-wrap {
+    background-image: url("../../../assets/bg.jpg");
+    padding: 5em 1em;
+    color: white;
+
+    .container {
+        @include flex($direction: column);
+        width: 85%;
+        margin: auto;
+        gap: 3rem;
+    }
+
+    h1 {
+        font-size: map-get($font-sizes, xl);
+        text-align: center;
+    }
+
+    h1::after {
+        display: block;
+        width: 2em;
+        height: 1px;
+        background-color: white;
+        content: "";
+        margin: 1em auto
+    }
+
+    .inner {
+        @include flex;
+        gap: 2em;
+    }
+
+    .food-type-container {
+        @include flex($direction: column);
+        text-align: center;
+
+        h2 {
+            font-size: map-get($font-sizes, lg);
+        }
+
+        p {
+            font-size: calc(map-get($font-sizes, reg) - .2rem);
+        }
+
+        svg {
+            margin-bottom: 1em;
+            width: 7em;
+            height: auto;
+
+            path {
+                stroke: white;
+                fill: white;
+            }
+        }
+    }
+
+    @media(max-width: $tablet) {
+        .inner {
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        .food-type-container p {
+            max-width: 45vw;
+        }
+    }
+}
