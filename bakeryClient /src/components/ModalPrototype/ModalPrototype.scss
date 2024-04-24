@@ -1,0 +1,17 @@
+@import "../styles_partials/colors";
+
+.modal, .overlay{
+  width:100vw;
+  height:100vh;
+  inset: 0;
+  position:fixed;
+}
+
+.modal{
+  z-index:5;
+}
+
+.overlay{
+  background-color: $modal-overlay-color;
+  opacity:.4;
+}
