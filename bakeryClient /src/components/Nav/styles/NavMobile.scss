@@ -4,50 +4,70 @@
 
 $pale-pink: map-get($accent-colors, pale-pink);
 
-.nav{
+.nav {
     @include flex($place_horizontal: space-between);
     padding: 1em;
 
-    .logo{
+    .logo {
         width: 250px;
         height: 80px;
         background: $pale-pink;
     }
 
-    .hamburger-btn{
+    .hamburger-btn {
         width: 60px;
         height: 60px;
         cursor: pointer;
         transition: .15s ease-in;
         border-radius: 10px;
-        path{
+
+        path {
             stroke: $pale-pink;
             transition: .15s ease-in;
         }
 
     }
 
-    .hamburger-btn:hover{
+    .hamburger-btn:hover {
         background-color: $pale-pink;
-        path{
+
+        path {
             stroke: white;
         }
     }
 
-    .modal-content{
-        position: fixed;
-        width: 30%;
-        height: 100vh;
-        z-index: 6;
-        background-color: $pale-pink;
+    //outer wrap 
+    .modal-content {
+        background-color: red;
 
-        div{
+        // list of links
+        div {
             @include flex($direction: column);
             color: white;
             gap: 15px;
             margin-top: 2em;
             font-weight: map-get($font-weights, bold);
             font-size: map-get($font-sizes, reg);
+            
+            //svg style for a closing button
+            svg{
+                border-radius: 8px;
+                transition: .2s ease-in-out;
+            }
+
+            svg>path {
+                stroke: white;
+            }
+
+            svg:hover {
+                cursor: pointer;
+                background-color: white;
+
+                path {
+                    transition: .2s ease-in-out;
+                    stroke: $pale-pink;
+                }
+            }
         }
     }
 }

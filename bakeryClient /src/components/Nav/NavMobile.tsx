@@ -1,25 +1,31 @@
 import { useState } from "react"
 import ModalPrototype from "../ModalPrototype/ModalPrototype";
-import { Hamburger } from "../SVGs";
+import { CloseButton, Hamburger } from "../SVGs";
 import "./styles/NavMobile.scss";
 import NavLinkList from "./NavLinkList";
 
 export default function NavMobile(){
-    const [isOpened, setIsOpened] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
     return (
         <nav className="nav">
             <div className="logo"></div>
             <Hamburger 
                 className="hamburger-btn"
-                onClick={(e) =>{ setIsOpened(true); }} 
+                onClick={() => setIsOpen(true)} 
             />
             {
-                isOpened &&
-                <ModalPrototype toggleModal={() => {setIsOpened(false)}}>
+                isOpen &&
+                <ModalPrototype toggleModal={() => {setIsOpen(false)}}>
                     <div className="modal-content">
                         <NavLinkList>
-                            <div onClick={(e) => {setIsOpened(false); e.stopPropagation()}}>X</div>
+                            <CloseButton
+                                onClick={(e) => 
+                                    {
+                                     setIsOpen(false); 
+                                     e.stopPropagation() 
+                                    }} 
+                            />
                         </NavLinkList>
                     </div>
                 </ModalPrototype>
