@@ -4,27 +4,28 @@ import { CloseButton, Hamburger } from "../SVGs";
 import "./styles/NavMobile.scss";
 import NavLinkList from "./NavLinkList";
 
-export default function NavMobile(){
+export default function NavMobile() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     return (
         <nav className="nav">
             <div className="logo"></div>
-            <Hamburger 
+            <Hamburger
                 className="hamburger-btn"
-                onClick={() => setIsOpen(true)} 
+                onClick={() => setIsOpen(true)}
             />
-            {
-                isOpen &&
-                <ModalPrototype toggleModal={() => {setIsOpen(false)}}>
+            {isOpen &&
+                <ModalPrototype
+                    toggleModal={() => { setIsOpen(false) }}
+                    modalState={isOpen}
+                >
                     <div className="modal-content">
                         <NavLinkList>
                             <CloseButton
-                                onClick={(e) => 
-                                    {
-                                     setIsOpen(false); 
-                                     e.stopPropagation() 
-                                    }} 
+                                onClick={(e) => {
+                                    setIsOpen(false);
+                                    e.stopPropagation()
+                                }}
                             />
                         </NavLinkList>
                     </div>

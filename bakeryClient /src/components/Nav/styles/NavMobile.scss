@@ -38,7 +38,11 @@ $pale-pink: map-get($accent-colors, pale-pink);
 
     //outer wrap 
     .modal-content {
-        background-color: red;
+        background-color: $pale-pink;
+        width: 30%;
+            height: 100vh;
+            position: fixed;
+            z-index: 6;
 
         // list of links
         div {
