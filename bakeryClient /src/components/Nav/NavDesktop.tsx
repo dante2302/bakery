@@ -30,7 +30,7 @@ export default function NavDesktop() {
                         <div className="logo"></div>
                         <NavLinkList />
                     </div>
-                    <a href="#">Поръчай</a>
+                    <a href="#" className="order-btn">Поръчай</a>
                 </div>
             </div>
         </nav>

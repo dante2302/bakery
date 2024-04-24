@@ -1,10 +1,13 @@
 @import "../../styles_partials/flex";
 @import "../../styles_partials/colors";
+@import "../../styles_partials/fonts";
+
 $pale-pink: map-get($accent-colors, pale-pink);
 
 .nav{
     @include flex($place_horizontal: space-between);
     padding: 1em;
+
     .logo{
         width: 250px;
         height: 80px;
@@ -28,6 +31,23 @@ $pale-pink: map-get($accent-colors, pale-pink);
         background-color: $pale-pink;
         path{
             stroke: white;
+        }
+    }
+
+    .modal-content{
+        position: fixed;
+        width: 30%;
+        height: 100vh;
+        z-index: 6;
+        background-color: $pale-pink;
+
+        div{
+            @include flex($direction: column);
+            color: white;
+            gap: 15px;
+            margin-top: 2em;
+            font-weight: map-get($font-weights, bold);
+            font-size: map-get($font-sizes, reg);
         }
     }
 }

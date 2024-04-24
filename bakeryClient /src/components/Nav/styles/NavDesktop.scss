@@ -52,27 +52,30 @@ nav{
         height: 50px;
         background-color: map-get($accent-colors, pale-pink);
     }
+
     div{
         @include flex;
         gap: 2em;
     }
+
     a{
-        color: black;
         transition: .2s ease-in;
     }
+
     a:hover{
         color: map-get($accent-colors, pale-pink);
     }
 
-    & > a{
+    .order-btn{
         border: 2px solid map-get($accent-colors, pale-pink);
         color: map-get($accent-colors, pale-pink);
         background-color: white;
         padding: 6px 15px;
         border-radius: 6px;
-        font-size: calc(map-get($font-sizes, sm) + 0.15rem);
+        font-size: calc(map-get($font-sizes, sm) + 0.25rem);
     }
-    & > a:hover{
+
+    .order-btn:hover{
         color: white;
         background-color: map-get($accent-colors, pale-pink);
     }

@@ -1,10 +1,14 @@
 import { PropsWithChildren } from "react";
 import "./ModalPrototype.scss";
 
-export default function ModalPrototype({children}: PropsWithChildren){
+interface ModalProps extends PropsWithChildren{
+ toggleModal: () => void;
+}
+
+export default function ModalPrototype({children, toggleModal}: ModalProps){
     return(
         <div className="modal">
-            <div className="overlay"></div>
+            <div className="overlay" onClick={toggleModal}></div>
             {children}
         </div>
     )
