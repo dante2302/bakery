@@ -1,5 +1,6 @@
 
 import { Cardboard, Email, FacebookLogo, InstagramLogo } from "../SVGs";
+import NavLinkList from "./NavLinkList";
 import "./styles/NavDesktop.scss";
 
 export default function NavDesktop() {
@@ -27,11 +28,7 @@ export default function NavDesktop() {
                 <div className="lower-nav">
                     <div>
                         <div className="logo"></div>
-                        <div>
-                            <a href="#">Начало</a>
-                            <a href="#">За нас</a>
-                            <a href="#">Контакти</a>
-                        </div>
+                        <NavLinkList />
                     </div>
                     <a href="#">Поръчай</a>
                 </div>

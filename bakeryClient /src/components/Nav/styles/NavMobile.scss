@@ -1,0 +1,33 @@
+@import "../../styles_partials/flex";
+@import "../../styles_partials/colors";
+$pale-pink: map-get($accent-colors, pale-pink);
+
+.nav{
+    @include flex($place_horizontal: space-between);
+    padding: 1em;
+    .logo{
+        width: 250px;
+        height: 80px;
+        background: $pale-pink;
+    }
+
+    .hamburger-btn{
+        width: 60px;
+        height: 60px;
+        cursor: pointer;
+        transition: .15s ease-in;
+        border-radius: 10px;
+        path{
+            stroke: $pale-pink;
+            transition: .15s ease-in;
+        }
+
+    }
+
+    .hamburger-btn:hover{
+        background-color: $pale-pink;
+        path{
+            stroke: white;
+        }
+    }
+}
