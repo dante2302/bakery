@@ -1,6 +1,7 @@
 @import "../styles_partials/flex";
 @import "../styles_partials/fonts";
 @import "../styles_partials/colors";
+@import "../styles_partials/breakpoints";
 
 $p-pink: map-get($accent-colors, pale-pink);
 
@@ -9,7 +10,7 @@ header {
     padding-block: 2em;
 
     .wrap {
-        @include flex;
+        @include flex($place_vertical: start);
         padding-block: 3.5em;
         gap: 2.5em;
         width: 85%;
@@ -18,10 +19,10 @@ header {
         margin-bottom: 10px;
 
         .img-temp {
-            width: 400px;
-            flex-shrink: 0;
-            height: 270px;
-            background-color: $p-pink;
+            vertical-align: middle;
+            border-radius: 15px;
+            max-width: 40vw;
+            height: auto;
         }
 
         div {
@@ -40,14 +41,27 @@ header {
             font-weight: map-get($font-weights, bold);
         }
 
-        button:hover{
+        button:hover {
             color: $p-pink;
             background-color: white;
         }
 
-        h1{
+        h1 {
             font-size: map-get($font-sizes, x-lg);
         }
     }
 
+    @media(max-width: $tablet) {
+        .wrap{
+            @include flex($direction: column);
+            text-align: center;
+            div {
+                @include flex($direction: column);
+                gap: 20px;
+            }
+            .img-temp{
+                max-width: 80vw;
+            }
+        }
+    }
 }

@@ -1,4 +1,5 @@
 import "./Header.scss";
+import temp from "../../assets/temp.jpg"
 export default function Header(){
     return (
         <header>
@@ -10,7 +11,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 </p>
                     <button>Know more about us</button>
                 </div>
-                <div className="img-temp"></div>
+                <img src={temp} className="img-temp" />
             </div>
         </header>
     )

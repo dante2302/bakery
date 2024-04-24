@@ -24,8 +24,10 @@ nav{
     padding-block: 15px;
     color: map-get($text-colors, white);
 
-    img{
+    svg{
         width: 25px;
+        height: auto;
+        fill: white;
     }
 
     .email-div{
