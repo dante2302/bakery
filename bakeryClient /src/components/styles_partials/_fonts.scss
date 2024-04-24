@@ -7,18 +7,18 @@ $font-weights: (
 );
 
 $font-sizes: (
-    sm: 0.8rem,
+    sm: 0.9rem,
     reg: 1.22rem,
     lg: 1.8rem,
-    x-lg: 2.2rem
+    xl: 2.2rem
 );
 
 @media(min-width: phone) {
     $font-sizes: (
-        sm: 1.2rem,
-        reg: 1.6rem,
-        lg: 2.2rem,
-        x-lg: 2.4rem,
+        sm: 1.3rem,
+        reg: 1.7rem,
+        lg: 2.4rem,
+        xl: 2.5rem,
     )
 }
 

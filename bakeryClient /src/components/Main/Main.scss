@@ -1,0 +1,26 @@
+@import "../styles_partials/flex";
+@import "../styles_partials/fonts";
+
+main {
+    background-image: url("../../assets/bg.jpg");
+
+    .wrap {
+        @include flex($direction: column);
+        width: 85%;
+        margin: auto;
+    }
+
+    .inner {
+        @include flex;
+    }
+
+    .food-type-container {
+        @include flex($direction: column);
+        p{
+            font-size: map-get($font-sizes, xl);
+        }
+        svg{
+            width: 11em;
+        }
+    }
+}
