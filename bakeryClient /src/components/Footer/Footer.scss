@@ -6,6 +6,9 @@
 footer{
     @include flex($direction: column);
     background-color: map-get($primary-colors, bg-black);
+    span, a{
+        font-weight: map-get($font-weights, bold )
+    }
     .upper-footer{
         @include flex($place_horizontal: space-around);
         width: 100%;
@@ -49,5 +52,38 @@ footer{
         width: 100vw;
         height: 1px;
         background-color: map-get($text-colors, grey );
+    }
+
+    .lower-footer{
+        @include flex($place_horizontal: space-between);
+        width: 85%;
+        color: map-get($text-colors, grey);
+        padding: 2em 1em;
+
+        a{
+            margin: 20px;
+        }
+        a:hover{
+            color: white;
+            transition: $generic_transition;
+        }
+    }
+
+    @media(max-width: $phone){
+        .lower-footer{
+            @include flex($direction: column);
+            padding: 5px;
+            a{
+                margin: 10px;
+            }
+            div{
+                width: 100%;
+                gap: none;
+                white-space: nowrap;
+                font-size: map-get($font-sizes, sm );
+                @include flex;
+                flex-wrap: wrap;
+            }
+        }
     }
 }

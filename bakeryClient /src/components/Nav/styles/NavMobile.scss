@@ -9,7 +9,10 @@ $pale-pink: map-get($accent-colors, pale-pink);
     background-color: white;
     padding: 1em;
     position: sticky;
-    top: 0;
+
+    &.isScrolled{
+        top: 1em;
+    }
 
     .logo {
         width: 250px;
