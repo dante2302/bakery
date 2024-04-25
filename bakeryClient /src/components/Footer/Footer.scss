@@ -1,0 +1,33 @@
+@import "../styles_partials/flex";
+@import "../styles_partials/colors";
+@import "../styles_partials/fonts";
+
+footer{
+    @include flex($direction: column);
+    background-color: map-get($primary-colors, bg-black);
+    .upper-footer{
+        @include flex($place_horizontal: space-around);
+        width: 100%;
+        padding: 2em;
+
+        div{
+            @include flex($direction: column, $place_vertical: start);
+            gap: 1em;
+        }
+        h6{
+            color: white;
+            font-size: calc(map-get($font-sizes, reg ) - .2rem);
+        }
+        .logo{
+            width: 260px;
+            height: 180px;
+            background-color: white;
+        }
+    }
+
+    hr{
+        width: 100vw;
+        height: 1px;
+        background-color: map-get($text-colors, grey );
+    }
+}
