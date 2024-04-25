@@ -4,22 +4,7 @@ $fw-thin: 100;
 $fw-reg: 400;
 $fw-bold: 600;
 
-$font-sizes: (
-    sm: 0.9rem,
-    reg: 1.22rem,
-    lg: 1.8rem,
-    xl: 2.2rem
-);
-
-@media(min-width: phone) {
-    $font-sizes: (
-        sm: 1.3rem,
-        reg: 1.7rem,
-        lg: 2.4rem,
-        xl: 2.7rem,
-    )
-}
-
-
+// font sizes are in index.scss 
+// reason - not functioning media queries when using variables
 
 $ff-main: "Roboto", sans-serif;

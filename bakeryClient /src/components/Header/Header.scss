@@ -46,7 +46,7 @@ header {
         }
 
         h1 {
-            font-size: map-get($font-sizes, x-lg);
+            font-size: var(--fs-lg);
         }
     }
 

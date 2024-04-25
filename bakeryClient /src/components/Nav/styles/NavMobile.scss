@@ -57,7 +57,7 @@
             gap: 15px;
             margin-top: 2em;
             font-weight: $fw-bold;
-            font-size: map-get($font-sizes, reg);
+            font-size: var(--fs-reg);
             
             a{
                 transition: .2s ease-in-out;

@@ -41,7 +41,7 @@ nav{
     }
 
     span{
-        font-size: map-get($font-sizes, sm );
+        font-size: var(--fs-sm);
     }
 }
 
@@ -74,7 +74,7 @@ nav{
         background-color: white;
         padding: 6px 15px;
         border-radius: 6px;
-        font-size: calc(map-get($font-sizes, sm) + 0.25rem);
+        font-size: var(--fs-sm);
 
         &:hover{
             color: white;

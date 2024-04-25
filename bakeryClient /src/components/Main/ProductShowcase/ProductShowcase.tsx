@@ -1,4 +1,5 @@
 import "./ProductShowcase.scss"
+
 export default function ProductShowcase(){
     return(
         <div className="product-showcase-wrap">

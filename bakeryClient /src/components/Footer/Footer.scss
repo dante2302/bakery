@@ -31,7 +31,7 @@ footer{
 
         h6{
             color: white;
-            font-size: calc(map-get($font-sizes, reg ) - .2rem);
+            font-size: calc(var(--fs-reg) - .2rem);
         }
 
         .logo{
@@ -78,9 +78,9 @@ footer{
             }
             div{
                 width: 100%;
-                gap: none;
+                gap: 0;
                 white-space: nowrap;
-                font-size: map-get($font-sizes, sm);
+                font-size: var(--fs-sm);
                 @include flex;
                 flex-wrap: wrap;
             }

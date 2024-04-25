@@ -15,7 +15,7 @@
     }
 
     h1 {
-        font-size: map-get($font-sizes, xl);
+        font-size: var(--fs-xl);
         text-align: center;
 
         &::after {
@@ -39,11 +39,11 @@
         text-align: center;
 
         h2 {
-            font-size: map-get($font-sizes, lg);
+            font-size: var(--fs-lg);
         }
 
         p {
-            font-size: calc(map-get($font-sizes, reg) - .2rem);
+            font-size: calc(var(--fs-reg) - .2rem);
         }
 
         svg {
