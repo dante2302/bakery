@@ -46,7 +46,9 @@ nav{
 }
 
 .lower-nav{
+    @include flex($place_horizontal: space-between);
     padding-block: 25px;
+
     .logo{
         width: 200px;
         height: 50px;
@@ -60,10 +62,10 @@ nav{
 
     a{
         transition: .2s ease-in;
-    }
 
-    a:hover{
-        color: map-get($accent-colors, pale-pink);
+        &:hover{
+            color: map-get($accent-colors, pale-pink);
+        }
     }
 
     .order-btn{
@@ -73,12 +75,10 @@ nav{
         padding: 6px 15px;
         border-radius: 6px;
         font-size: calc(map-get($font-sizes, sm) + 0.25rem);
-    }
 
-    .order-btn:hover{
-        color: white;
-        background-color: map-get($accent-colors, pale-pink);
+        &:hover{
+            color: white;
+            background-color: map-get($accent-colors, pale-pink);
+        }
     }
-
-    @include flex($place_horizontal: space-between);
 }

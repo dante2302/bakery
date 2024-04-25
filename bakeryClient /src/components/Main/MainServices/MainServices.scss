@@ -17,16 +17,17 @@
     h1 {
         font-size: map-get($font-sizes, xl);
         text-align: center;
+
+        &::after {
+            display: block;
+            width: 2em;
+            height: 1px;
+            background-color: white;
+            content: "";
+            margin: 1em auto
+        }
     }
 
-    h1::after {
-        display: block;
-        width: 2em;
-        height: 1px;
-        background-color: white;
-        content: "";
-        margin: 1em auto
-    }
 
     .inner {
         @include flex;

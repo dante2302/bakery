@@ -13,6 +13,13 @@ footer{
         div{
             @include flex($direction: column, $place_vertical: start);
             gap: 1em;
+            color: map-get($text-colors, grey);
+        }
+        span, a{
+            &:hover{
+                color: red;
+            }
+            cursor: pointer;
         }
         h6{
             color: white;

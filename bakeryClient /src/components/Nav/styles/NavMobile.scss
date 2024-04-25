@@ -26,13 +26,12 @@ $pale-pink: map-get($accent-colors, pale-pink);
             transition: .15s ease-in;
         }
 
-    }
+        &:hover{
+            background-color: $pale-pink;
 
-    .hamburger-btn:hover {
-        background-color: $pale-pink;
-
-        path {
-            stroke: white;
+            path {
+                stroke: white;
+            }
         }
     }
 
@@ -40,9 +39,9 @@ $pale-pink: map-get($accent-colors, pale-pink);
     .modal-content {
         background-color: $pale-pink;
         width: 30%;
-            height: 100vh;
-            position: fixed;
-            z-index: 6;
+        height: 100vh;
+        position: fixed;
+        z-index: 6;
 
         // list of links
         div {
@@ -54,29 +53,30 @@ $pale-pink: map-get($accent-colors, pale-pink);
             font-size: map-get($font-sizes, reg);
             
             a{
-                transition: .2s ease-in-out
-            }
-            a:hover{
-                color: map-get($accent-colors, brown);
+                transition: .2s ease-in-out;
+
+                &:hover{
+                    color: map-get($accent-colors, brown);
+                }
             }
             //svg style for a closing button
             svg{
                 border-radius: 8px;
                 transition: .2s ease-in-out;
+
+                &:hover{
+                    cursor: pointer;
+                    background-color: white;
+
+                    path {
+                        transition: .2s ease-in-out;
+                        stroke: $pale-pink;
+                    }
+                }
             }
 
             svg>path {
                 stroke: white;
-            }
-
-            svg:hover {
-                cursor: pointer;
-                background-color: white;
-
-                path {
-                    transition: .2s ease-in-out;
-                    stroke: $pale-pink;
-                }
             }
         }
     }

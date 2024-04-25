@@ -39,11 +39,11 @@ header {
             cursor: pointer;
             padding: 10px 20px;
             font-weight: map-get($font-weights, bold);
-        }
 
-        button:hover {
-            color: $p-pink;
-            background-color: white;
+            &:hover{
+                color: $p-pink;
+                background-color: white;
+            }
         }
 
         h1 {
@@ -55,10 +55,12 @@ header {
         .wrap{
             @include flex($direction: column);
             text-align: center;
+
             div {
                 @include flex($direction: column);
                 gap: 20px;
             }
+
             .img-temp{
                 max-width: 80vw;
             }
