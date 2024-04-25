@@ -7,7 +7,7 @@ footer{
     @include flex($direction: column);
     background-color: $bg-black;
     span, a{
-        font-weight: map-get($font-weights, bold )
+        font-weight: $fw-bold 
     }
     .upper-footer{
         @include flex($place_horizontal: space-around);

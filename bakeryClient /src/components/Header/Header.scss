@@ -37,10 +37,10 @@ header {
             transition: .2s ease-in;
             cursor: pointer;
             padding: 10px 20px;
-            font-weight: map-get($font-weights, bold);
+            font-weight: $fw-bold;
 
             &:hover{
-                color: $p-pink;
+                color: $acc-pale-pink;
                 background-color: white;
             }
         }

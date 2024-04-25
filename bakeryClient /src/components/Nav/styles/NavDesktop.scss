@@ -17,7 +17,7 @@ nav{
 .upper-nav, .lower-nav{
     width: 85%;
     margin: auto;
-    font-weight: map-get($font-weights, bold);
+    font-weight: $fw-bold;
 }
 
 .upper-nav{
@@ -70,7 +70,7 @@ nav{
 
     .order-btn{
         border: 2px solid $acc-pale-pink;
-        color: map-get($accent-colors, pale-pink);
+        color: $acc-pale-pink;
         background-color: white;
         padding: 6px 15px;
         border-radius: 6px;

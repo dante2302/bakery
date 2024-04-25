@@ -1,0 +1,35 @@
+@import "../../styles_partials/colors";
+@import "../../styles_partials/flex";
+@import "../../styles_partials/fonts";
+.product-showcase-wrap{
+    background-color: $bg-white;
+    width: 100%;
+    padding-top: 1.5em;
+    padding-bottom: 4em;
+    .container{
+        width: 85%;
+        margin: auto;
+
+        h1{
+            font-size: map-get($font-sizes, xl);
+        }
+    }
+
+    .product-grid{
+        @include flex;
+            gap: 20px;
+
+        li{
+            border-radius: 7px 7px 5px 5px;
+            border: 1px solid black;
+            overflow: hidden;
+            @include flex($direction: column);
+
+            .temp-image{
+                width: 250px;
+                height: 200px;
+                background: red;
+            }
+        }
+    }
+}

@@ -1,10 +1,8 @@
 @import "./breakpoints";
 
-$font-weights: (
-    thin: 100,
-    reg: 400,
-    bold: 600
-);
+$fw-thin: 100;
+$fw-reg: 400;
+$fw-bold: 600;
 
 $font-sizes: (
     sm: 0.9rem,
