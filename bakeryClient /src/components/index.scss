@@ -7,7 +7,7 @@ body{
 
 :root{
     --fs-sm: 0.8rem;
-    --fs-reg: 1.4rem;
+    --fs-reg: 1.2rem;
     --fs-lg: 1.8rem;
     --fs-xl: 2rem;
 }
@@ -15,7 +15,7 @@ body{
 @media(min-width: $tablet){
     :root{
         --fs-sm: 0.9rem;
-        --fs-reg: 1.6rem;
+        --fs-reg: 1.4rem;
         --fs-lg: 2.2rem;
         --fs-xl: 2.4rem;
     }

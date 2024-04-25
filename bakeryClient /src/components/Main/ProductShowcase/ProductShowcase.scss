@@ -14,15 +14,26 @@
         margin: auto;
 
         h1{
-            font-size: var(--fs-xl) + .2rem;
+            font-size: calc(var(--fs-xl) + .5rem);
             font-weight: $fw-bold;
             color: $text-black;
+
+            &::after{
+                width: 50px;
+                border-radius: 15px;
+                content: "";
+                height: 2px;
+                display: block;
+                margin-bottom: .5em;
+                background-color: grey;
+            }
+
         }
 
         h6{
-            font-size: var(--fs-reg);
+            font-size: calc(var(--fs-reg) - .2rem);
             font-weight: $fw-reg;
-            color: darkgrey;
+            margin-bottom: .7em;
         }
     }
 
@@ -46,13 +57,19 @@
 
 
             button{
-                padding: 7px 22px;
-                font-weight: $fw-bold;
-                color: $text-white;
-                background-color: $acc-purple;
+                margin-top: .5em;
                 margin-bottom: 1.5em;
+                padding: 7px 22px;
+
+                font-weight: $fw-bold;
+                font-size: calc(var(--fs-sm) + .1rem);
+                color: $text-white;
+
+                background-color: $acc-purple;
+
                 border: none;
                 border-radius: 30px;
+
                 cursor: pointer;
                 transition: $generic_transition;
 
