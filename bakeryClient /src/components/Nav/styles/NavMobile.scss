@@ -2,7 +2,6 @@
 @import "../../styles_partials/colors";
 @import "../../styles_partials/fonts";
 
-$pale-pink: map-get($accent-colors, pale-pink);
 
 .nav {
     @include flex($place_horizontal: space-between);
@@ -17,7 +16,7 @@ $pale-pink: map-get($accent-colors, pale-pink);
     .logo {
         width: 250px;
         height: 60px;
-        background: $pale-pink;
+        background: $acc-pale-pink;
     }
 
     .hamburger-btn {
@@ -30,12 +29,12 @@ $pale-pink: map-get($accent-colors, pale-pink);
         border-radius: 10px;
 
         path {
-            stroke: $pale-pink;
+            stroke: $acc-pale-pink;
             transition: .15s ease-in;
         }
 
         &:hover{
-            background-color: $pale-pink;
+            background-color: $acc-pale-pink;
 
             path {
                 stroke: white;
@@ -45,7 +44,7 @@ $pale-pink: map-get($accent-colors, pale-pink);
 
     //outer wrap 
     .modal-content {
-        background-color: $pale-pink;
+        background-color: $acc-pale-pink;
         width: 30%;
         height: 100vh;
         position: fixed;
@@ -64,7 +63,7 @@ $pale-pink: map-get($accent-colors, pale-pink);
                 transition: .2s ease-in-out;
 
                 &:hover{
-                    color: map-get($accent-colors, brown);
+                    color: $acc-brown;
                 }
             }
             //svg style for a closing button
@@ -78,7 +77,7 @@ $pale-pink: map-get($accent-colors, pale-pink);
 
                     path {
                         transition: .2s ease-in-out;
-                        stroke: $pale-pink;
+                        stroke: $acc-pale-pink;
                     }
                 }
             }

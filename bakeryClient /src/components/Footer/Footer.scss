@@ -5,7 +5,7 @@
 
 footer{
     @include flex($direction: column);
-    background-color: map-get($primary-colors, bg-black);
+    background-color: $bg-black;
     span, a{
         font-weight: map-get($font-weights, bold )
     }
@@ -17,7 +17,7 @@ footer{
         div{
             @include flex($direction: column, $place_vertical: start);
             gap: 1em;
-            color: map-get($text-colors, grey);
+            color: $text-grey;
         }
 
         span, a{
@@ -51,13 +51,13 @@ footer{
     hr{
         width: 100vw;
         height: 1px;
-        background-color: map-get($text-colors, grey );
+        background-color: $text-grey;
     }
 
     .lower-footer{
         @include flex($place_horizontal: space-between);
         width: 85%;
-        color: map-get($text-colors, grey);
+        color: $text-grey;
         padding: 2em 1em;
 
         a{
@@ -80,7 +80,7 @@ footer{
                 width: 100%;
                 gap: none;
                 white-space: nowrap;
-                font-size: map-get($font-sizes, sm );
+                font-size: map-get($font-sizes, sm);
                 @include flex;
                 flex-wrap: wrap;
             }

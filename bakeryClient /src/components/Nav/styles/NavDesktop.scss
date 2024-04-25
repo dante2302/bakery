@@ -11,7 +11,7 @@ nav{
 }
 
 .upper-nav-wrap{
-    background-color: map-get($accent-colors, pale-pink);
+    background-color: $acc-pale-pink;
 }
 
 .upper-nav, .lower-nav{
@@ -23,7 +23,7 @@ nav{
 .upper-nav{
     @include flex($place_horizontal: space-between);
     padding-block: 15px;
-    color: map-get($text-colors, white);
+    color: $text-white;
 
     svg{
         width: 25px;
@@ -52,7 +52,7 @@ nav{
     .logo{
         width: 200px;
         height: 50px;
-        background-color: map-get($accent-colors, pale-pink);
+        background-color: $acc-pale-pink
     }
 
     div{
@@ -64,12 +64,12 @@ nav{
         transition: .2s ease-in;
 
         &:hover{
-            color: map-get($accent-colors, pale-pink);
+            color: $acc-pale-pink;
         }
     }
 
     .order-btn{
-        border: 2px solid map-get($accent-colors, pale-pink);
+        border: 2px solid $acc-pale-pink;
         color: map-get($accent-colors, pale-pink);
         background-color: white;
         padding: 6px 15px;
@@ -78,7 +78,7 @@ nav{
 
         &:hover{
             color: white;
-            background-color: map-get($accent-colors, pale-pink);
+            background-color: $acc-pale-pink;
         }
     }
 }

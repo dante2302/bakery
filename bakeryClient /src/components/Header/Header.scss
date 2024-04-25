@@ -3,11 +3,10 @@
 @import "../styles_partials/colors";
 @import "../styles_partials/breakpoints";
 
-$p-pink: map-get($accent-colors, pale-pink);
-
 header {
     width: 100%;
     padding-block: 2em;
+    background-color: $bg-white;
 
     .wrap {
         @include flex($place_vertical: start);
@@ -32,8 +31,8 @@ header {
 
         button {
             color: white;
-            background-color: $p-pink;
-            border: 2px solid $p-pink;
+            background-color: $acc-pale-pink;
+            border: 2px solid $acc-pale-pink;
             border-radius: 6px;
             transition: .2s ease-in;
             cursor: pointer;
