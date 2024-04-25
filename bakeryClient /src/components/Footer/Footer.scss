@@ -1,6 +1,7 @@
 @import "../styles_partials/flex";
 @import "../styles_partials/colors";
 @import "../styles_partials/fonts";
+@import "../styles_partials/transitions";
 
 footer{
     @include flex($direction: column);
@@ -15,20 +16,32 @@ footer{
             gap: 1em;
             color: map-get($text-colors, grey);
         }
+
         span, a{
-            &:hover{
-                color: red;
-            }
             cursor: pointer;
+            transition: $generic_transition;
+
+            &:hover{
+                color: white;
+            }
         }
+
         h6{
             color: white;
             font-size: calc(map-get($font-sizes, reg ) - .2rem);
         }
+
         .logo{
-            width: 260px;
+            width: 20%;
             height: 180px;
             background-color: white;
+        }
+    }
+
+    @media(max-width: $tablet){
+        .upper-footer{
+            @include flex($direction: column, $place_vertical: start);
+            gap: 40px;
         }
     }
 

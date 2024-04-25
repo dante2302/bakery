@@ -6,15 +6,20 @@ $pale-pink: map-get($accent-colors, pale-pink);
 
 .nav {
     @include flex($place_horizontal: space-between);
+    background-color: white;
     padding: 1em;
+    position: sticky;
+    top: 0;
 
     .logo {
         width: 250px;
-        height: 80px;
+        height: 60px;
         background: $pale-pink;
     }
 
     .hamburger-btn {
+        flex-shrink: 0;
+        margin-left: 10px;
         width: 60px;
         height: 60px;
         cursor: pointer;
@@ -78,6 +83,11 @@ $pale-pink: map-get($accent-colors, pale-pink);
             svg>path {
                 stroke: white;
             }
+        }
+    }
+    @media(max-width: calc($phone - 200px)){
+        .modal-content{
+            width: 60%;
         }
     }
 }
