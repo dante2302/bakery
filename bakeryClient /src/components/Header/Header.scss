@@ -1,0 +1,68 @@
+@import "../styles_partials/flex";
+@import "../styles_partials/fonts";
+@import "../styles_partials/colors";
+@import "../styles_partials/breakpoints";
+
+header {
+    width: 100%;
+    padding-block: 2em;
+    background-color: $bg-white;
+
+    .wrap {
+        @include flex($place_vertical: start);
+        padding-block: 3.5em;
+        gap: 2.5em;
+        width: 85%;
+        margin: auto;
+        border-bottom: 1px solid lightgray;
+        margin-bottom: 10px;
+
+        .img-temp {
+            vertical-align: middle;
+            border-radius: 15px;
+            max-width: 40vw;
+            height: auto;
+        }
+
+        div {
+            @include flex($direction: column, $place_vertical: start);
+            gap: 20px;
+        }
+
+        button {
+            color: white;
+            background-color: $acc-pale-pink;
+            border: 2px solid $acc-pale-pink;
+            border-radius: 6px;
+            transition: .2s ease-in;
+            cursor: pointer;
+            padding: 10px 20px;
+            font-weight: $fw-bold;
+
+            &:hover{
+                color: $acc-pale-pink;
+                background-color: white;
+            }
+        }
+
+        h1 {
+            font-size: var(--fs-lg);
+        }
+    }
+
+    @media(max-width: $tablet) {
+        .wrap{
+            @include flex($direction: column);
+            text-align: center;
+
+            div {
+                @include flex($direction: column);
+                gap: 20px;
+            }
+
+            .img-temp{
+                max-width: 80vw;
+            }
+        }
+    }
+}
