@@ -51,6 +51,9 @@ builder.Services.AddScoped<IEntityService<Topping>, ToppingService>();
 builder.Services.AddScoped<IRepository<FoodType>, FoodTypeRepo>();
 builder.Services.AddScoped<IEntityService<FoodType>, FoodTypeService>();
 
+builder.Services.AddScoped<IRepository<Base>, BaseRepo>();
+builder.Services.AddScoped<IEntityService<Base>, BaseService>();
+
 builder.Services.AddScoped<IRepository<User>, UserRepo>();
 builder.Services.AddScoped<IExtendedUserRepo, UserRepo>();
 builder.Services.AddScoped<IEntityService<User>, UserService>();

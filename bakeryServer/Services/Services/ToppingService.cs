@@ -33,7 +33,7 @@ namespace bakeryServer.Services
             return entity;
         }
 
-        public async Task<IEnumerable<Topping?>> ReadAll()
+        public async Task<IEnumerable<Topping>> ReadAll()
         {
             var list = await _repo.ReadAll();
             if(list.Count == 0)

@@ -30,7 +30,7 @@ namespace bakeryServer.Services
             return entity;
         }
 
-        public async Task<IEnumerable<User?>> ReadAll()
+        public async Task<IEnumerable<User>> ReadAll()
         {
             var list = await _repo.ReadAll();
             if(list.Count == 0)

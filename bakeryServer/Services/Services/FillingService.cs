@@ -23,7 +23,7 @@ namespace bakeryServer.Services
             return filling;
         }
 
-        public async Task<Filling?> ReadOne(int id)
+        public async Task<Filling> ReadOne(int id)
         {
             var filling = await _repo.ReadOne(id);
             if (filling is null)

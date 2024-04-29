@@ -32,7 +32,7 @@ namespace bakeryServer.Services
             return entity;
         }
 
-        public async Task<IEnumerable<Order?>> ReadAll()
+        public async Task<IEnumerable<Order>> ReadAll()
         {
             var list = await _repo.ReadAll();
             if(list.Count == 0)
@@ -42,7 +42,7 @@ namespace bakeryServer.Services
             return list;
         }
 
-        public async Task<IEnumerable<Order?>> ReadAllSortedByDate(bool ascending)
+        public async Task<IEnumerable<Order>> ReadAllSortedByDate(bool ascending)
         {
             var list = await _repo.ReadAll();
             if(list.Count == 0)
