@@ -15,7 +15,7 @@ namespace bakeryServer.Models
 
         public int[] Fillings { get; set; }
         public int[] Toppings { get; set; }
-        public int[] Base { get; set; }
+        public int[] Bases { get; set; }
 
         public required bool ContainsLettering {get; set;}
         public required bool IsCompleted { get; set; }
