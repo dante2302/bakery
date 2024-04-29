@@ -26,44 +26,44 @@ namespace bakeryServer.Services
 
         public async Task<Base> ReadOne(int id)
         {
-            var filling = await _repo.ReadOne(id);
-            if (filling is null)
+            var fBase = await _repo.ReadOne(id);
+            if (fBase is null)
             {
                 throw new NotFoundException();
             }
-            return filling;
+            return fBase;
         }
 
-        public async Task<IEnumerable<Filling>> ReadAll()
+        public async Task<IEnumerable<Base>> ReadAll()
         {
-            List<Filling> fList = await _repo.ReadAll();
-            if(fList.Count == 0)
+            List<Base> bList = await _repo.ReadAll();
+            if(bList.Count == 0)
             {
                 throw new NotFoundException();
             }
-            return fList;
+            return bList;
         }
 
-        public async Task Update(Filling newFilling)
+        public async Task Update(Base newBase)
         {
-            var fillingForUpdate = await ReadOne(newFilling.Id);
-            if (fillingForUpdate is null)
+            var baseForUpdate = await ReadOne(newBase.Id);
+            if (baseForUpdate is null)
             {
                 throw new NotFoundException();
             }
 
-            if(newFilling is null || newFilling.Name is null)
+            if(newBase is null || newBase.Name is null)
             {
                 throw new ArgumentException("Invalid entity");    
             }
 
-            await _repo.Update(newFilling, fillingForUpdate);
+            await _repo.Update(newBase, baseForUpdate);
         }
 
         public async Task Delete(int id)
         {
-            Filling fillingForDeletion = await ReadOne(id);
-            await _repo.Delete(fillingForDeletion);
+            Base baseForDeletion = await ReadOne(id);
+            await _repo.Delete(baseForDeletion);
         }
     }
 }
