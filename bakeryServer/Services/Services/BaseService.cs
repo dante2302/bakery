@@ -1,4 +1,5 @@
-﻿using bakeryServer.Models;
+
+using bakeryServer.Models;
 using bakeryServer.Services.Repositories;
 using Services.Validation;
 using Exceptions;
@@ -6,24 +7,24 @@ using Services;
 
 namespace bakeryServer.Services
 {
-    public class FillingService(IRepository<Filling> repo): IEntityService<Filling> 
+    public class BaseService(IRepository<Base> repo): IEntityService<Base> 
     {
-        private readonly IRepository<Filling> _repo = repo;
+        private readonly IRepository<Base> _repo = repo;
 
-        public async Task<Filling> Create(Filling filling)
+        public async Task<Base> Create(Base fBase)
         {
-            var validator = new EntityValidator<Filling>();
+            var validator = new EntityValidator<Base>();
 
-            if (!validator.AssertFields(filling) || filling is null)
+            if (!validator.AssertFields(fBase) || fBase is null)
             {
                 throw new ArgumentException("Invalid entity");    
             }
 
-            await _repo.Create(filling);
-            return filling;
+            await _repo.Create(fBase);
+            return fBase;
         }
 
-        public async Task<Filling?> ReadOne(int id)
+        public async Task<Base> ReadOne(int id)
         {
             var filling = await _repo.ReadOne(id);
             if (filling is null)

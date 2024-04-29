@@ -8,4 +8,3 @@
         public int[] UncompatableToppings { get; set; }
     }
 }
-

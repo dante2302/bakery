@@ -8,16 +8,23 @@ namespace WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class FoodTypesController(IEntityService<FoodType> service) : ControllerBase
+    public class FoodTypesController(
+        IEntityService<FoodType> foodService,
+        IEntityService<Filling> fillingService,
+        IEntityService<Topping> toppingService,
+        IEntityService<Base> baseService) : ControllerBase
     {
-        private readonly IEntityService<FoodType> _service = service;
+        private readonly IEntityService<FoodType> _foodService = foodService;
+        private readonly IEntityService<Filling> _fillingService = fillingService;
+        private readonly IEntityService<Topping> _toppingService = toppingService;
+        private readonly IEntityService<Base> _baseService = baseService;
 
         [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
             try
             {
-                var foodType = await _service.ReadAll();
+                var foodType = await _foodService.ReadAll();
                 return Ok(foodType);
             }
             catch (NotFoundException)
@@ -35,8 +42,13 @@ namespace WebApi.Controllers
         {
             try
             {
-                var foodType = await _service.ReadOne(id);
-                return Ok(foodType);
+                var foodType = await _foodService.ReadOne(id);
+                List<Filling> fillings = await MapExternalEntity(_fillingService, foodType.Fillings);
+                List<Topping> toppings = await MapExternalEntity(_toppingService, foodType.Toppings);
+                List<Base> bases = await MapExternalEntity(_baseService, foodType.Bases);
+                FoodTypeExtras extras = new(fillings, toppings, bases);
+                FoodTypeDTO fDTO = new(foodType, extras);
+                return Ok(fDTO);
             }
             catch (NotFoundException)
             {
@@ -57,17 +69,17 @@ namespace WebApi.Controllers
                 {
                     throw new ArgumentException($"Invalid Entity: {ModelState}");
                 }
-                FoodType result = await _service.Create(foodType);
+                FoodType result = await _foodService.Create(foodType);
 
                 return CreatedAtAction(nameof(GetOne), new { id = result.Id }, result);
             }
 
-            catch(ArgumentException ex)
+            catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }
 
-            catch(Exception)
+            catch (Exception)
             {
                 return StatusCode(500, "Internal Server Error.");
             }
@@ -78,10 +90,10 @@ namespace WebApi.Controllers
         {
             try
             {
-                await _service.Update(updatedFoodType);
+                await _foodService.Update(updatedFoodType);
                 return Ok();
             }
-            catch(NotFoundException)
+            catch (NotFoundException)
             {
                 return NotFound();
             }
@@ -90,9 +102,9 @@ namespace WebApi.Controllers
                 return BadRequest(ex.Message);
             }
 
-            catch(Exception)
+            catch (Exception)
             {
-                return StatusCode(500,$"Internal Server Error");
+                return StatusCode(500, $"Internal Server Error");
             }
         }
 
@@ -101,7 +113,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                await _service.Delete(id);
+                await _foodService.Delete(id);
                 return Ok();
             }
             catch (NotFoundException)
@@ -111,6 +123,26 @@ namespace WebApi.Controllers
             catch (Exception)
             {
                 return StatusCode(500, $"Internal Server Error");
+            }
+        }
+
+        private async Task<List<T>> MapExternalEntity<T>(IEntityService<T> _service, List<int> ids)
+        {
+            List<T> entityList = [];
+            try
+            {
+                foreach (int id in ids)
+                {
+                    T entity = await _service.ReadOne(id);
+                    entityList.Add(entity);
+                }
+                return entityList;
+            }
+            catch
+            {
+                // log missing entity
+                // cleanup function
+                return  [];
             }
         }
     }
