@@ -1,4 +1,5 @@
 
+import { Link } from "react-router-dom";
 import { Cardboard, Email, FacebookLogo, InstagramLogo } from "../SVGs";
 import NavLinkList from "./NavLinkList";
 import "./styles/NavDesktop.scss";
@@ -30,7 +31,7 @@ export default function NavDesktop() {
                         <div className="logo"></div>
                         <NavLinkList />
                     </div>
-                    <a href="#" className="order-btn">Поръчай</a>
+                    <Link to="./order" className="order-btn">Поръчай</Link>
                 </div>
             </div>
         </nav>

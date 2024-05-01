@@ -4,6 +4,9 @@ import Home from "./Home/Home";
 import Contact from "./Contact/Contact";
 import Nav from "./Nav/Nav";
 import "./index.scss";
+import Footer from "./Footer/Footer";
+import OrderAll from "./Order/OrderAll";
+import OrderFoodPage from "./Order/OrderFoodPage";
 
 function App() {
   return (
@@ -13,7 +16,12 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="about" element={<About />} />
       <Route path="contact" element={<Contact />} />
+      <Route path="order" >
+        <Route index element={<OrderAll />}/>
+        <Route path={':name'} element={<OrderFoodPage />} />
+      </Route>
     </Routes>
+    <Footer />
     </>
   )
 }

@@ -1,12 +1,13 @@
 import { PropsWithChildren } from "react";
+import { Link } from "react-router-dom";
 
 export default function NavLinkList({children}: PropsWithChildren){
     return(
         <div>
             {children}
-            <a href="#">Начало</a>
-            <a href="#">За нас</a>
-            <a href="#">Контакти</a>
+            <Link to="/">Начало</Link>
+            <Link to="/about">За нас</Link>
+            <Link to="/contact">Контакти</Link>
         </div>
     )
 }
