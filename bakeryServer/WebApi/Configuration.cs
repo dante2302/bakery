@@ -1,7 +1,7 @@
 ﻿
 public static class Configuration
 {
-    private static IConfigurationRoot _manager = new ConfigurationBuilder()
+    private static readonly IConfigurationRoot _manager = new ConfigurationBuilder()
         .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
         .AddJsonFile("appsettings.json")
         .Build();

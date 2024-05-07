@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using bakeryServer.Services;
 using bakeryServer.Models;
 using Exceptions;
-using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
+using Services;
 
 namespace WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class FillingsController(FillingService service) : ControllerBase
+    public class FillingsController(IEntityService<Filling> service) : ControllerBase
     {
-        private readonly FillingService _service = service;
+        private readonly IEntityService<Filling> _service = service;
 
         [HttpGet("all")]
         public async Task<IActionResult> GetAll()
@@ -23,6 +23,10 @@ namespace WebApi.Controllers
             catch (NotFoundException)
             {
                 return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
             }
         }
 
@@ -38,6 +42,10 @@ namespace WebApi.Controllers
             {
                 return NotFound();
             }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
 
         [HttpPost]
@@ -47,16 +55,16 @@ namespace WebApi.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    throw new ValidationException($"{ModelState}");
+                    throw new ArgumentException($"Invalid Entity: {ModelState}");
                 }
                 Filling result = await _service.Create(filling);
 
                 return CreatedAtAction(nameof(GetOne), new { id = result.Id }, result);
             }
 
-            catch(ValidationException ex)
+            catch(ArgumentException ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.Message);
             }
 
             catch(Exception)
@@ -77,9 +85,9 @@ namespace WebApi.Controllers
             {
                 return NotFound();
             }
-            catch (ValidationException ex)
+            catch (ArgumentException ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.Message);
             }
 
             catch(Exception)

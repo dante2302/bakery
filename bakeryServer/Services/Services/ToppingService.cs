@@ -3,19 +3,20 @@ using bakeryServer.Services.Repositories;
 using System.ComponentModel.DataAnnotations;
 using Services.Validation;
 using Exceptions;
+using Services;
 
 namespace bakeryServer.Services
 {
-    public class ToppingService(ToppingRepo repo)
+    public class ToppingService(IRepository<Topping> repo): IEntityService<Topping>
     {
-        private readonly ToppingRepo _repo = repo;
+        private readonly IRepository<Topping> _repo = repo;
         public async Task<Topping> Create(Topping entity)
         {
             var validator = new EntityValidator<Topping>();
 
             if (!validator.AssertFields(entity) || entity is null)
             {
-                throw new ValidationException();
+                throw new ArgumentException("Invalid Entity");
             }
 
             await _repo.Create(entity);
@@ -32,7 +33,7 @@ namespace bakeryServer.Services
             return entity;
         }
 
-        public async Task<IEnumerable<Topping?>> ReadAll()
+        public async Task<IEnumerable<Topping>> ReadAll()
         {
             var list = await _repo.ReadAll();
             if(list.Count == 0)
@@ -52,7 +53,7 @@ namespace bakeryServer.Services
 
             if(newEntity is null || newEntity.Name is null)
             {
-                throw new ValidationException();    
+                throw new ArgumentException("Invalid Entity");
             }
 
             await _repo.Update(newEntity, entityForUpdate);

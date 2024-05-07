@@ -7,11 +7,20 @@ namespace bakeryServer.Models
     {
         [Key] 
         public int Id { get; set; }
+        
+        [ForeignKey("FoodType")]
+        public required int FoodId { get; set; }
 
-        public int FoodId { get; set; }
-        public DateTime Date { get; set; }
+        public required DateTime Date { get; set; }
+
+        public int[] Fillings { get; set; }
+        public int[] Toppings { get; set; }
+        public int[] Bases { get; set; }
+
+        public required bool ContainsLettering {get; set;}
+        public required bool IsCompleted { get; set; }
 
         [ForeignKey("User")] 
-        public int UserId { get; set; }
+        public required int UserId { get; set; }
     }
 }

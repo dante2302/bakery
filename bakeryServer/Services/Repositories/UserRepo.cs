@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace bakeryServer.Services.Repositories
 {
-    public class UserRepo(BakeryContext context) : IRepository<User>
+    public class UserRepo(BakeryContext context) : IExtendedUserRepo 
     {
         private readonly BakeryContext _context = context;
 
@@ -40,5 +40,9 @@ namespace bakeryServer.Services.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public List<User> SearchByPhone(string phoneNumber)
+        {
+            return [.. _context.Users.Where(x => x.PhoneNumber == phoneNumber)];
+        }
     }
 }

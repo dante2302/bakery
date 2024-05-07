@@ -6,3 +6,4 @@
 # Ignore bin and obj folders recursively
 **/bin/
 **/obj/
+.fake
