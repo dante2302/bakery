@@ -2,7 +2,7 @@ export interface FoodType{
     id: number,
     name: string,
     fillings: Filling[],
-    topping: Topping[],
+    toppings: Topping[],
     bases: Base[],
     canContainLettering: boolean
 }

@@ -1,4 +1,4 @@
-const BASE_URL = "localhost:5792/foods"
+const BASE_URL = "http://localhost:5279/foodtypes?id=2"
 
 export async function ReadOneByName(name: string | undefined)
 {
@@ -7,7 +7,7 @@ export async function ReadOneByName(name: string | undefined)
         {
             return;
         }
-        const response = await fetch(`${BASE_URL}?name=${name}`);
+        const response = await fetch(BASE_URL);
         return response.json();
     }
 

@@ -1,99 +1,120 @@
-import { useEffect, useState } from "react";
+import { HTMLInputAutoCompleteAttribute, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import * as foodTypeService from "../../services/foodTypeService";
-import { FoodType, Filling, Topping, Base } from "../../services/Models";
+import { FoodType } from "../../services/Models";
 
-type OrderState = 
+
+type FilterCategory =
+    {
+        [filterName: string]: boolean
+    }
+
+type FilterCategoryName = "toppings" | "fillings" | "bases";
+
+type OrderFormState =
+    {
+        fillings: FilterCategory,
+        toppings: FilterCategory,
+        bases: FilterCategory
+    }
+
+const defaultOrderState: OrderFormState =
 {
-    [filterKey: string]: boolean
+    fillings: {},
+    toppings: {},
+    bases: {}
 }
 
-const defaultOrderState: OrderState = 
-{
-
-}
-
-export default function OrderFoodPage(){
+export default function OrderFoodPage() {
 
     const { name } = useParams();
-    const [orderForm, setOrderForm] = useState<OrderState>(defaultOrderState);
+    const [orderForm, setOrderForm] = useState(defaultOrderState);
     const [foodTypeData, setFoodTypeData] = useState<FoodType>();
-    const [fillings, setFillings] = useState<Filling[]>();
-    const [toppings, setToppings] = useState<Topping[]>();
-    const [bases, setBases] = useState<Base[]>();
 
     useEffect(() => {
         (async () => {
             const foodData: FoodType = await foodTypeService.ReadOneByName(name);
+            const fillings: FilterCategory = {};
+            foodData.fillings.forEach(value => {
+                fillings[value.id] = false;
+            })
+
+            const toppings: FilterCategory = {};
+            foodData.toppings.forEach(value => {
+                toppings[value.id] = false;
+            })
+
+            const bases: FilterCategory = {};
+            foodData.bases.forEach(value => bases[value.id] = false);
+
+            setOrderForm({ fillings, toppings, bases });
             setFoodTypeData(foodData);
-            setFillings(foodData.fillings);
-            setToppings(foodData.topping);
-            setBases(foodData.bases);
-        })(); 
+        })();
     }, []);
 
-    function handleCheckbox(e: React.MouseEvent<HTMLInputElement>){
-        e.preventDefault();
-        setOrderForm((orderForm: any) => (
+    function handleCheckbox(e: React.ChangeEvent<HTMLInputElement>, category: FilterCategoryName) {
+        setOrderForm(o => (
             {
-                ...orderForm,
-                [e.currentTarget.name]: !orderForm[e.currentTarget.name]
+                ...o, [category]:
+                {
+                    ...o[category],
+                    [e.target.name]: !o[category][e.target.name]
+                }
             }
         ))
     }
 
-    return(
-        // foodTypeData 
-        //     ?
-            <form className="order-food-container">
-                <h1>{foodTypeData?.name}</h1>
-                <img />
-                {/* {
-                    fillings?.length && 
+    return (
+        foodTypeData 
+            ?
+        <form className="order-food-container">
+            <h1>{foodTypeData.name}</h1>
+            <img />
+                {
+                    foodTypeData.fillings?.length && 
                 <div className="filter-container">
                     <h2>Fillings</h2>
-                    {fillings?.map((f) => 
+                    {foodTypeData.fillings?.map((f) => 
                         <div>
-                            <label htmlFor={f.id.toString()}></label>
+                            <label htmlFor={f.id.toString()}>{f.name}</label>
                             <input 
                             type="checkbox" key={f.id} />
                         </div>)
                     }
                 </div>
-                } */}
-                {
-                    toppings?.length && 
+                }
+            {
+                foodTypeData.toppings.length &&
                 <div className="filter-container">
                     <h2>Toppings</h2>
-                    {toppings?.map((f) => 
-                        <div>
-                            <label htmlFor={`${f.id}`}></label>
-                            <input 
-                                type="checkbox" 
-                                key={f.id} 
+                    {foodTypeData.toppings?.map((f) =>
+                        <div key={f.id}>
+                            <label htmlFor={`${f.id}`}>{f.name}</label>
+                            <input
+                                type="checkbox"
                                 name={f.id.toString()}
-                                checked={orderForm[f.id]}
-                                onClick={handleCheckbox}
-                                />
+                                checked={orderForm.toppings[f.id]}
+                                onChange={(e) => handleCheckbox(e, "toppings")}
+                            />
                         </div>)
                     }
                 </div>
 
-                }
-                {/* {bases?.length &&
+            }
+             {foodTypeData.bases?.length > 1 &&
 
                     <div className="filter-container">
                         <h2>Bases</h2>
-                        {bases?.map((f) =>
+                        {foodTypeData.bases?.map((f) =>
                             <div>
                                 <label htmlFor={`${f.id}`}></label>
                                 <input type="checkbox" key={f.id} />
                             </div>)
                         }
                     </div>
-                } */}
-                </form>
-            // :
-            // <div>err</div>
+                }
+        </form>
+        :
+        <div>err</div>
     )
 }
