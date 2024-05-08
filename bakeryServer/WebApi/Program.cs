@@ -49,18 +49,17 @@ builder.Services.AddScoped<IEntityService<Filling>, FillingService>();
 builder.Services.AddScoped<IRepo<Topping>, Repo<Topping>>();
 builder.Services.AddScoped<IEntityService<Topping>, ToppingService>();
 
-builder.Services.AddScoped<IRepository<FoodType>, FoodTypeRepo>();
+builder.Services.AddScoped<IRepo<FoodType>, Repo<FoodType>>();
 builder.Services.AddScoped<IEntityService<FoodType>, FoodTypeService>();
 
-builder.Services.AddScoped<IRepository<Base>, BaseRepo>();
+builder.Services.AddScoped<IRepo<Base>, Repo<Base>>();
 builder.Services.AddScoped<IEntityService<Base>, BaseService>();
 
-builder.Services.AddScoped<IRepository<User>, UserRepo>();
-builder.Services.AddScoped<IExtendedUserRepo, UserRepo>();
+builder.Services.AddScoped<IRepo<User>, Repo<User>>();
 builder.Services.AddScoped<IEntityService<User>, UserService>();
 builder.Services.AddScoped<IExtendedUserService, UserService>();
 
-builder.Services.AddScoped<IRepository<Order>, OrderRepo>();
+builder.Services.AddScoped<IRepo<Order>, Repo<Order>>();
 builder.Services.AddScoped<IEntityService<Order>, OrderService>();
 builder.Services.AddScoped<OrderDTOMapper, OrderDTOMapper>();
 
