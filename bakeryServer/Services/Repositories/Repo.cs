@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using bakeryServer.Models;
 
 namespace bakeryServer.Services.Repositories
 {

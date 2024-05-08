@@ -6,6 +6,7 @@ using bakeryServer.Services.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using NuGet.Protocol.Core.Types;
 using Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,10 +43,10 @@ builder.Services.AddDbContext<BakeryContext>(options =>
     options.UseNpgsql(connectionString, b => b.MigrationsAssembly("WebApi"));
 });
 
-builder.Services.AddScoped<IRepository<Filling>, FillingRepo>();
+builder.Services.AddScoped<IRepo<Filling>, Repo<Filling>>();
 builder.Services.AddScoped<IEntityService<Filling>, FillingService>();
 
-builder.Services.AddScoped<IRepository<Topping>, ToppingRepo>();
+builder.Services.AddScoped<IRepo<Topping>, Repo<Topping>>();
 builder.Services.AddScoped<IEntityService<Topping>, ToppingService>();
 
 builder.Services.AddScoped<IRepository<FoodType>, FoodTypeRepo>();

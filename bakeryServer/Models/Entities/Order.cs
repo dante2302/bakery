@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace bakeryServer.Models
 {
-    public class Order
+    public class Order : IEntity
     {
         [Key] 
         public int Id { get; set; }

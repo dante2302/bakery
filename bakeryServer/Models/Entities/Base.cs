@@ -1,6 +1,6 @@
 ﻿namespace bakeryServer.Models
 {
-    public class Base
+    public class Base : IEntity
     {
         public int Id { get; set; }
         public required string Name { get; set; }

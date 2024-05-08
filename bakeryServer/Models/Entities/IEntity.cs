@@ -1,4 +1,4 @@
-namespace bakeryServer.Services.Repositories
+namespace bakeryServer.Models
 {
     public interface IEntity
     {

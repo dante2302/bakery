@@ -2,7 +2,7 @@
 
 namespace bakeryServer.Models
 {
-    public class FoodType
+    public class FoodType : IEntity
     {
         [Key] public int Id { get; set; }
         public required string Name { get; set; }
