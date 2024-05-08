@@ -50,7 +50,7 @@ builder.Services.AddScoped<IRepo<FoodType>, Repo<FoodType>>();
 builder.Services.AddScoped<IRepo<Order>, Repo<Order>>();
 builder.Services.AddScoped<IRepo<User>, Repo<User>>();
 
-builder.Services.AddScoped<IEntityService<Filling>, FillingService>();
+builder.Services.AddScoped<IEntityService<Filling>, EntityService<Filling>>();
 builder.Services.AddScoped<IEntityService<Topping>, EntityService<Topping>>();
 builder.Services.AddScoped<IEntityService<FoodType>, EntityService<FoodType>>();
 builder.Services.AddScoped<IEntityService<Base>, EntityService<Base>>();

@@ -1,12 +1,13 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using bakeryServer.Models;
+using bakeryServer.Data.DbContexts;
 
 namespace bakeryServer.Services.Repositories
 {
     public class Repo<T> : IRepo<T> where T : class, IEntity
     {
-        public Repo(DbContext context)
+        public Repo(BakeryContext context)
         {
             _context = context;
         }

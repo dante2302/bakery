@@ -50,7 +50,7 @@ public class OrderDTOMapper(
         return udto;
     }
 
-    private async Task<List<T>> MapExtras<T>(IEntityService<T> _s, int[] ids)
+    private async Task<List<T>> MapExtras<T>(IEntityService<T> _s, int[] ids) where T : class, IEntity
     {
         List<T> extras = [];
         try
@@ -61,7 +61,7 @@ public class OrderDTOMapper(
                 extras.Add(extra);
             }
         }
-        catch (NotFoundException ex)
+        catch 
         {
             throw new NullReferenceException(
                 $"{typeof(T).Name} no longer exists."
