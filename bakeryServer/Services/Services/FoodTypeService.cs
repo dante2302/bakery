@@ -34,6 +34,11 @@ namespace bakeryServer.Services
             return entity;
         }
 
+        public async Task<FoodType> ReadOneByName(string name)
+        {
+            var entity = await _repo.Read
+        }
+
         public async Task<IEnumerable<FoodType>> ReadAll()
         {
             var list = await _repo.ReadAll();

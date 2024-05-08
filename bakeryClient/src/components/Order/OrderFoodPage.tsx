@@ -84,7 +84,7 @@ export default function OrderFoodPage() {
                 </div>
                 }
             {
-                foodTypeData.toppings.length &&
+                foodTypeData.toppings.length > 1&&
                 <div className="filter-container">
                     <h2>Toppings</h2>
                     {foodTypeData.toppings?.map((f) =>
@@ -107,7 +107,7 @@ export default function OrderFoodPage() {
                         <h2>Bases</h2>
                         {foodTypeData.bases?.map((f) =>
                             <div>
-                                <label htmlFor={`${f.id}`}></label>
+                                <label htmlFor={`${f.id}`}>{f.name}</label>
                                 <input type="checkbox" key={f.id} />
                             </div>)
                         }

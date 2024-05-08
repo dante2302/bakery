@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using bakeryServer.Data.DbContexts;
 using bakeryServer.Models;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,12 @@ namespace bakeryServer.Services.Repositories
         {
             Base? b = await _context.Bases.FirstOrDefaultAsync(f => id == f.Id);
             return b;
+        }
+
+        public async Task<Base> ReadOneByCondition(Expression<Func<Base, bool>> expression)
+        {
+            var b = await _context.Bases.Where(expression).ToListAsync();
+            return b[0];
         }
 
         public async Task<List<Base>> ReadAll()

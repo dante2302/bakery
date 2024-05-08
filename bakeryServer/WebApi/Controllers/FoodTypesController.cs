@@ -60,6 +60,29 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetOneByName([FromQuery] string name)
+        {
+            try
+            {
+                var foodType = await _foodService.ReadOneByName(name);
+                List<Filling> fillings = await MapExternalEntity(_fillingService, foodType.Fillings);
+                List<Topping> toppings = await MapExternalEntity(_toppingService, foodType.Toppings);
+                List<Base> bases = await MapExternalEntity(_baseService, foodType.Bases);
+                FoodTypeExtras extras = new(fillings, toppings, bases);
+                FoodTypeDTO fDTO = new(foodType, extras);
+                return Ok(fDTO);
+            }
+            catch(NotFoundException)
+            {
+                return NotFound();
+            }
+            catch(Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] FoodType foodType)
         {
