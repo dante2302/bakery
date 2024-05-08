@@ -4,7 +4,7 @@ using Services;
 
 namespace bakeryServer.Services
 {
-    public class UserService(IRepo<User> repo) : EntityService<User>(repo), IExtendedUserService
+    public class UserService(IRepo<User> repo) : EntityService<User>(repo), IUserService
     {
         public async Task<User?> CheckIfUserExists(User user)
         {

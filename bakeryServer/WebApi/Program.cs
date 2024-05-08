@@ -56,7 +56,7 @@ builder.Services.AddScoped<IEntityService<FoodType>, EntityService<FoodType>>();
 builder.Services.AddScoped<IEntityService<Base>, EntityService<Base>>();
 builder.Services.AddScoped<IEntityService<Order>, EntityService<Order>>();
 builder.Services.AddScoped<IEntityService<User>, EntityService<User>>();
-builder.Services.AddScoped<IExtendedUserService, UserService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<OrderDTOMapper, OrderDTOMapper>();
 
