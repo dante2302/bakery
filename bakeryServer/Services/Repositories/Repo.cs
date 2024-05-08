@@ -3,9 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace bakeryServer.Services.Repositories
 {
-    public class Repo<T>(DbContext context) where T : class, IEntity
+    public class Repo<T> : IRepo<T> where T : class, IEntity
     {
-        DbContext _context = context;
+        public Repo(DbContext context)
+        {
+            _context = context;
+        }
+
+        DbContext _context;
 
         public async Task Create(T entity)
         {
@@ -22,7 +27,7 @@ namespace bakeryServer.Services.Repositories
         public async Task<T?> ReadOneByCondition(Expression<Func<T, bool>> exp)
         {
            List<T> eList = await _context.Set<T>().Where(exp).ToListAsync();
-           return eList[0];
+           return eList.FirstOrDefault();
         }
 
         public async Task<List<T>> ReadAll()
@@ -39,7 +44,14 @@ namespace bakeryServer.Services.Repositories
 
         public async Task Update(T newEntity, T oldEntity)
         {
-            
+            _context.Entry(oldEntity).CurrentValues.SetValues(newEntity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Delete(T entity)
+        {
+            _context.Remove(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }
