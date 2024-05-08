@@ -7,14 +7,18 @@ namespace WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class OrdersController(IEntityService<Order> orderService, IExtendedUserService userService, OrderDTOMapper orderDTOMapper) : ControllerBase
+    public class OrdersController(
+        IEntityService<Order> orderService,
+        IUserService userService,
+        OrderDTOMapper orderDTOMapper
+        ) : BasicEntityControllerBase<Order>(orderService)
     {
-        private readonly IExtendedUserService _userService = userService;
+        private readonly IUserService _userService = userService;
         private readonly IEntityService<Order> _orderService = orderService;
         private readonly OrderDTOMapper _orderDTOMapper = orderDTOMapper;
 
         [HttpGet("all")]
-        public async Task<IActionResult> GetAll()
+        public override async Task<IActionResult> GetAll()
         {
             try
             {
@@ -37,7 +41,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetOne([FromQuery] int id)
+        public override async Task<IActionResult> GetOne([FromQuery] int id)
         {
             try
             {
@@ -55,6 +59,7 @@ namespace WebApi.Controllers
             }
         }
 
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] OrderSubmission orderSubmission)
         {
@@ -65,7 +70,7 @@ namespace WebApi.Controllers
                     throw new ArgumentException($"Invalid Entity: {ModelState}");
                 }
             
-                User existingUser  = _userService.CheckIfUserExists(orderSubmission.User);
+                User? existingUser  = await _userService.CheckIfUserExists(orderSubmission.User);
                 int newOrderUserId;
                 if(existingUser is not null)
                 {
@@ -106,47 +111,6 @@ namespace WebApi.Controllers
             catch(Exception ex)
             {
                 return StatusCode(500, ex);
-            }
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Order updatedOrder)
-        {
-            try
-            {
-                await _orderService.Update(updatedOrder);
-                return Ok();
-            }
-            catch(NotFoundException)
-            {
-                return NotFound();
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex);
-            }
-
-            catch(Exception)
-            {
-                return StatusCode(500,$"Internal Server Error");
-            }
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            try
-            {
-                await _orderService.Delete(id);
-                return Ok();
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, $"Internal Server Error");
             }
         }
     }

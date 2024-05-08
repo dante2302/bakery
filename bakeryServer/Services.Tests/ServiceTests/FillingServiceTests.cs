@@ -4,7 +4,7 @@ namespace Services.Tests
 {
     public class FillingServiceTests
     {
-        private readonly FillingService srv = ArrangeService();
+        private readonly EntityService<Filling> srv = ArrangeService();
 
         [Fact]
         public async Task ReadOne_ShouldReturnAnEntityOrNull()
@@ -20,15 +20,15 @@ namespace Services.Tests
                 await srv.ReadOne(nonExistentId));
         }
 
-        private static FillingService ArrangeService()
+        private static EntityService<Filling> ArrangeService()
         {
             DbContextOptionsBuilder<BakeryContext> builder = new();
             builder.UseInMemoryDatabase(databaseName: "Test");
 
             var context = new BakeryContext(options: builder.Options);
 
-            FillingRepo repo = new(context);
-            FillingService srv = new(repo);
+            Repo<Filling> repo = new(context);
+            EntityService<Filling> srv = new(repo);
             return srv;
         }
     }

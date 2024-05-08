@@ -19,6 +19,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Npgsql" Version="8.0.2" />
+    <PackageReference Include="OneOf" Version="3.0.263" />
 
   </ItemGroup>
 
