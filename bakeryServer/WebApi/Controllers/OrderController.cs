@@ -7,9 +7,13 @@ namespace WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class OrdersController(IEntityService<Order> orderService, IExtendedUserService userService, OrderDTOMapper orderDTOMapper) : ControllerBase
+    public class OrdersController(
+        IEntityService<Order> orderService,
+        IUserService userService,
+        OrderDTOMapper orderDTOMapper
+        ) : ControllerBase
     {
-        private readonly IExtendedUserService _userService = userService;
+        private readonly IUserService _userService = userService;
         private readonly IEntityService<Order> _orderService = orderService;
         private readonly OrderDTOMapper _orderDTOMapper = orderDTOMapper;
 
@@ -65,7 +69,7 @@ namespace WebApi.Controllers
                     throw new ArgumentException($"Invalid Entity: {ModelState}");
                 }
             
-                User existingUser  = _userService.CheckIfUserExists(orderSubmission.User);
+                User? existingUser  = await _userService.CheckIfUserExists(orderSubmission.User);
                 int newOrderUserId;
                 if(existingUser is not null)
                 {

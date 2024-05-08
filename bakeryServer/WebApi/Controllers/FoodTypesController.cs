@@ -12,7 +12,8 @@ namespace WebApi.Controllers
         IEntityService<FoodType> foodService,
         IEntityService<Filling> fillingService,
         IEntityService<Topping> toppingService,
-        IEntityService<Base> baseService) : ControllerBase
+        IEntityService<Base> baseService
+        ) : ControllerBase
     {
         private readonly IEntityService<FoodType> _foodService = foodService;
         private readonly IEntityService<Filling> _fillingService = fillingService;
@@ -65,7 +66,9 @@ namespace WebApi.Controllers
         {
             try
             {
-                var foodType = await _foodService.ReadOneByName(name);
+                var foodType = await _foodService.ReadOneByCondition(
+                    (FoodType f) => f.Name == name);
+
                 List<Filling> fillings = await MapExternalEntity(_fillingService, foodType.Fillings);
                 List<Topping> toppings = await MapExternalEntity(_toppingService, foodType.Toppings);
                 List<Base> bases = await MapExternalEntity(_baseService, foodType.Bases);
@@ -150,6 +153,7 @@ namespace WebApi.Controllers
         }
 
         private async Task<List<T>> MapExternalEntity<T>(IEntityService<T> _service, List<int> ids)
+            where T : class, IEntity
         {
             List<T> entityList = [];
             try
