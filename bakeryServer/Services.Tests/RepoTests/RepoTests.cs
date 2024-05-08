@@ -1,7 +1,11 @@
 ﻿namespace BakeryServer.Tests.Services.Repositories
 {
-    public class FillingRepoTests
+    public class RepoTests
     {
+
+        // Filling is used as a dummy entity in these tests, 
+        // It can be switched up with any of the database entities
+
         private DbContextOptions<BakeryContext> CreateNewContextOptions()
         {
             // Create a fresh DbContextOptionsBuilder with an in-memory database
@@ -16,7 +20,7 @@
             // Arrange
             var options = CreateNewContextOptions();
             using var context = new BakeryContext(options);
-            var repository = new FillingRepo(context);
+            var repository = new Repo<Filling>(context);
             var newFilling = GenerateData(1)[0];
 
             // Act
@@ -34,7 +38,7 @@
             // Arrange
             var options = CreateNewContextOptions();
             using var context = new BakeryContext(options);
-            var repository = new FillingRepo(context);
+            var repository = new Repo<Filling>(context);
             var filling = GenerateData(1)[0];
             context.Fillings.Add(filling);
             await context.SaveChangesAsync();
@@ -53,7 +57,7 @@
             // Arrange
             var options = CreateNewContextOptions();
             using var context = new BakeryContext(options);
-            var repository = new FillingRepo(context);
+            var repository = new Repo<Filling>(context);
 
             // Act
             var retrievedFilling = await repository.ReadOne(999);
@@ -68,7 +72,7 @@
             // Arrange
             var options = CreateNewContextOptions();
             using var context = new BakeryContext(options);
-            var repository = new FillingRepo(context);
+            var repository = new Repo<Filling>(context);
             var fillings = GenerateData(3);
             context.Fillings.AddRange(fillings);
             await context.SaveChangesAsync();
@@ -87,7 +91,7 @@
             // Arrange
             var options = CreateNewContextOptions();
             using var context = new BakeryContext(options);
-            var repository = new FillingRepo(context);
+            var repository = new Repo<Filling>(context);
             var filling = GenerateData(1)[0];
             context.Fillings.Add(filling);
             await context.SaveChangesAsync();
@@ -98,7 +102,7 @@
 
             // Assert
             var retrievedFilling = await context.Fillings.FindAsync(filling.Id);
-            Assert.Equal(updatedFilling.Name, retrievedFilling.Name);
+            Assert.Equal(updatedFilling.Name, retrievedFilling?.Name);
         }
 
         [Fact]
@@ -107,7 +111,7 @@
             // Arrange
             var options = CreateNewContextOptions();
             using var context = new BakeryContext(options);
-            var repository = new FillingRepo(context);
+            var repository = new Repo<Filling>(context);
             var filling = GenerateData(1)[0];
             context.Fillings.Add(filling);
             await context.SaveChangesAsync();
