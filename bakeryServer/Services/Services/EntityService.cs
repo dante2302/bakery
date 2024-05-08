@@ -9,7 +9,7 @@ namespace bakeryServer.Services
 {
     public class EntityService<T> : IEntityService<T> where T : class, IEntity
     {
-        private readonly IRepo<T> _repo;
+        protected readonly IRepo<T> _repo;
         
         public EntityService(IRepo<T> repo)
         {
