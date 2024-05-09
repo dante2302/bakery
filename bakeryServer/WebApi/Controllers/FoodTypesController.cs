@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using bakeryServer.Models;
+using Models;
 using Exceptions;
-using Microsoft.AspNetCore.Authorization;
 using Services;
 
 namespace WebApi.Controllers
@@ -20,8 +19,9 @@ namespace WebApi.Controllers
         private readonly IEntityService<Topping> _toppingService = toppingService;
         private readonly IEntityService<Base> _baseService = baseService;
 
-        [HttpGet]
-        public override async Task<IActionResult> GetOne([FromQuery] int id)
+        [HttpGet("{id}/detailed")]
+        [Route("{id}/detailed")]
+        public async Task<IActionResult> GetOneDetailed(int id)
         {
             try
             {
@@ -44,6 +44,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
+        [Route("where")]
         public async Task<IActionResult> GetOneByName([FromQuery] string name)
         {
             try

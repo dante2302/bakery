@@ -1,9 +1,8 @@
-﻿namespace bakeryServer.Models
+﻿namespace Models;
+
+public class Topping : IEntity
 {
-    public class Topping : IEntity
-    {
-        public int Id { get; set; }
-        public required string Name { get; set; }
-        public int[]? UncompatibleFillings { get; set; }
-    }
+    public int Id { get; set; }
+    public required string Name { get; set; }
+    public int[]? UncompatibleFillings { get; set; }
 }

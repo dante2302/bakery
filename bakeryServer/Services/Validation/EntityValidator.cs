@@ -1,21 +1,20 @@
 ﻿using System.Reflection;
 
-namespace Services.Validation
+namespace Services.Validation;
+
+public class EntityValidator<T>
 {
-    public class EntityValidator<T>
+    private readonly PropertyInfo[] requieredProperties = typeof(T).GetProperties();
+
+    public bool AssertFields(T entity)
     {
-        private readonly PropertyInfo[] requieredProperties = typeof(T).GetProperties();
-        
-        public bool AssertFields(T entity)
+        foreach (PropertyInfo prop in requieredProperties)
         {
-            foreach(PropertyInfo prop in requieredProperties) 
+            if (prop.GetValue(entity) == null)
             {
-                if(prop.GetValue(entity) == null)
-                {
-                    return false;
-                }
+                return false;
             }
-            return true;
         }
+        return true;
     }
 }

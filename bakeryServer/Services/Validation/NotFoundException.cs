@@ -1,6 +1,5 @@
-﻿namespace Exceptions
+﻿namespace Exceptions;
+
+public class NotFoundException : Exception
 {
-    public class NotFoundException : Exception
-    {
-    }
 }

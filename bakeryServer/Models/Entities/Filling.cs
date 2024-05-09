@@ -1,9 +1,8 @@
-﻿namespace bakeryServer.Models
+﻿namespace Models;
+
+public class Filling : IEntity
 {
-    public class Filling : IEntity
-    {
-        public int Id { get; set; }
-        public required string Name { get; set; }
-        public int[]? UncompatibleToppings { get; set; }
-    }
+    public int Id { get; set; }
+    public required string Name { get; set; }
+    public int[]? UncompatibleToppings { get; set; }
 }

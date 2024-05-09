@@ -1,12 +1,11 @@
 using System.Text;
-using bakeryServer.Data.DbContexts;
-using bakeryServer.Models;
-using bakeryServer.Services;
-using bakeryServer.Services.Repositories;
+using Data.DbContexts;
+using Models;
+using Services;
+using Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

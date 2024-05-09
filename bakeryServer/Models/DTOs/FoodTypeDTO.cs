@@ -1,4 +1,4 @@
-﻿namespace bakeryServer.Models;
+﻿namespace Models;
 
 public class FoodTypeDTO(FoodType f, FoodTypeExtras fExtras)
 {

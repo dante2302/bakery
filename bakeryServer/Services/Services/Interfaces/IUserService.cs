@@ -1,4 +1,4 @@
-﻿using bakeryServer.Models;
+﻿using Models;
 
 namespace Services;
 

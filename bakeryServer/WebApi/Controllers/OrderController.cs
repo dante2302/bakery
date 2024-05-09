@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using bakeryServer.Models;
+using Models;
 using Exceptions;
 using Services;
 

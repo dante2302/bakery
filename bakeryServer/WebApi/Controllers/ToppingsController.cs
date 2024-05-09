@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using bakeryServer.Models;
-using Exceptions;
-using Microsoft.AspNetCore.Authorization;
+using Models;
 using Services;
 
 namespace WebApi.Controllers;
