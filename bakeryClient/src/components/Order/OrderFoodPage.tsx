@@ -1,7 +1,9 @@
-import { HTMLInputAutoCompleteAttribute, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import * as foodTypeService from "../../services/foodTypeService";
 import { FoodType } from "../../services/Models";
+import "./styles/OrderFoodPage.scss";
+import cake from "../../assets/cake-bg.jpg";
 
 
 type FilterCategory =
@@ -65,56 +67,66 @@ export default function OrderFoodPage() {
     }
 
     return (
-        foodTypeData 
+        foodTypeData
             ?
-        <form className="order-food-container">
-            <h1>{foodTypeData.name}</h1>
-            <img />
-                {
-                    foodTypeData.fillings?.length && 
-                <div className="filter-container">
-                    <h2>Fillings</h2>
-                    {foodTypeData.fillings?.map((f) => 
-                        <div>
-                            <label htmlFor={f.id.toString()}>{f.name}</label>
-                            <input 
-                            type="checkbox" key={f.id} />
-                        </div>)
-                    }
+            <form className="order-food-container">
+                <div>
+                    <h1>{foodTypeData.name}</h1>
+                    <img src={cake} />
                 </div>
-                }
-            {
-                foodTypeData.toppings.length > 1&&
-                <div className="filter-container">
-                    <h2>Toppings</h2>
-                    {foodTypeData.toppings?.map((f) =>
-                        <div key={f.id}>
-                            <label htmlFor={`${f.id}`}>{f.name}</label>
-                            <input
-                                type="checkbox"
-                                name={f.id.toString()}
-                                checked={orderForm.toppings[f.id]}
-                                onChange={(e) => handleCheckbox(e, "toppings")}
-                            />
-                        </div>)
+                <div className="all-filters">
+                    {
+                        foodTypeData.fillings?.length &&
+
+                        <div className="filter-container">
+                            <h2>Fillings</h2>
+                            {foodTypeData.fillings?.map((f) =>
+                                <div>
+                                    <label htmlFor={f.id.toString()}>{f.name}</label>
+                                    <input
+                                        type="checkbox" key={f.id} />
+                                </div>)
+                            }
+                        </div>
                     }
+
+                    {
+                        foodTypeData.toppings.length > 1 &&
+
+                        <div className="filter-container">
+                            <h2>Toppings</h2>
+                            {foodTypeData.toppings?.map((f) =>
+                                <div key={f.id}>
+                                    <label htmlFor={`${f.id}`}>{f.name}</label>
+                                    <input
+                                        type="checkbox"
+                                        name={f.id.toString()}
+                                        checked={orderForm.toppings[f.id]}
+                                        onChange={(e) => handleCheckbox(e, "toppings")}
+                                    />
+                                </div>)
+                            }
+                        </div>
+
+                    }
+
+                    {
+                        foodTypeData.bases?.length > 1 &&
+
+                        <div className="filter-container">
+                            <h2>Bases</h2>
+                            {foodTypeData.bases?.map((f) =>
+                                <div>
+                                    <label htmlFor={`${f.id}`}>{f.name}</label>
+                                    <input type="checkbox" key={f.id} />
+                                </div>)
+                            }
+                        </div>
+                    }
+                    <button>Napred</button>
                 </div>
-
-            }
-             {foodTypeData.bases?.length > 1 &&
-
-                    <div className="filter-container">
-                        <h2>Bases</h2>
-                        {foodTypeData.bases?.map((f) =>
-                            <div>
-                                <label htmlFor={`${f.id}`}>{f.name}</label>
-                                <input type="checkbox" key={f.id} />
-                            </div>)
-                        }
-                    </div>
-                }
         </form>
         :
-        <div>err</div>
+        <div>Try again later.</div>
     )
 }

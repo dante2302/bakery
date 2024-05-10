@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { Cardboard, Email, FacebookLogo, InstagramLogo } from "../SVGs";
 import NavLinkList from "./NavLinkList";
 import "./styles/NavDesktop.scss";
+import UseScroll from "../../hooks/UseScroll";
 
 export default function NavDesktop() {
+    const [verticalOffset] = UseScroll();
     return (
         <nav>
-            <div className="upper-nav-wrap">
-                <div className="upper-nav">
+            <div className={`upper-nav-wrap ${verticalOffset > 0 ? "disabled" : ""}`}>
+                <div className={"upper-nav"}>
                     <div>
                         <div>
                             <Cardboard/>

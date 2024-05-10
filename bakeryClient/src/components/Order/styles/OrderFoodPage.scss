@@ -1,0 +1,11 @@
+@import "../../styles_partials/flex";
+
+.order-food-container{
+    @include flex();
+    width: 100%;
+    padding-inline: 2em;
+    img{
+        width: auto;
+        height: 80vh;
+    }
+}
