@@ -1,0 +1,21 @@
+@import "../styles_partials/flex";
+
+.about-wrap
+{
+    margin-block: 2em;
+    .about-header
+    {
+        @include flex($direction: column);
+        gap: 15px;
+
+        h1::after
+        {
+            display: block;
+            content: "";
+            width: 50px;
+            height: 1px;
+            background-color: black;
+            margin: 10px auto;
+        }
+    }
+}
