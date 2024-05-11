@@ -1,21 +1,71 @@
 @import "../styles_partials/flex";
+@import "../styles_partials/breakpoints";
+@import "../styles_partials/colors";
 
 .about-wrap
 {
-    margin-block: 2em;
+    @include flex($direction: column);
+    margin-top: 2em;
     .about-header
     {
         @include flex($direction: column);
-        gap: 15px;
+        width: 70%;
+        padding: 3em 1em;
+        text-align: center;
 
+        h1{
+            font-size: var(--fs-xl);
+        }
         h1::after
         {
+            margin: auto;
+            margin-top: 1em;
             display: block;
             content: "";
             width: 50px;
             height: 1px;
-            background-color: black;
-            margin: 10px auto;
+            background-color: grey;
+        }
+        p{
+            margin-top:3em;
+        }
+        .img-grid{
+            @include flex();
+            gap: 20px;
+            margin-block: 3em;
+            div{
+                width: 25vw;
+                height: 40vh;
+                background-color: red;
+            }
+        }
+        @media(max-width: $phone)
+        {
+            .img-grid{
+                flex-direction: column;
+                div{
+                    width: 80vw;
+                    height: 15vh;
+                }
+            }
+        }
+    }
+
+    .taste{
+        background-color: $bg-dark-grey;
+        color: $text-white;
+        text-align: center;
+        @include flex();
+        padding: 7em;
+        div{
+            width: 80%;
+        }
+        h1{
+            font-size: calc(var(--fs-xl) + 1.5rem);
+        }
+        p{
+            margin-top: 1em;
+            font-size: calc(var(--fs-reg) - .2rem);
         }
     }
 }
