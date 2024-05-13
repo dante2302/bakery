@@ -56,7 +56,7 @@ nav{
 
 .lower-nav{
     @include flex($place_horizontal: space-between);
-    padding-block: 25px;
+    padding-block: 18px;
 
     .logo{
         width: 200px;

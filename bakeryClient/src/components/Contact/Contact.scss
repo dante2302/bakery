@@ -1,0 +1,68 @@
+@import "../styles_partials/flex";
+@import "../styles_partials/colors";
+@import "../styles_partials/fonts";
+
+.outer-contact-wrap{
+    width: 100%;
+    @include flex($direction: column);
+    padding-block: 6em;
+    h1{
+        font-size: var(--fs-xl);
+        margin-bottom: 1.5em;
+    }
+    .inner-contact{
+        @include flex($place-vertical: start);
+        width: 85%;
+
+        h6{
+            font-size: var(--fs-reg);
+        }
+
+        span{
+            display: block;
+            font-size: var(--fs-sm);
+            color: $text-dark-grey;
+        }
+
+        form{
+            @include flex($direction: column, $place-vertical: start);
+            width: 100%;
+            input, textarea{
+                padding:.5em 1em;
+                width: 80%;
+                margin-bottom: 2em;
+                border: 1px solid $bg-dark-grey;
+            }
+
+            input:hover, textarea:hover{
+                border: 1px solid black;
+            }
+
+            input:focus, textarea:focus{
+                border: 1px solid $acc-purple-intense;
+                outline: none;
+            }
+            
+            textarea{
+                resize: none;
+                height: 20vh;
+            }
+
+            button{
+                color: white;
+                background-color: black;
+                border: none;
+                font-weight: $fw-bold;
+                font-size: cal(var(--fs-sm) + .3rem);
+                padding: .5em 2em;
+                border-radius: 3px;
+                transition: all .2s ease-in-out;
+                cursor: pointer;
+            }
+
+            button:hover{
+                background-color: $acc-pale-pink;
+            }
+        }
+    }
+}
