@@ -1,11 +1,12 @@
-import { useState } from "react"
+import { ReactElement, useState } from "react"
 import { ClipLoader } from "react-spinners"
 import { LengthType } from "react-spinners/helpers/props";
 
 type Callback = (...args: any[]) => Promise<void>
 type ErrorCallback = (error: any | unknown) => void;
 
-function useLoadingSpinner(callback: Callback, errorCallback: ErrorCallback){
+function useLoadingSpinner(callback: Callback, errorCallback: ErrorCallback)
+{
   const [isLoading,setLoading] = useState(false)
 
   const callbackWithLoading = async (...args: any[]) => {
@@ -21,11 +22,11 @@ function useLoadingSpinner(callback: Callback, errorCallback: ErrorCallback){
     }
   }
   
-  const loadingSpinner = (size: LengthType) => {
-    return isLoading ? <ClipLoader size={size} /> : null
+  const LoadingSpinner = () => {
+    return <ClipLoader loading={isLoading} /> 
   }
 
-  return [loadingSpinner,callbackWithLoading,isLoading]
+  return [LoadingSpinner, callbackWithLoading, isLoading]
 }
 
 export default useLoadingSpinner

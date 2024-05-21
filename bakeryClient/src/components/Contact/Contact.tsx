@@ -3,6 +3,8 @@ import "./Contact.scss";
 import * as formService from "../../services/formService";
 import * as contactService from "../../services/contactService";
 import MessageBlock from "../Messages/MessageBlock";
+import { useNavigate } from "react-router";
+import useLoadingSpinner from "../../hooks/UseLoadingSpinner";
 
 export interface ContactFormState extends formService.BaseFormState {
     name: string,
@@ -21,6 +23,9 @@ export default function Contact() {
     const [formState, setFormState] = useState(defaultFormState);
     const [requestSuccess, setRequestSuccess] = useState<boolean>();
     const [showMessage, setShowMessage] = useState<boolean>();
+    const [LoadingSpinner, contactSubmitHandlerWithLoading, isLoading] = useLoadingSpinner(contactSubmitHandler, submitErrorHandler);
+
+    const navigate  = useNavigate();
 
     async function contactSubmitHandler(e: React.FormEvent<HTMLButtonElement>) {
         e.preventDefault();
@@ -29,7 +34,13 @@ export default function Contact() {
         setShowMessage(true);
         setTimeout(() => {
             setShowMessage(false);
+            success && navigate("/");
         }, 2000)
+    }
+
+    async function submitErrorHandler(e: unknown)
+    {
+        console.log(e);
     }
 
     return (
@@ -63,7 +74,8 @@ export default function Contact() {
                         onChange={(e) => formService.changeHandler(setFormState, e)}
                     />
 
-                    <button onClick={(e) => contactSubmitHandler(e)}>Изпрати</button>
+                    <button onClick={(e) => contactSubmitHandlerWithLoading(e)}>
+                        {isLoading ? <LoadingSpinner />: "Изпрати"}</button>
                     {
                         showMessage && 
                         <MessageBlock 
