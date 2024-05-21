@@ -48,6 +48,7 @@ builder.Services.AddScoped<IRepo<Topping>, Repo<Topping>>();
 builder.Services.AddScoped<IRepo<FoodType>, Repo<FoodType>>();
 builder.Services.AddScoped<IRepo<Order>, Repo<Order>>();
 builder.Services.AddScoped<IRepo<User>, Repo<User>>();
+builder.Services.AddScoped<IRepo<ContactMessage>, Repo<ContactMessage>>();
 
 builder.Services.AddScoped<IEntityService<Filling>, EntityService<Filling>>();
 builder.Services.AddScoped<IEntityService<Topping>, EntityService<Topping>>();
@@ -56,6 +57,7 @@ builder.Services.AddScoped<IEntityService<Base>, EntityService<Base>>();
 builder.Services.AddScoped<IEntityService<Order>, EntityService<Order>>();
 builder.Services.AddScoped<IEntityService<User>, EntityService<User>>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IEntityService<ContactMessage>, EntityService<ContactMessage>>();
 
 builder.Services.AddScoped<OrderDTOMapper, OrderDTOMapper>();
 
