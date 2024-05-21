@@ -1,5 +1,5 @@
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Cardboard, Email, FacebookLogo, InstagramLogo } from "../SVGs";
 import NavLinkList from "./NavLinkList";
 import "./styles/NavDesktop.scss";
@@ -7,6 +7,8 @@ import UseScroll from "../../hooks/UseScroll";
 
 export default function NavDesktop() {
     const [verticalOffset] = UseScroll();
+    const navigate = useNavigate();
+
     return (
         <nav>
             <div className={`upper-nav-wrap ${verticalOffset > 0 ? "disabled" : ""}`}>
@@ -30,7 +32,7 @@ export default function NavDesktop() {
             <div className="lower-nav-wrap">
                 <div className="lower-nav">
                     <div>
-                        <div className="logo"></div>
+                        <div className="logo" onClick={() => navigate("/")}></div>
                         <NavLinkList />
                     </div>
                     <Link to="./order" className="order-btn">Поръчай</Link>

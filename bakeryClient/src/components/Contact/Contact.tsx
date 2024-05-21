@@ -25,17 +25,17 @@ export default function Contact() {
     const [showMessage, setShowMessage] = useState<boolean>();
     const [LoadingSpinner, contactSubmitHandlerWithLoading, isLoading] = useLoadingSpinner(contactSubmitHandler, submitErrorHandler);
 
-    const navigate  = useNavigate();
+    // const navigate  = useNavigate();
 
     async function contactSubmitHandler(e: React.FormEvent<HTMLButtonElement>) {
         e.preventDefault();
         const success = await contactService.sendMessage(formState);
         setRequestSuccess(success);
         setShowMessage(true);
-        setTimeout(() => {
-            setShowMessage(false);
-            success && navigate("/");
-        }, 2000)
+        // setTimeout(() => {
+        //     setShowMessage(false);
+        //     success && navigate("/");
+        // }, 2000)
     }
 
     async function submitErrorHandler(e: unknown)
@@ -75,7 +75,7 @@ export default function Contact() {
                     />
 
                     <button onClick={(e) => contactSubmitHandlerWithLoading(e)}>
-                        {isLoading ? <LoadingSpinner />: "Изпрати"}</button>
+                        {isLoading ? <LoadingSpinner color={"#ffffff"} size={25}/>: "Изпрати"}</button>
                     {
                         showMessage && 
                         <MessageBlock 

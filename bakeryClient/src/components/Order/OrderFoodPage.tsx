@@ -4,6 +4,7 @@ import * as foodTypeService from "../../services/foodTypeService";
 import { FoodType } from "../../services/Models";
 import "./styles/OrderFoodPage.scss";
 import cake from "../../assets/cake-bg.jpg";
+import useLoadingSpinner from "../../hooks/UseLoadingSpinner";
 
 
 type FilterCategory =
@@ -32,26 +33,29 @@ export default function OrderFoodPage() {
     const { name } = useParams();
     const [orderForm, setOrderForm] = useState(defaultOrderState);
     const [foodTypeData, setFoodTypeData] = useState<FoodType>();
+    const [LoadingSpinner, InitialFetchWithLoading, isLoading] = useLoadingSpinner(InitialFetch);
+
+    async function InitialFetch(){
+        const foodData: FoodType = await foodTypeService.ReadOneByName(name);
+        const fillings: FilterCategory = {};
+        foodData.fillings.forEach(value => {
+            fillings[value.id] = false;
+        })
+
+        const toppings: FilterCategory = {};
+        foodData.toppings.forEach(value => {
+            toppings[value.id] = false;
+        })
+
+        const bases: FilterCategory = {};
+        foodData.bases.forEach(value => bases[value.id] = false);
+
+        setOrderForm({ fillings, toppings, bases });
+        setFoodTypeData(foodData);
+    };
 
     useEffect(() => {
-        (async () => {
-            const foodData: FoodType = await foodTypeService.ReadOneByName(name);
-            const fillings: FilterCategory = {};
-            foodData.fillings.forEach(value => {
-                fillings[value.id] = false;
-            })
-
-            const toppings: FilterCategory = {};
-            foodData.toppings.forEach(value => {
-                toppings[value.id] = false;
-            })
-
-            const bases: FilterCategory = {};
-            foodData.bases.forEach(value => bases[value.id] = false);
-
-            setOrderForm({ fillings, toppings, bases });
-            setFoodTypeData(foodData);
-        })();
+        InitialFetchWithLoading();
     }, []);
 
     function handleCheckbox(e: React.ChangeEvent<HTMLInputElement>, category: FilterCategoryName) {
@@ -127,6 +131,10 @@ export default function OrderFoodPage() {
                 </div>
         </form>
         :
-        <div>Try again later.</div>
+            isLoading ?
+                <div className="order-spinner-box">
+                    <LoadingSpinner size={200} />
+                </div> :
+                <div>Try again later.</div>
     )
 }

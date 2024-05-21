@@ -9,3 +9,8 @@
         height: 80vh;
     }
 }
+
+.order-spinner-box{
+    @include flex;
+    margin: 50px;
+}

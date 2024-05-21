@@ -1,29 +1,31 @@
-import { ReactElement, useState } from "react"
+import { useState } from "react"
 import { ClipLoader } from "react-spinners"
-import { LengthType } from "react-spinners/helpers/props";
+import { LoaderSizeMarginProps, LoaderSizeProps } from "react-spinners/helpers/props";
 
 type Callback = (...args: any[]) => Promise<void>
 type ErrorCallback = (error: any | unknown) => void;
+type LoadingSpinner = ({ color, size }: LoaderSizeProps) => JSX.Element;
 
-function useLoadingSpinner(callback: Callback, errorCallback: ErrorCallback)
+function useLoadingSpinner(callback: Callback, errorCallback?: ErrorCallback): [LoadingSpinner, Callback, boolean]
 {
   const [isLoading,setLoading] = useState(false)
 
   const callbackWithLoading = async (...args: any[]) => {
     try{
-      setLoading(true)
-      await callback(...args) 
+      setLoading(true);
+      await callback(...args);
     }
     catch(error: unknown){
       if(errorCallback)errorCallback(error)
     }
     finally{
-      setLoading(false)
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      setLoading(false);
     }
   }
   
-  const LoadingSpinner = () => {
-    return <ClipLoader loading={isLoading} /> 
+  const LoadingSpinner = (props: LoaderSizeMarginProps) => {
+    return <ClipLoader {...props}/> 
   }
 
   return [LoadingSpinner, callbackWithLoading, isLoading]
