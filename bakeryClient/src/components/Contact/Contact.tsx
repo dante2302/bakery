@@ -1,10 +1,10 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "./Contact.scss";
 import * as formService from "../../services/formService";
 import * as contactService from "../../services/contactService";
 import MessageBlock from "../Messages/MessageBlock";
-import { useNavigate } from "react-router";
 import useLoadingSpinner from "../../hooks/UseLoadingSpinner";
+import useValidate from "../../hooks/useValidate";
 
 export interface ContactFormState extends formService.BaseFormState {
     name: string,
@@ -20,11 +20,43 @@ export default function Contact() {
         message: ""
     };
 
+    const defaultValidationErrors = {
+        name: {
+            error: false,
+            message: ""
+        },
+        email: {
+            error: false,
+            message: ""
+        },
+        message: {
+            error: false,
+            message: ""
+        }
+    }
+
+    const regexValidator = {
+        email: {
+            regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            message: "Невалиден имейл."
+        },
+        name: {
+            regex: /^[a-zA-Z0-9.]+(?:[-'\s][a-zA-Z0-9.]+)*$/,
+            message: "Невалидно име."
+        },
+        message: {
+            regex: /^[a-zA-Z0-9\s.,!?'"()&%-]*$/,
+            message: "Съобщението ви съдържа недопустими символи."
+        }
+    }
+
+
     const [formState, setFormState] = useState(defaultFormState);
     const [requestSuccess, setRequestSuccess] = useState<boolean>();
     const [showMessage, setShowMessage] = useState<boolean>();
-    const [LoadingSpinner, contactSubmitHandlerWithLoading, isLoading] = useLoadingSpinner(contactSubmitHandler, submitErrorHandler);
-
+    const [LoadingSpinner, contactSubmitHandlerWithLoading, isLoading] = useLoadingSpinner(contactSubmitHandler);
+    const [validationErrors, setValidationErrors] = useState(defaultValidationErrors);
+    const validate = useValidate(setValidationErrors, regexValidator);
     // const navigate  = useNavigate();
 
     async function contactSubmitHandler(e: React.FormEvent<HTMLButtonElement>) {
@@ -38,10 +70,7 @@ export default function Contact() {
         // }, 2000)
     }
 
-    async function submitErrorHandler(e: unknown)
-    {
-        console.log(e);
-    }
+    useEffect(() => (console.table(validationErrors)), [validationErrors])
 
     return (
         <div className="outer-contact-wrap">
@@ -55,7 +84,10 @@ export default function Contact() {
                         id="name"
                         value={formState.name}
                         onChange={(e) => formService.changeHandler(setFormState, e)}
+                        onBlur={(e) => validate(e)}
                     />
+                    {validationErrors.name.error && 
+                        <span>{validationErrors.name.message}</span>}
 
                     <label htmlFor="email">Имейл</label>
                     <input
@@ -64,7 +96,10 @@ export default function Contact() {
                         id="email"
                         value={formState.email}
                         onChange={(e) => formService.changeHandler(setFormState, e)}
+                        onBlur={(e) => validate(e)}
                     />
+                    {validationErrors.email.error && 
+                        <span>{validationErrors.email.message}</span>}
 
                     <label htmlFor="message">Съобщение</label>
                     <textarea
@@ -72,7 +107,10 @@ export default function Contact() {
                         id="message"
                         value={formState.message}
                         onChange={(e) => formService.changeHandler(setFormState, e)}
+                        onBlur={(e) => validate(e)}
                     />
+                    {validationErrors.message.error && 
+                        <span>{validationErrors.message.message}</span>}
 
                     <button onClick={(e) => contactSubmitHandlerWithLoading(e)}>
                         {isLoading ? <LoadingSpinner color={"#ffffff"} size={25}/>: "Изпрати"}</button>

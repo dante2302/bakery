@@ -3,7 +3,7 @@ export interface BaseFormState
 
 }
 
-type InputElement = HTMLInputElement | HTMLTextAreaElement;
+export type InputElement = HTMLInputElement | HTMLTextAreaElement;
 type InputChangeEvent = React.ChangeEvent<InputElement>;
 
 export function changeHandler<T extends BaseFormState>(setState:React.Dispatch<React.SetStateAction<T>> , e: InputChangeEvent ){
