@@ -99,6 +99,7 @@ namespace WebApi.Controllers
                 }
 
                 orderSubmission.Order.UserId = newOrderUserId;
+                orderSubmission.Order.IsCompleted = false;
                 Order result = await _orderService.Create(orderSubmission.Order);
                 return CreatedAtAction(nameof(GetOne), new { id = result.Id }, result);
             }

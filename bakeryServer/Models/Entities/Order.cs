@@ -9,8 +9,7 @@ public class Order : IEntity
 
     [ForeignKey("FoodType")]
     public required int FoodId { get; set; }
-
-    public required DateTime Date { get; set; }
+    ublic required DateTime Date { get; set; }
 
     public int[] Fillings { get; set; }
     public int[] Toppings { get; set; }
