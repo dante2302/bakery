@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5279/foodtypes/3/detailed"
+const BASE_URL = "http://localhost:5279/foodtypes/4/detailed"
 
 export async function ReadOneByName(name: string | undefined)
 {

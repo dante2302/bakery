@@ -1,5 +1,5 @@
 import "./Header.scss";
-import temp from "../../assets/temp.jpg"
+import bon from "../../assets/bon1.jpg"
 import { Link } from "react-router-dom";
 export default function Header(){
     return (
@@ -12,7 +12,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 </p>
                     <Link to="/about">Know more about us</Link>
                 </div>
-                <img src={temp} className="img-temp" />
+                <img src={bon} className="img-temp" />
             </div>
         </header>
     )
