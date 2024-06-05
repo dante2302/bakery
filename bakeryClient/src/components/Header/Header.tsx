@@ -6,11 +6,10 @@ export default function Header(){
         <header>
             <div className="wrap">
                 <div>
-                    <h1>Welcome to our Bakery</h1>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+                    <h1>Добре дошли в <br></br>Пекарната на Боби</h1>
+                    <p>Сладкарница, която предлага ръчно изработени шоколадови бонбони, бисквити и торти по поръчка. Всеки продукт е направен с внимание към детайла и използване на висококачествени съставки. Ние създаваме уникални вкусове и дизайни за специални поводи, които ще задоволят и най-изисканите вкусове.
 </p>
-                    <Link to="/about">Know more about us</Link>
+                    <Link to="/about">Повече за нас</Link>
                 </div>
                 <img src={bon} className="img-temp" />
             </div>

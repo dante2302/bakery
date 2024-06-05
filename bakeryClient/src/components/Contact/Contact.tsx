@@ -77,41 +77,46 @@ export default function Contact() {
             <h1>Свържи се с нас</h1>
             <div className="inner-contact">
                 <form>
+                    <div className="input-container">
                     <label htmlFor="name">Име</label>
                     <input
                         type="text"
                         name="name"
-                        id="name"
-                        value={formState.name}
-                        onChange={(e) => formService.changeHandler(setFormState, e)}
-                        onBlur={(e) => validate(e)}
-                    />
-                    {validationErrors.name.error && 
-                        <span>{validationErrors.name.message}</span>}
+                            id="name"
+                            value={formState.name}
+                            onChange={(e) => formService.changeHandler(setFormState, e)}
+                            onBlur={(e) => validate(e)}
+                        />
+                        {validationErrors.name.error &&
+                            <span>{validationErrors.name.message}</span>}
+                    </div>
 
-                    <label htmlFor="email">Имейл</label>
-                    <input
-                        type="email"
-                        name="email"
-                        id="email"
-                        value={formState.email}
-                        onChange={(e) => formService.changeHandler(setFormState, e)}
-                        onBlur={(e) => validate(e)}
-                    />
-                    {validationErrors.email.error && 
-                        <span>{validationErrors.email.message}</span>}
+                    <div className="input-container">
+                        <label htmlFor="email">Имейл</label>
+                        <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            value={formState.email}
+                            onChange={(e) => formService.changeHandler(setFormState, e)}
+                            onBlur={(e) => validate(e)}
+                        />
+                        {validationErrors.email.error &&
+                            <span>{validationErrors.email.message}</span>}
+                    </div>
 
-                    <label htmlFor="message">Съобщение</label>
-                    <textarea
-                        name="message"
-                        id="message"
-                        value={formState.message}
-                        onChange={(e) => formService.changeHandler(setFormState, e)}
-                        onBlur={(e) => validate(e)}
-                    />
-                    {validationErrors.message.error && 
-                        <span>{validationErrors.message.message}</span>}
-
+                    <div className="input-container">
+                        <label htmlFor="message">Съобщение</label>
+                        <textarea
+                            name="message"
+                            id="message"
+                            value={formState.message}
+                            onChange={(e) => formService.changeHandler(setFormState, e)}
+                            onBlur={(e) => validate(e)}
+                        />
+                        {validationErrors.message.error &&
+                            <span>{validationErrors.message.message}</span>}
+                    </div>
                     <button onClick={(e) => contactSubmitHandlerWithLoading(e)}>
                         {isLoading ? <LoadingSpinner color={"#ffffff"} size={25}/>: "Изпрати"}</button>
                     {
@@ -126,7 +131,7 @@ export default function Contact() {
                 </form>
                 <div>
                     <h6>Контакти</h6>
-                    <span>asddasd@email.com</span>
+                    <span>bakery123@gmail.com</span>
                     <span>+35900128481</span>
                 </div>
             </div>

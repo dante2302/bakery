@@ -8,19 +8,16 @@ export default function OrderAll(){
     return (
     <div className="order-all-container">
         <Link to="./cookie" className="card">
-            <h2>Cookies</h2>
+            <h2>Бисквити</h2>
             <img src={cookie} alt="" />
-            <p>Explore option one and its benefits.Explore option one,</p>
         </Link>
         <Link to="./cake" className="card">
-            <h2>Cakes</h2>
+            <h2>Торти</h2>
             <img src={cake} />
-            <p>Discover what choice two offers and why it's interesting.</p>
         </Link>
         <Link to="./candy" className="card">
-            <h2>Candies</h2>
+            <h2>Бонбони</h2>
             <img src={candy} />
-            <p>Learn more about the third choice and its unique features.</p>
         </Link>
     </div>
     )

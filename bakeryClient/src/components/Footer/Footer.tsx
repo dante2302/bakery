@@ -28,7 +28,7 @@ export default function Footer() {
             </div>
             <hr />
             <div className="lower-footer">
-                <div>Copyright blabla</div>
+                <div>Copyright@2024</div>
                 <NavLinkList />
             </div>
         </footer>

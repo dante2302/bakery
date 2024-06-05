@@ -27,6 +27,7 @@
             background-color: grey;
         }
         p{
+            font-size: calc(var(--fs-sm) + .2rem);
             margin-top:3em;
         }
         .img-grid{
@@ -65,7 +66,7 @@
         }
         p{
             margin-top: 1em;
-            font-size: calc(var(--fs-reg) - .2rem);
+            font-size: calc(var(--fs-reg) - 0rem);
         }
     }
 }

@@ -20,7 +20,7 @@ export default function NavDesktop() {
                         </div>
                         <div className="email-div">
                             <Email />
-                            <span>bakery123@bkr.com</span>
+                            <span>bakery123@gmail.com</span>
                         </div>
                     </div>
                     <div>

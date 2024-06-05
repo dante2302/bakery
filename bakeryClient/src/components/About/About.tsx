@@ -4,13 +4,12 @@ export default function About(){
     return (
         <div className="about-wrap">
             <div className="about-header">
-                <h1>Our Bakery Approach</h1>
+                <h1>Нашият подход към сладкарството</h1>
                 <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic.
-                </p>
+Нашата пекарна, разположена във Варна, е специализирана в изработката на ръчно направени шоколадови бонбони, бисквити и торти по поръчка. С внимание към детайла и използване на висококачествени съставки, ние създаваме уникални и вкусни изкушения за всеки повод. Независимо дали става дума за рожден ден, сватба или корпоративно събитие, нашите сладкиши са изработени така, че да впечатлят и най-изисканите вкусове. </p>
                 <p className="lower-p">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic.
-                </p>
+Нямаме физически офис, затова молим нашите клиенти да използват формата за поръчка на нашия сайт. Гордеем се с индивидуалния подход към всяка поръчка и стремежа ни да превърнем вашите желания в реалност. Доверете ни се и се насладете на неповторими сладки изживявания.
+                    </p>
                 <div className="img-grid">
                     <div></div>
                     <div></div>
@@ -20,8 +19,8 @@ export default function About(){
 
             <div className="taste">
                 <div>
-                    <h1>Real Taste</h1>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    <h1>Истински вкус</h1>
+                    <p>Продуктите на нашата пекарна предлагат истински вкус, благодарение на висококачествените съставки и ръчната изработка. Всяка хапка е наслада, която ще ви пренесе в свят на сладки изкушения.</p>
                 </div>
             </div>
         </div>
