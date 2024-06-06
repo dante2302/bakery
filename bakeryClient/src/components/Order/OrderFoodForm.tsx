@@ -5,19 +5,18 @@ import { FoodType } from "../../services/Models";
 import "./styles/OrderFoodPage.scss";
 import cake from "../../assets/cake-bg.jpg";
 import useLoadingSpinner from "../../hooks/UseLoadingSpinner";
+import { Order, OrderSubmission } from "../../services/orderService";
 
 type FilterCategory =
     {
-        [filterName: string]: boolean
+        [filterId: string]: boolean
     }
 
 type FilterCategoryName = "toppings" | "fillings" | "bases";
 
 type OrderFormState =
     {
-        fillings: FilterCategory,
-        toppings: FilterCategory,
-        bases: FilterCategory
+        [fcn in FilterCategoryName]: FilterCategory
     }
 
 const defaultOrderState: OrderFormState =
@@ -28,10 +27,11 @@ const defaultOrderState: OrderFormState =
 }
 
 interface FoodFormProps{
-    changeState: React.Dispatch<React.SetStateAction<any>>
+    changeMode: React.Dispatch<React.SetStateAction<boolean>>
+    setOrderSubmissionState: React.Dispatch<React.SetStateAction<OrderSubmission>>
 }
 
-export default function OrderFoodForm({changeState}: FoodFormProps){
+export default function OrderFoodForm({changeMode, setOrderSubmissionState}: FoodFormProps){
     const { name } = useParams();
     const [orderForm, setOrderForm] = useState(defaultOrderState);
     const [foodTypeData, setFoodTypeData] = useState<FoodType>();
@@ -72,9 +72,27 @@ export default function OrderFoodForm({changeState}: FoodFormProps){
         ))
     }
 
-    function onSubmit()
-    {
+    function toOrder(orderFormState: OrderFormState){
+        const order: Order = 
+        {
+            foodId: 1,
+            fillings: [],
+            toppings: [],
+            bases: [],
+            containsLettering: false
+        } 
 
+        order.fillings = Object.entries(orderFormState.fillings)
+            .filter(entry => entry[1])
+            .map(prop => +prop[0]);
+        order.toppings = Object.entries(orderFormState.toppings)
+            .filter(entry => entry[1])
+            .map(prop => +prop[0]);
+        order.bases = Object.entries(orderFormState.bases)
+            .filter(entry => entry[1])
+            .map(prop => +prop[0]);
+
+        return order;
     }
 
     return (
@@ -143,7 +161,13 @@ export default function OrderFoodForm({changeState}: FoodFormProps){
                             }
                         </div>
                     }
-                    <button onClick={changeState}>Напред</button>
+                    <button onClick={
+                        (e) => {
+                            e.preventDefault();
+                            toOrder(orderForm)
+                            setOrderSubmissionState(o => ({...o, order: toOrder(orderForm)}));
+                            changeMode(mode => !mode)
+                        }}>Напред</button>
                 </div>
         </form>
         :

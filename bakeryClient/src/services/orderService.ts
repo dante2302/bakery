@@ -1,20 +1,19 @@
 const BASE_URL = "localhost:5279/orders";
 
-interface OrderSubmission{
+export interface OrderSubmission{
     order: Order,
     user: User
 }
 
-interface Order{
+export interface Order{
     foodId: number,
     fillings: number[],
     toppings: number[],
     bases: number[],
-    ContainsLettering: boolean,
-    userId: number
+    containsLettering: boolean,
 }
 
-interface User{
+export interface User{
     phoneNumber: string,
     firstName: string,
     lastName: string,

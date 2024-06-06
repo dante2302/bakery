@@ -44,8 +44,8 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("where")]
-        public async Task<IActionResult> GetOneByName([FromQuery] string name)
+        [Route("withName/{name}")]
+        public async Task<IActionResult> GetOneByName(string name)
         {
             try
             {
@@ -67,6 +67,14 @@ namespace WebApi.Controllers
             {
                 return StatusCode(500);
             }
+        }
+
+        [HttpPut]
+        [Route("dto")]
+        public async Task<IActionResult> UpdateByDTO([FromBody] FoodTypeDTO fDto)
+        {
+            FoodType ft = new(fDto);
+            return await Update(ft);
         }
 
         private async Task<List<T>> MapExternalEntity<T>(IEntityService<T> _service, List<int> ids)
