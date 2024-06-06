@@ -1,12 +1,14 @@
 import { FoodType } from "./Models";
 
-const BASE_URL = "http://localhost:5279/foodtypes/dto"
-const alternative = "http://localhost:5279/foodtypes/4/detailed" ;
-const nameMap = 
+const BASE_URL = "http://localhost:5279/foodtypes"
+const alternative = "http://localhost:5279/foodtypes/2/detailed" ;
+const updateUrl = "http://localhost:5279/foodtypes/dto";
+//
+export const nameMap = 
 {
     cake: "Торта",
-    candy: "Бонбони",
-    cookie: "Бисквити",
+    candy: "Бонбон",
+    cookie: "Бисквита",
 }
 
 export async function ReadOneByName(name: "cake" | "candy" | "cookie" | undefined)
@@ -16,21 +18,9 @@ export async function ReadOneByName(name: "cake" | "candy" | "cookie" | undefine
         {
             return;
         }
-// `${BASE_URL}/withName/${nameMap[name]}`
-        const response = await fetch(alternative);
-
-        const b = await response.json();
-        const a = { ...b, name: "Торта" };
-
-        console.log(JSON.stringify(a));
-
-        const rp = await fetch(BASE_URL, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(a)
-        })
+// 
+        const response = await fetch(`${BASE_URL}/withName/${nameMap[name]}`);
+        return await response.json()
     }
 
     catch(err){

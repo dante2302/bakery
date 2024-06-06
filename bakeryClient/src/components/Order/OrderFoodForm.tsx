@@ -38,6 +38,9 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState}: Foo
     const [LoadingSpinner, InitialFetchWithLoading, isLoading] = useLoadingSpinner(InitialFetch);
 
     async function InitialFetch(){
+        if(Object.keys(foodTypeService.nameMap).indexOf(name) == -1){
+            throw new Error("wrong adress");
+        }
         const foodData: FoodType = await foodTypeService.ReadOneByName(name);
         const fillings: FilterCategory = {};
         foodData.fillings.forEach(value => {
