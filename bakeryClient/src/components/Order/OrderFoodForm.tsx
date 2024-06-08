@@ -6,6 +6,7 @@ import "./styles/OrderFoodPage.scss";
 import cake from "../../assets/cake-bg.jpg";
 import useLoadingSpinner from "../../hooks/UseLoadingSpinner";
 import { Order, OrderSubmission } from "../../services/orderService";
+import { OrderMode } from "./OrderPage";
 
 type FilterCategory =
     {
@@ -18,16 +19,21 @@ type OrderFormState =
     {
         [fcn in FilterCategoryName]: FilterCategory
     }
+    &
+    {
+        containsLettering: boolean
+    }
 
 const defaultOrderState: OrderFormState =
 {
     fillings: {},
     toppings: {},
-    bases: {}
+    bases: {},
+    containsLettering: false
 }
 
 interface FoodFormProps{
-    changeMode: React.Dispatch<React.SetStateAction<boolean>>
+    changeMode: React.Dispatch<React.SetStateAction<OrderMode>>
     setOrderSubmissionState: React.Dispatch<React.SetStateAction<OrderSubmission>>
 }
 
@@ -38,8 +44,9 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState}: Foo
     const [LoadingSpinner, InitialFetchWithLoading, isLoading] = useLoadingSpinner(InitialFetch);
 
     async function InitialFetch(){
-        if(Object.keys(foodTypeService.nameMap).indexOf(name) == -1){
-            throw new Error("wrong adress");
+        if(!name || Object.keys(foodTypeService.nameMap).indexOf(name) == -1){
+            console.log("a");
+            throw "wrong adress";
         }
         const foodData: FoodType = await foodTypeService.ReadOneByName(name);
         const fillings: FilterCategory = {};
@@ -55,13 +62,11 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState}: Foo
         const bases: FilterCategory = {};
         foodData.bases.forEach(value => bases[value.id] = false);
 
-        setOrderForm({ fillings, toppings, bases });
+        setOrderForm({ fillings, toppings, bases, containsLettering: false });
         setFoodTypeData(foodData);
     };
 
-    useEffect(() => {
-        InitialFetchWithLoading();
-    }, []);
+    useEffect(() => {InitialFetchWithLoading()}, []);
 
     function handleCheckbox(e: React.ChangeEvent<HTMLInputElement>, category: FilterCategoryName) {
         setOrderForm(o => (
@@ -78,7 +83,7 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState}: Foo
     function toOrder(orderFormState: OrderFormState){
         const order: Order = 
         {
-            foodId: 1,
+            foodId: foodTypeData.id,
             fillings: [],
             toppings: [],
             bases: [],
@@ -164,20 +169,30 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState}: Foo
                             }
                         </div>
                     }
+                    <div className="filter-container">
+                        <div>
+                            <label htmlFor="canContainLettering">Изписване на букви</label>
+                            <input 
+                                type="checkbox"
+                                name={"containsLettering"}
+                                checked={orderForm.containsLettering}
+                                onChange={() => setOrderForm((o) => ({...o, containsLettering: !o.containsLettering}))}
+                                />
+                        </div>
+                    </div>
                     <button onClick={
                         (e) => {
                             e.preventDefault();
                             toOrder(orderForm)
                             setOrderSubmissionState(o => ({...o, order: toOrder(orderForm)}));
-                            changeMode(mode => !mode)
+                            changeMode("order")
                         }}>Напред</button>
                 </div>
         </form>
         :
-            isLoading ?
+            isLoading &&
                 <div className="order-spinner-box">
                     <LoadingSpinner size={200} />
-                </div> :
-                <div>Try again later.</div>
+                </div> 
     )
 }

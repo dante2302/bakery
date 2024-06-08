@@ -47,7 +47,6 @@ namespace WebApi.Controllers
         [Route("withName/{name}")]
         public async Task<IActionResult> GetOneByName(string name)
         {
-            return Ok();
             try
             {
                 var foodType = await _foodService.ReadOneByCondition(

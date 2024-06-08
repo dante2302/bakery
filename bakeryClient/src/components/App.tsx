@@ -6,21 +6,21 @@ import Nav from "./Nav/Nav";
 import "./index.scss";
 import Footer from "./Footer/Footer";
 import OrderAll from "./Order/OrderAll";
-import OrderFoodPage from "./Order/OrderFoodPage";
+import OrderPage from "./Order/OrderPage";
 
 function App() {
   return (
     <>
     <Nav />
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="about" element={<About />} />
-      <Route path="contact" element={<Contact />} />
-      <Route path="order" >
-        <Route index element={<OrderAll />}/>
-        <Route path={':name'} element={<OrderFoodPage />} />
-      </Route>
-    </Routes>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="order" >
+          <Route index element={<OrderAll />} />
+          <Route path={':name'} element={<OrderPage />} />
+        </Route>
+      </Routes>
     <Footer />
     </>
   )
