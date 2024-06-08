@@ -3,8 +3,13 @@ import { User } from "../../services/orderService";
 import * as formService from "../../services/formService";
 import useValidate from "../../hooks/useValidate";
 import GetDefaultErrorState from "../../services/validationService";
+import { OrderMode } from "./OrderPage";
 
-export default function OrderUserForm(){
+type props = 
+{
+    changeMode: React.Dispatch<React.SetStateAction<OrderMode>>;
+}
+export default function OrderUserForm({changeMode} : props){
     const defaultFormState: User = 
     {
         phoneNumber: "",
@@ -43,6 +48,7 @@ export default function OrderUserForm(){
         },
     }
 
+    const [showConfirmation, setShowConfirmation] = useState(false);
     const [formState, setFormState] = useState(defaultFormState);
 
     const propertyNames = Object.keys(defaultFormState);
@@ -109,7 +115,7 @@ export default function OrderUserForm(){
                     <span>{validationErrors.email.message}</span>}
             </div>
 
-            <button>Завърши Поръчка</button>
+            <button onClick={() => changeMode("final")}>Завърши Поръчка</button>
         </div>
     )
 }

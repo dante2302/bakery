@@ -1,7 +1,35 @@
+import { FilterCategory } from "../components/Order/OrderFoodForm";
+
+// INTERFACES
+export interface FoodType{
+    id: number,
+    name: string,
+    fillings: Filling[],
+    toppings: Topping[],
+    bases: Base[],
+    canContainLettering: boolean
+}
+
+export interface Filling{
+    id: number,
+    name: string,
+}
+
+export interface Topping{
+    id: number,
+    name: string,
+}
+
+export interface Base{
+    id: number,
+    name: string,
+}
+
+// FUNCTIONS
 const BASE_URL = "http://localhost:5279/foodtypes"
 // const alternative = "http://localhost:5279/foodtypes/2/detailed" ;
 // const updateUrl = "http://localhost:5279/foodtypes/dto";
-//
+
 export const nameMap = 
 {
     cake: "Торта",
@@ -11,20 +39,22 @@ export const nameMap =
 
 export async function ReadOneByName(name: string | undefined)
 {
-    try{
-        if(!name || !Object.keys(nameMap).includes(name))
-        {
-            return;
-        }
-
-        const response = await fetch(`${BASE_URL}/withName/${nameMap[name]}`);
-        return await response.json();
-    }
-
-    catch(err){
-        console.log(err);
-        return;
-    }
+    const response = await fetch(`${BASE_URL}/withName/${nameMap[name]}`);
+    const a = await response.json();
+    console.log(a);
+    return a;
 }
 
+export function MapFilterFromData(foodData: FoodType)
+{
+    const fillings: FilterCategory = {};
+    foodData.fillings.forEach(value => fillings[value.id] = false);
 
+    const toppings: FilterCategory = {};
+    foodData.toppings.forEach(value => toppings[value.id] = false);
+
+    const bases: FilterCategory = {};
+    foodData.bases.forEach(value => bases[value.id] = false);
+
+    return [fillings, toppings, bases];
+}

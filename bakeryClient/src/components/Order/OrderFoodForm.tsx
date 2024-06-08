@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import * as foodTypeService from "../../services/foodTypeService";
 import { FoodType } from "../../services/Models";
 import "./styles/OrderFoodPage.scss";
 import cake from "../../assets/cake-bg.jpg";
 import useLoadingSpinner from "../../hooks/UseLoadingSpinner";
-import { Order, OrderSubmission } from "../../services/orderService";
+import { FormToOrder, OrderSubmission, OrderSubmissionClientView } from "../../services/orderService";
 import { OrderMode } from "./OrderPage";
 import ErrorPage from "../ErrorBoundaries/ErrorPage";
 
-type FilterCategory =
+export type FilterCategory =
     {
-        [filterId: string]: boolean
+        [filterId: string]: boolean,
     }
 
 type FilterCategoryName = "toppings" | "fillings" | "bases";
 
-type OrderFormState =
+export type FoodFormState =
     {
         [fcn in FilterCategoryName]: FilterCategory
     }
@@ -25,7 +25,7 @@ type OrderFormState =
         containsLettering: boolean
     }
 
-const defaultOrderState: OrderFormState =
+const defaultOrderState: FoodFormState =
 {
     fillings: {},
     toppings: {},
@@ -36,37 +36,34 @@ const defaultOrderState: OrderFormState =
 interface FoodFormProps{
     changeMode: React.Dispatch<React.SetStateAction<OrderMode>>
     setOrderSubmissionState: React.Dispatch<React.SetStateAction<OrderSubmission>>
+    setOrderView: React.Dispatch<React.SetStateAction<OrderSubmissionClientView>>
 }
 
 export default function OrderFoodForm({changeMode, setOrderSubmissionState}: FoodFormProps){
     const { name } = useParams();
-    const [orderForm, setOrderForm] = useState(defaultOrderState);
+    const navigate = useNavigate();
+    const [foodForm, setFoodForm] = useState(defaultOrderState);
     const [foodTypeData, setFoodTypeData] = useState<FoodType>();
     const [LoadingSpinner, InitialFetchWithLoading, isLoading] = useLoadingSpinner(InitialFetch);
 
     async function InitialFetch(){
+        if(!name || Object.keys(foodTypeService.nameMap).indexOf(name) == -1)
+        {
+            navigate("/404");
+            return;
+        }
         const foodData: FoodType = await foodTypeService.ReadOneByName(name);
-        const fillings: FilterCategory = {};
-        foodData.fillings.forEach(value => {
-            fillings[value.id] = false;
-        })
-
-        const toppings: FilterCategory = {};
-        foodData.toppings.forEach(value => {
-            toppings[value.id] = false;
-        })
-
-        const bases: FilterCategory = {};
-        foodData.bases.forEach(value => bases[value.id] = false);
-
-        setOrderForm({ fillings, toppings, bases, containsLettering: false });
+        const [fillings, toppings, bases] = foodTypeService.MapFilterFromData(foodData);
+        setFoodForm({ fillings, toppings, bases, containsLettering: false });
         setFoodTypeData(foodData);
     };
 
     useEffect(() => {InitialFetchWithLoading()}, []);
 
+    // useEffect(() => console.log(foodTypeData), [foodTypeData]);
+
     function handleCheckbox(e: React.ChangeEvent<HTMLInputElement>, category: FilterCategoryName) {
-        setOrderForm(o => (
+        setFoodForm(o => (
             {
                 ...o, [category]:
                 {
@@ -76,29 +73,7 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState}: Foo
             }
         ))
     }
-
-    function toOrder(orderFormState: OrderFormState){
-        const order: Order = 
-        {
-            foodId: foodTypeData.id,
-            fillings: [],
-            toppings: [],
-            bases: [],
-            containsLettering: false
-        } 
-
-        order.fillings = Object.entries(orderFormState.fillings)
-            .filter(entry => entry[1])
-            .map(prop => +prop[0]);
-        order.toppings = Object.entries(orderFormState.toppings)
-            .filter(entry => entry[1])
-            .map(prop => +prop[0]);
-        order.bases = Object.entries(orderFormState.bases)
-            .filter(entry => entry[1])
-            .map(prop => +prop[0]);
-
-        return order;
-    }
+ 
     return (
         foodTypeData
             ?
@@ -119,7 +94,7 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState}: Foo
                                     <input
                                         type="checkbox"
                                         name={f.id.toString()}
-                                        checked={orderForm.fillings[f.id]}
+                                        checked={foodForm.fillings[f.id]}
                                         onChange={(e) => handleCheckbox(e, "fillings")}
                                     />
                                 </div>)
@@ -138,7 +113,7 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState}: Foo
                                     <input
                                         type="checkbox"
                                         name={f.id.toString()}
-                                        checked={orderForm.toppings[f.id]}
+                                        checked={foodForm.toppings[f.id]}
                                         onChange={(e) => handleCheckbox(e, "toppings")}
                                     />
                                 </div>)
@@ -158,7 +133,7 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState}: Foo
                                     <input                                  
                                         type="checkbox"
                                         name={f.id.toString()}
-                                        checked={orderForm.bases[f.id]}
+                                        checked={foodForm.bases[f.id]}
                                         onChange={(e) => handleCheckbox(e, "bases")}
                                     />
                                 </div>)
@@ -171,26 +146,24 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState}: Foo
                             <input 
                                 type="checkbox"
                                 name={"containsLettering"}
-                                checked={orderForm.containsLettering}
-                                onChange={() => setOrderForm((o) => ({...o, containsLettering: !o.containsLettering}))}
+                                checked={foodForm.containsLettering}
+                                onChange={() => setFoodForm((o) => ({...o, containsLettering: !o.containsLettering}))}
                                 />
                         </div>
                     </div>
                     <button onClick={
                         (e) => {
                             e.preventDefault();
-                            toOrder(orderForm)
-                            setOrderSubmissionState(o => ({...o, order: toOrder(orderForm)}));
-                            changeMode("order")
+                            const order = FormToOrder(foodForm, foodTypeData)
+                            setOrderSubmissionState(o => ({...o, order: order}));
+                            changeMode("user")
                         }}>Напред</button>
                 </div>
         </form>
         :
-            isLoading ?
+            isLoading &&
                 <div className="order-spinner-box">
                     <LoadingSpinner size={200} />
                 </div> 
-                :
-                <ErrorPage />
     )
 }

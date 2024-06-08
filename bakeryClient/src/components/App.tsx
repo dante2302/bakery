@@ -20,11 +20,11 @@ export default function App() {
         <Route path="contact" element={<Contact />} />
         <Route path="order" >
           <Route index element={<OrderAll />} />
-          <Route path="cake" element={<OrderPage />} />
-          <Route path="cookie" element={<OrderPage />} />
-          <Route path="candy" element={<OrderPage />} />
+          <Route path=":name" element={<OrderPage />} />
           <Route path="*" element={<Page404 />} />
         </Route>
+        <Route path="*" element={<Page404 />} />
+        <Route path="404" element={<Page404 />} />
       </Routes>
       <Footer />
     </GlobalErrorBoundary>
