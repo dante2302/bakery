@@ -7,23 +7,27 @@ import "./index.scss";
 import Footer from "./Footer/Footer";
 import OrderAll from "./Order/OrderAll";
 import OrderPage from "./Order/OrderPage";
+import GlobalErrorBoundary from "./ErrorBoundaries/GlobalErrorBoundary";
+import Page404 from "./ErrorBoundaries/Page404";
 
-function App() {
+export default function App() {
   return (
-    <>
-    <Nav />
+    <GlobalErrorBoundary>
+      <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
         <Route path="order" >
           <Route index element={<OrderAll />} />
-          <Route path={':name'} element={<OrderPage />} />
+          <Route path="cake" element={<OrderPage />} />
+          <Route path="cookie" element={<OrderPage />} />
+          <Route path="candy" element={<OrderPage />} />
+          <Route path="*" element={<Page404 />} />
         </Route>
       </Routes>
-    <Footer />
-    </>
+      <Footer />
+    </GlobalErrorBoundary>
   )
 }
 
-export default App

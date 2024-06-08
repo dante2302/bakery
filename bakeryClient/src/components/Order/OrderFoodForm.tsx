@@ -7,6 +7,7 @@ import cake from "../../assets/cake-bg.jpg";
 import useLoadingSpinner from "../../hooks/UseLoadingSpinner";
 import { Order, OrderSubmission } from "../../services/orderService";
 import { OrderMode } from "./OrderPage";
+import ErrorPage from "../ErrorBoundaries/ErrorPage";
 
 type FilterCategory =
     {
@@ -44,10 +45,6 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState}: Foo
     const [LoadingSpinner, InitialFetchWithLoading, isLoading] = useLoadingSpinner(InitialFetch);
 
     async function InitialFetch(){
-        if(!name || Object.keys(foodTypeService.nameMap).indexOf(name) == -1){
-            console.log("a");
-            throw "wrong adress";
-        }
         const foodData: FoodType = await foodTypeService.ReadOneByName(name);
         const fillings: FilterCategory = {};
         foodData.fillings.forEach(value => {
@@ -102,7 +99,6 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState}: Foo
 
         return order;
     }
-
     return (
         foodTypeData
             ?
@@ -190,9 +186,11 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState}: Foo
                 </div>
         </form>
         :
-            isLoading &&
+            isLoading ?
                 <div className="order-spinner-box">
                     <LoadingSpinner size={200} />
                 </div> 
+                :
+                <ErrorPage />
     )
 }
