@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-export default function useLocalStorage<T>(key: string, defaultValue: T)
+export default function useLocalStorage<T>(key: string, defaultValue: T): [T, React.Dispatch<React.SetStateAction<T>>]
 {
-    const [state, setState] = useState(() => getStorageValue());
+    const [state, setState] = useState<T>(() => getStorageValue());
 
     useEffect(() => {localStorage.setItem(key, JSON.stringify(state))}, [state]);
 

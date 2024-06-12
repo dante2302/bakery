@@ -4,6 +4,7 @@ import * as formService from "../../services/formService";
 import useValidate from "../../hooks/useValidate";
 import GetDefaultErrorState from "../../services/validationService";
 import { OrderMode } from "./OrderPage";
+import useLocalStorage from "../../hooks/UseLocalStorage";
 
 type props = 
 {
@@ -34,23 +35,13 @@ export default function OrderUserForm({changeMode, setOrderSubmissionState, setO
             message: "Невалиднa фамилия."
         },
 
-        phoneNumber: {
-            regex: /^(?:\d{10}|\+\d{1,14}|(?:\d+[-]?){0,3}\d{7,16})$/,
-
-    //\d{10} |                      // Case 1: Exactly 10 digits
-    //\+\d{1,14} |                  // Case 2: Starts with '+', 1 to 14 digits after '+'
-    //(?:\d+[-]?){0,3}\d{7,16}      // Case 3: Up to 3 groups of digits followed optionally by a dash, remaining digits up to 16
-
-            message: "Невалиден телефонен номер."
-        },
-
         email: {
             regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
             message: "Невалиден имейл."
         },
     }
 
-    const [userFormState, setUserFormState] = useState(defaultFormState);
+    const [userFormState, setUserFormState] = useLocalStorage("userData", defaultFormState);
 
     const propertyNames = Object.keys(defaultFormState);
     const defaultValidationErrors = GetDefaultErrorState(propertyNames);
@@ -96,10 +87,7 @@ export default function OrderUserForm({changeMode, setOrderSubmissionState, setO
                     id="phoneNumber"
                     value={userFormState.phoneNumber}
                     onChange={(e) => formService.changeHandler(setUserFormState, e)}
-                    onBlur={(e) => validate(e)}
                 />
-                {validationErrors.phoneNumber.error &&
-                    <span>{validationErrors.phoneNumber.message}</span>}
             </div>
 
             <div className="input-container">

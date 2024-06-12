@@ -60,13 +60,14 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState, setO
     async function InitialFetch(){
 
         //if there's already a valid data in localStorage and its the same food, dont do anything
-        if(foodTypeData.id > 0 && lastFood == name)return;
+        if(foodTypeData.id >= 0 && lastFood == name)return;
 
         if(!name || Object.keys(foodTypeService.nameMap).indexOf(name) == -1)
         {
             navigate("/404");
             return;
         }
+
         const foodData: FoodType = await foodTypeService.ReadOneByName(name);
         const [fillings, toppings, bases] = foodTypeService.MapFilterFromData(foodData);
         if (lastFood != name) {
