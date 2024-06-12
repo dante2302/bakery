@@ -5,7 +5,7 @@ import { FoodType } from "../../services/Models";
 import "./styles/OrderFoodPage.scss";
 import cake from "../../assets/cake-bg.jpg";
 import useLoadingSpinner from "../../hooks/UseLoadingSpinner";
-import { FormToOrder, OrderSubmission, OrderSubmissionClientView } from "../../services/orderService";
+import { FormToOrder, MapFoodFormToClientView, OrderSubmission, OrderSubmissionClientView } from "../../services/orderService";
 import { OrderMode } from "./OrderPage";
 import ErrorPage from "../ErrorBoundaries/ErrorPage";
 
@@ -39,7 +39,7 @@ interface FoodFormProps{
     setOrderView: React.Dispatch<React.SetStateAction<OrderSubmissionClientView>>
 }
 
-export default function OrderFoodForm({changeMode, setOrderSubmissionState}: FoodFormProps){
+export default function OrderFoodForm({changeMode, setOrderSubmissionState, setOrderView}: FoodFormProps){
     const { name } = useParams();
     const navigate = useNavigate();
     const [foodForm, setFoodForm] = useState(defaultOrderState);
@@ -84,12 +84,12 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState}: Foo
                 </div>
                 <div className="all-filters">
                     {
-                        foodTypeData.fillings?.length &&
+                        foodTypeData.fillings?.length > 0 &&
 
                         <div className="filter-container">
                             <h2>Fillings</h2>
                             {foodTypeData.fillings?.map((f) =>
-                                <div>
+                                <div key={f.id}>
                                     <label htmlFor={f.id.toString()}>{f.name}</label>
                                     <input
                                         type="checkbox"
@@ -103,7 +103,7 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState}: Foo
                     }
 
                     {
-                        foodTypeData.toppings.length > 1 &&
+                        foodTypeData.toppings.length > 0 &&
 
                         <div className="filter-container">
                             <h2>Toppings</h2>
@@ -123,12 +123,12 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState}: Foo
                     }
 
                     {
-                        foodTypeData.bases?.length > 1 &&
+                        foodTypeData.bases?.length > 0 &&
 
                         <div className="filter-container">
                             <h2>Bases</h2>
                             {foodTypeData.bases?.map((f) =>
-                                <div>
+                                <div key={f.id}>
                                     <label htmlFor={`${f.id}`}>{f.name}</label>
                                     <input                                  
                                         type="checkbox"
@@ -155,7 +155,9 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState}: Foo
                         (e) => {
                             e.preventDefault();
                             const order = FormToOrder(foodForm, foodTypeData)
-                            setOrderSubmissionState(o => ({...o, order: order}));
+                            const orderView = MapFoodFormToClientView(foodForm, foodTypeData, name);
+                            setOrderSubmissionState(o => ({...o, order}));
+                            setOrderView(o => ({...o, order: orderView}))
                             changeMode("user")
                         }}>Напред</button>
                 </div>

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { User } from "../../services/orderService";
+import { OrderSubmission, OrderSubmissionClientView, User } from "../../services/orderService";
 import * as formService from "../../services/formService";
 import useValidate from "../../hooks/useValidate";
 import GetDefaultErrorState from "../../services/validationService";
@@ -7,9 +7,11 @@ import { OrderMode } from "./OrderPage";
 
 type props = 
 {
-    changeMode: React.Dispatch<React.SetStateAction<OrderMode>>;
+    changeMode: React.Dispatch<React.SetStateAction<OrderMode>>,
+    setOrderSubmissionState: React.Dispatch<React.SetStateAction<OrderSubmission>>,
+    setOrderView: React.Dispatch<React.SetStateAction<OrderSubmissionClientView>>
 }
-export default function OrderUserForm({changeMode} : props){
+export default function OrderUserForm({changeMode, setOrderSubmissionState, setOrderView} : props){
     const defaultFormState: User = 
     {
         phoneNumber: "",
@@ -48,8 +50,7 @@ export default function OrderUserForm({changeMode} : props){
         },
     }
 
-    const [showConfirmation, setShowConfirmation] = useState(false);
-    const [formState, setFormState] = useState(defaultFormState);
+    const [userFormState, setUserFormState] = useState(defaultFormState);
 
     const propertyNames = Object.keys(defaultFormState);
     const defaultValidationErrors = GetDefaultErrorState(propertyNames);
@@ -65,8 +66,8 @@ export default function OrderUserForm({changeMode} : props){
                     type="text"
                     name="firstName"
                     id="firstName"
-                    value={formState.firstName}
-                    onChange={(e) => formService.changeHandler(setFormState, e)}
+                    value={userFormState.firstName}
+                    onChange={(e) => formService.changeHandler(setUserFormState, e)}
                     onBlur={(e) => validate(e)}
                 />
                 {validationErrors.firstName.error &&
@@ -79,8 +80,8 @@ export default function OrderUserForm({changeMode} : props){
                     type="text"
                     name="lastName"
                     id="lastName"
-                    value={formState.lastName}
-                    onChange={(e) => formService.changeHandler(setFormState, e)}
+                    value={userFormState.lastName}
+                    onChange={(e) => formService.changeHandler(setUserFormState, e)}
                     onBlur={(e) => validate(e)}
                 />
                 {validationErrors.lastName.error &&
@@ -93,8 +94,8 @@ export default function OrderUserForm({changeMode} : props){
                     type="text"
                     name="phoneNumber"
                     id="phoneNumber"
-                    value={formState.phoneNumber}
-                    onChange={(e) => formService.changeHandler(setFormState, e)}
+                    value={userFormState.phoneNumber}
+                    onChange={(e) => formService.changeHandler(setUserFormState, e)}
                     onBlur={(e) => validate(e)}
                 />
                 {validationErrors.phoneNumber.error &&
@@ -107,15 +108,21 @@ export default function OrderUserForm({changeMode} : props){
                     type="email"
                     name="email"
                     id="email"
-                    value={formState.email}
-                    onChange={(e) => formService.changeHandler(setFormState, e)}
+                    value={userFormState.email}
+                    onChange={(e) => formService.changeHandler(setUserFormState, e)}
                     onBlur={(e) => validate(e)}
                 />
                 {validationErrors.email.error &&
                     <span>{validationErrors.email.message}</span>}
             </div>
-
-            <button onClick={() => changeMode("final")}>Завърши Поръчка</button>
+            <button onClick={() => changeMode("order")}>Nazad</button>
+            <button onClick={() => 
+            {
+                console.log(setOrderView);
+                setOrderSubmissionState(os => ({...os, user: userFormState}));
+                setOrderView(o => ({...o, user: userFormState}));
+                changeMode("final")
+            }}>Завърши Поръчка</button>
         </div>
     )
 }

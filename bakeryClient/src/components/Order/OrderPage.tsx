@@ -3,12 +3,12 @@ import OrderFoodForm from "./OrderFoodForm";
 import OrderUserForm from "./OrderUserForm";
 import { Order, OrderClientView, OrderSubmission,  OrderSubmissionClientView,  User } from "../../services/orderService";
 import OrderConfirmation from "./OrderConfirmation";
+import ErrorPage from "../ErrorBoundaries/ErrorPage";
 
 export type OrderMode = "order" | "user" | "final";
 
 export default function OrderPage() {
     const [mode, setMode] = useState<OrderMode>("order");
-    const [orderConfirmed, setOrderConfirmed] = useState<boolean>();
 
     const [orderState, setOrderState] = useState<OrderSubmission>({
         order: {} as Order, 
@@ -28,9 +28,14 @@ export default function OrderPage() {
                     setOrderView={setOrderView}
                     />;
         case "user": 
-            return <OrderUserForm changeMode={setMode} />;
+            return <OrderUserForm 
+                    changeMode={setMode} 
+                    setOrderSubmissionState={setOrderState}
+                    setOrderView={setOrderView}/>;
         case "final":
-            return <OrderConfirmation orderView={orderView}/>;
-        default: throw new Error("asdasdasd");
+            return <OrderConfirmation 
+                    orderState={orderState}
+                    orderView={orderView}/>;
+        default: return <ErrorPage />;
     }
 }

@@ -30,6 +30,8 @@ const BASE_URL = "http://localhost:5279/foodtypes"
 // const alternative = "http://localhost:5279/foodtypes/2/detailed" ;
 // const updateUrl = "http://localhost:5279/foodtypes/dto";
 
+export type NameMapName = "cake" | "candy" | "cookie";
+
 export const nameMap = 
 {
     cake: "Торта",
@@ -41,7 +43,6 @@ export async function ReadOneByName(name: string | undefined)
 {
     const response = await fetch(`${BASE_URL}/withName/${nameMap[name]}`);
     const a = await response.json();
-    console.log(a);
     return a;
 }
 
