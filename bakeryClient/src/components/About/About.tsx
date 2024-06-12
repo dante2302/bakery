@@ -1,8 +1,18 @@
 import "./About.scss";
+import yc from "../../assets/yellowCupcake.jpg";
+import ap from "../../assets/applePie.jpg";
+import bc from "../../assets/berryCake].jpg";
+import bg from "../../assets/about-bg.jpg";
 
 export default function About(){
     return (
         <div className="about-wrap">
+            <div className="taste">
+                <div>
+                    <h1>Истински вкус</h1>
+                    <p>Продуктите на нашата пекарна предлагат истински вкус, благодарение на висококачествените съставки и ръчната изработка. Всяка хапка е наслада, която ще ви пренесе в свят на сладки изкушения.</p>
+                </div>
+            </div>
             <div className="about-header">
                 <h1>Нашият подход към сладкарството</h1>
                 <p>
@@ -11,18 +21,12 @@ export default function About(){
 Нямаме физически офис, затова молим нашите клиенти да използват формата за поръчка на нашия сайт. Гордеем се с индивидуалния подход към всяка поръчка и стремежа ни да превърнем вашите желания в реалност. Доверете ни се и се насладете на неповторими сладки изживявания.
                     </p>
                 <div className="img-grid">
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                    <img src={yc}  />
+                    <img src={bc}  />
+                    <img src={ap}  />
                 </div>
             </div>
 
-            <div className="taste">
-                <div>
-                    <h1>Истински вкус</h1>
-                    <p>Продуктите на нашата пекарна предлагат истински вкус, благодарение на висококачествените съставки и ръчната изработка. Всяка хапка е наслада, която ще ви пренесе в свят на сладки изкушения.</p>
-                </div>
-            </div>
         </div>
     )
 }
