@@ -54,7 +54,6 @@ function useLoadingSpinner(callback: Callback, errorCallback?: ErrorCallback): [
       if(errorCallback)errorCallback(error)
     }
     finally{
-      await new Promise(resolve => setTimeout(resolve, 2000))
       setLoading(false);
     }
   }

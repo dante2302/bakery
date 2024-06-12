@@ -7,7 +7,7 @@ import cake from "../../assets/cake-bg.jpg";
 import useLoadingSpinner from "../../hooks/UseLoadingSpinner";
 import { FormToOrder, MapFoodFormToClientView, OrderSubmission, OrderSubmissionClientView } from "../../services/orderService";
 import { OrderMode } from "./OrderPage";
-import ErrorPage from "../ErrorBoundaries/ErrorPage";
+import useLocalStorage from "../../hooks/UseLocalStorage";
 
 export type FilterCategory =
     {
@@ -33,6 +33,16 @@ const defaultOrderState: FoodFormState =
     containsLettering: false
 }
 
+const defaultFoodData: FoodType = 
+{
+    id: -1,
+    name: "",
+    fillings: [],
+    toppings: [],
+    bases: [],
+    canContainLettering:false, 
+}
+
 interface FoodFormProps{
     changeMode: React.Dispatch<React.SetStateAction<OrderMode>>
     setOrderSubmissionState: React.Dispatch<React.SetStateAction<OrderSubmission>>
@@ -42,11 +52,16 @@ interface FoodFormProps{
 export default function OrderFoodForm({changeMode, setOrderSubmissionState, setOrderView}: FoodFormProps){
     const { name } = useParams();
     const navigate = useNavigate();
-    const [foodForm, setFoodForm] = useState(defaultOrderState);
-    const [foodTypeData, setFoodTypeData] = useState<FoodType>();
+    const [foodForm, setFoodForm] = useLocalStorage<FoodFormState>("foodForm", defaultOrderState);
+    const [lastFood, setLastFood] = useLocalStorage("lastFood", name);
+    const [foodTypeData, setFoodTypeData] = useLocalStorage<FoodType>("foodData", defaultFoodData);
     const [LoadingSpinner, InitialFetchWithLoading, isLoading] = useLoadingSpinner(InitialFetch);
 
     async function InitialFetch(){
+
+        //if there's already a valid data in localStorage and its the same food, dont do anything
+        if(foodTypeData.id > 0 && lastFood == name)return;
+
         if(!name || Object.keys(foodTypeService.nameMap).indexOf(name) == -1)
         {
             navigate("/404");
@@ -54,7 +69,10 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState, setO
         }
         const foodData: FoodType = await foodTypeService.ReadOneByName(name);
         const [fillings, toppings, bases] = foodTypeService.MapFilterFromData(foodData);
-        setFoodForm({ fillings, toppings, bases, containsLettering: false });
+        if (lastFood != name) {
+            setFoodForm({ fillings, toppings, bases, containsLettering: false });
+            setLastFood(name);
+        }
         setFoodTypeData(foodData);
     };
 
@@ -75,8 +93,12 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState, setO
     }
  
     return (
+            isLoading ?
+                <div className="order-spinner-box">
+                    <LoadingSpinner size={200} />
+                </div> :
         foodTypeData
-            ?
+            &&
             <form className="order-food-container">
                 <div>
                     <h1>{foodTypeData.name}</h1>
@@ -162,10 +184,5 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState, setO
                         }}>Напред</button>
                 </div>
         </form>
-        :
-            isLoading &&
-                <div className="order-spinner-box">
-                    <LoadingSpinner size={200} />
-                </div> 
     )
 }
