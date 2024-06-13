@@ -1,5 +1,8 @@
 import { FilterCategory } from "../components/Order/OrderFoodForm";
-import cakeImg from "../../assets/cake-bg.jpg";
+import cakeImg from "../assets/cake-bg.jpg";
+import cookieImg from "../assets/cookie.jpg";
+import candyImg from "../assets/candy.jpg";
+import { Cake, Candy, Cookie } from "../components/SVGs";
 
 // INTERFACES
 export interface FoodType{
@@ -35,7 +38,19 @@ export type NameMapName = "cake" | "candy" | "cookie";
 
 export const imageMap = 
 {
-    cake: cakeImg
+    cake: {
+        img: cakeImg,
+        svg: <Cake />
+    },
+    cookie: {
+        img: cookieImg,
+        svg: <Cookie />
+    },
+
+    candy: {
+        img: candyImg,
+        svg: <Candy />
+    }
 }
 export const nameMap = 
 {

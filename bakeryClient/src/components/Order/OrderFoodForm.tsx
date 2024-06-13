@@ -136,7 +136,16 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState, setO
             <form className="order-food-container">
                 <div className="heading-div">
                     <h1>{foodTypeData.name}</h1>
-                    {width > widthBoundary ? <img src={cake} /> : <Cake />}
+                    {
+                        (Object.keys(foodTypeService.imageMap).indexOf(name) != -1) &&
+                        (
+                            width > widthBoundary
+                                ?
+                                <img src={foodTypeService.imageMap[name].img} />
+                                :
+                                foodTypeService.imageMap[name].svg
+                        )
+                    }
                 </div>
                 <div className="all-filters">
                     {
@@ -209,10 +218,12 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState, setO
                             id="additionalMessage" 
                             name="additionalMessage"
                             onChange={(e) => changeHandler(setFoodForm, e)}
+                            maxLength={500}
                         />
                     </div>
-                    <button onClick={e => handleForwardClick(e)} disabled={hasGotError}>Напред</button>
-                </div>
+                    {width >= widthBoundary &&  <button onClick={e => handleForwardClick(e)} disabled={hasGotError}>Напред</button>}
+               </div>
+                    {width < widthBoundary && <button onClick={e => handleForwardClick(e)} disabled={hasGotError}>Напред</button>}
         </form>
     )
 }

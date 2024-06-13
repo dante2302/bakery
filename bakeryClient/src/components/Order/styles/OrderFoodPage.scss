@@ -1,42 +1,106 @@
 @import "../../styles_partials/flex";
 @import "../../styles_partials/breakpoints";
+@import "../../styles_partials/colors";
 
 .order-food-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width: 100%;
-    padding-inline: 2em;
+    grid-template-columns: 40% 60%;
+    margin: 20px auto;
+    width: 85%;
+    color: white;
+
+    .heading-div {
+        padding-top: 10px;
+        text-align: center;
+        @include flex($direction: column, $place-horizontal: start);
+        border: 3px solid white;
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
+    }
+
+    label {
+        margin-right: 8px;
+    }
+
+    .heading-div, .all-filters{
+        background-color: $acc-pale-pink;
+    }
 
     img {
-        width: auto;
+        border-radius: 8px;
+        width: 70%;
+        margin-top: 10px;
     }
 
     .all-filters {
-        border-radius: 10px;
-        border: 1px solid black;
+        border-bottom-right-radius: 10px;
+        border-top-right-radius: 10px;
+        border: 3px solid white;
     }
 
     .filter-container,
     .lettering,
     .additionalMessage {
-        border-bottom: 1px solid black;
+        padding: 15px;
+        border-bottom: 3px solid white;
     }
 
-    .lettering>label {
+    .additionalMessage{
+        @include flex($direction: column);
+        border: none;
+        textarea{
+            margin-block: 10px;
+            padding: 10px;
+            border: none;
+            width: 85%;
+            resize: none;
+            height: 200px;
+            border-radius: 3px;
+
+            &:focus{
+                outline: none;
+                border: 1px solid $acc-purple-intense;
+            }
+        }
+    }
+
+    .lettering>label, .additionalMessage>label {
         font-weight: bold;
+        font-size: var(--fs-reg);
     }
 
+    button{
+        background-color: white;
+        border: 3px solid $acc-pale-pink;
+        color: $acc-pale-pink;
+        display: block;
+        margin: 10px auto;
+        padding: 5px 10px;
+        border-radius: 7px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all .1s;
+    }
+    button:hover{
+        background-color: $acc-pale-pink;
+        color: white;
+        border: 3px solid white;
+    }
     @media(max-width: $tablet){
         &{
             grid-template-columns: 1fr;
-            grid-template-rows: 20% 80%;
+            grid-template-rows: 20% 70% 10%;
         }
         .heading-div{
             @include flex();
         }
         svg{
-            width: 60px;
-            height: 60px;
+            margin-left: 10px;
+            width: 45px;
+            height: 45px;
+            path{
+                fill: $acc-purple-intense;
+            }
         }
 
         img{

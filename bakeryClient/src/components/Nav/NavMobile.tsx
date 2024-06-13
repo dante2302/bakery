@@ -3,6 +3,7 @@ import ModalPrototype from "../ModalPrototype/ModalPrototype";
 import { CloseButton, Hamburger } from "../SVGs";
 import "./styles/NavMobile.scss";
 import NavLinkList from "./NavLinkList";
+import { Link } from "react-router-dom";
 
 export default function NavMobile() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -27,6 +28,7 @@ export default function NavMobile() {
                                     e.stopPropagation()
                                 }}
                             />
+                    <Link to="./order" className="order-btn">Поръчай</Link>
                         </NavLinkList>
                     </div>
                 </ModalPrototype>
