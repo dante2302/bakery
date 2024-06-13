@@ -10,6 +10,7 @@ import OrderPage from "./Order/OrderPage";
 import GlobalErrorBoundary from "./ErrorBoundaries/GlobalErrorBoundary";
 import Page404 from "./ErrorBoundaries/Page404";
 import ScrollToTop from "./ScrollToTop";
+import ErrorPage from "./ErrorBoundaries/ErrorPage";
 
 export default function App() {
   return (
@@ -24,8 +25,9 @@ export default function App() {
           <Route path=":name" element={<OrderPage />} />
           <Route path="*" element={<Page404 />} />
         </Route>
-        <Route path="*" element={<Page404 />} />
         <Route path="404" element={<Page404 />} />
+        <Route path="error" element={<ErrorPage />} />
+        <Route path="*" element={<Page404 />} />
       </Routes>
       <ScrollToTop>
         <Footer />

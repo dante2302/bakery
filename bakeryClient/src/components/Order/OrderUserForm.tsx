@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { OrderSubmission, OrderSubmissionClientView, User } from "../../services/orderService";
 import * as formService from "../../services/formService";
-import useValidate from "../../hooks/useValidate";
+import useValidate from "../../hooks/UseValidate";
 import GetDefaultErrorState from "../../services/validationService";
 import { OrderMode } from "./OrderPage";
 import useLocalStorage from "../../hooks/UseLocalStorage";
@@ -39,15 +39,35 @@ export default function OrderUserForm({changeMode, setOrderSubmissionState, setO
             regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
             message: "Невалиден имейл."
         },
-    }
 
+        phoneNumber: {
+            regex: /(.*?)/,
+            message: ""
+        }
+    }
     const [userFormState, setUserFormState] = useLocalStorage("userData", defaultFormState);
 
     const propertyNames = Object.keys(defaultFormState);
     const defaultValidationErrors = GetDefaultErrorState(propertyNames);
 
     const [validationErrors, setValidationErrors] = useState(defaultValidationErrors);
+    const [hasGotError, setHasGotError] = useState(true);
     const validate = useValidate(setValidationErrors, regexValidator);
+
+    function FinishOrderClickHandler()
+    {
+        setOrderSubmissionState(os => ({ ...os, user: userFormState }));
+        setOrderView(o => ({ ...o, user: userFormState }));
+        changeMode("final");
+    }
+
+    useEffect(() => {
+        if (Object.values(userFormState).some(v => v.length == 0)) {
+            setHasGotError(true);
+            return;
+        }
+        setHasGotError(Object.values(validationErrors).some(v => v.error));
+    }, [validationErrors])
 
     return (
         <div>
@@ -87,7 +107,10 @@ export default function OrderUserForm({changeMode, setOrderSubmissionState, setO
                     id="phoneNumber"
                     value={userFormState.phoneNumber}
                     onChange={(e) => formService.changeHandler(setUserFormState, e)}
+                    onBlur={(e) => validate(e)}
                 />
+                {validationErrors.phoneNumber.error && 
+                    <span>{validationErrors.phoneNumber.message}</span>}
             </div>
 
             <div className="input-container">
@@ -104,13 +127,7 @@ export default function OrderUserForm({changeMode, setOrderSubmissionState, setO
                     <span>{validationErrors.email.message}</span>}
             </div>
             <button onClick={() => changeMode("order")}>Nazad</button>
-            <button onClick={() => 
-            {
-                console.log(setOrderView);
-                setOrderSubmissionState(os => ({...os, user: userFormState}));
-                setOrderView(o => ({...o, user: userFormState}));
-                changeMode("final")
-            }}>Завърши Поръчка</button>
+            <button onClick={FinishOrderClickHandler} disabled={hasGotError}>Завърши Поръчка</button>
         </div>
     )
 }

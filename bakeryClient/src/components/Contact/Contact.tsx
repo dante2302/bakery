@@ -4,7 +4,7 @@ import * as formService from "../../services/formService";
 import * as contactService from "../../services/contactService";
 import MessageBlock from "../Messages/MessageBlock";
 import useLoadingSpinner from "../../hooks/UseLoadingSpinner";
-import useValidate from "../../hooks/useValidate";
+import useValidate from "../../hooks/UseValidate";
 import useLocalStorage from "../../hooks/UseLocalStorage";
 
 export interface ContactFormState extends formService.BaseFormState {

@@ -15,6 +15,7 @@ public class Order : IEntity
     public int[] Toppings { get; set; }
     public int[] Bases { get; set; }
 
+    public string AdditionalMessage { get; set; }
     public required bool ContainsLettering { get; set; }
     public required bool IsCompleted { get; set; }
 

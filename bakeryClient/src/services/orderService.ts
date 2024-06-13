@@ -20,6 +20,7 @@ export interface OrderClientView
     toppings: string[],
     bases: string[],
     containsLettering: boolean
+    additionalMessage: string
 }
 
 export interface Order{
@@ -28,6 +29,7 @@ export interface Order{
     toppings: number[],
     bases: number[],
     containsLettering: boolean,
+    additionalMessage: string
 }
 
 export interface User{
@@ -57,7 +59,8 @@ export function FormToOrder(orderFormState: FoodFormState, foodTypeData: FoodTyp
         fillings: [],
         toppings: [],
         bases: [],
-        containsLettering: false
+        containsLettering: false,
+        additionalMessage: ""
     }
 
     order.fillings = Object.entries(orderFormState.fillings)
@@ -80,7 +83,8 @@ export function MapFoodFormToClientView(form: FoodFormState, f: FoodType, name: 
         fillings: [],
         toppings: [],
         bases: [],
-        containsLettering: form.containsLettering
+        containsLettering: form.containsLettering,
+        additionalMessage: form.additionalMessage
     };
 
     // METHOD: 

@@ -1,4 +1,5 @@
 import { FilterCategory } from "../components/Order/OrderFoodForm";
+import cakeImg from "../../assets/cake-bg.jpg";
 
 // INTERFACES
 export interface FoodType{
@@ -32,6 +33,10 @@ const BASE_URL = "http://localhost:5279/foodtypes"
 
 export type NameMapName = "cake" | "candy" | "cookie";
 
+export const imageMap = 
+{
+    cake: cakeImg
+}
 export const nameMap = 
 {
     cake: "Торта",

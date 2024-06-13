@@ -19,7 +19,7 @@ namespace WebApi.Controllers
         private readonly IEntityService<Topping> _toppingService = toppingService;
         private readonly IEntityService<Base> _baseService = baseService;
 
-        [HttpGet("{id}/detailed")]
+        [HttpGet]
         [Route("{id}/detailed")]
         public async Task<IActionResult> GetOneDetailed(int id)
         {

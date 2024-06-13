@@ -1,16 +1,51 @@
 @import "../../styles_partials/flex";
+@import "../../styles_partials/breakpoints";
 
-.order-food-container{
-    @include flex();
+.order-food-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     width: 100%;
     padding-inline: 2em;
-    img{
+
+    img {
         width: auto;
-        height: 80vh;
+    }
+
+    .all-filters {
+        border-radius: 10px;
+        border: 1px solid black;
+    }
+
+    .filter-container,
+    .lettering,
+    .additionalMessage {
+        border-bottom: 1px solid black;
+    }
+
+    .lettering>label {
+        font-weight: bold;
+    }
+
+    @media(max-width: $tablet){
+        &{
+            grid-template-columns: 1fr;
+            grid-template-rows: 20% 80%;
+        }
+        .heading-div{
+            @include flex();
+        }
+        svg{
+            width: 60px;
+            height: 60px;
+        }
+
+        img{
+            height: 25vh;
+        }
     }
 }
 
-.order-spinner-box{
+.order-spinner-box {
     @include flex;
     margin: 50px;
 }
