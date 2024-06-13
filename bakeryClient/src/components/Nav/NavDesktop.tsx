@@ -24,8 +24,8 @@ export default function NavDesktop() {
                         </div>
                     </div>
                     <div>
-                        <InstagramLogo className="svgHover"/>
-                        <FacebookLogo className="svgHover"/>
+                        <a href=""><InstagramLogo className="svg-hover"/></a>
+                        <a href=""><FacebookLogo className="svg-hover"/></a>
                     </div>
                 </div>
             </div>

@@ -25,14 +25,14 @@ export default function OrderUserForm({changeMode, setOrderSubmissionState, setO
         firstName: {
             //regex not allowing special characters
             regex: /^[a-zA-Z0-9.]+(?:[-'\s][a-zA-Z0-9.]+)*$/,
-            message: "Невалидно име."
+            message: "Името не може да съдържа следните символи: \n! @ # $ % ^ & * () _ + = {} [] | \ : ;"
         },
 
         lastName: {
             //regex not allowing special characters
             regex: /^[a-zA-Z0-9.]+(?:[-'\s][a-zA-Z0-9.]+)*$/,
 
-            message: "Невалиднa фамилия."
+            message: "Името не може да съдържа следните символи: \n! @ # $ % ^ & * () _ + = {} [] | \ : ;"
         },
 
         email: {

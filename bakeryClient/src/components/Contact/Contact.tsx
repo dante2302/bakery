@@ -5,6 +5,7 @@ import * as contactService from "../../services/contactService";
 import MessageBlock from "../Messages/MessageBlock";
 import useLoadingSpinner from "../../hooks/UseLoadingSpinner";
 import useValidate from "../../hooks/useValidate";
+import useLocalStorage from "../../hooks/UseLocalStorage";
 
 export interface ContactFormState extends formService.BaseFormState {
     name: string,
@@ -42,16 +43,16 @@ export default function Contact() {
         },
         name: {
             regex: /^[a-zA-Z0-9.]+(?:[-'\s][a-zA-Z0-9.]+)*$/,
-            message: "Невалидно име."
+            message: "Името не може да съдържа следните символи: \n! @ # $ % ^ & * () _ + = {} [] | \ : ;"
         },
         message: {
             regex: /^[a-zA-Z0-9\s.,!?'"()&%-]*$/,
-            message: "Съобщението ви съдържа недопустими символи."
+            message: "Съобщението ви съдържа недопустими символи: \n! @ # $ % ^ & * () _ + = {} [] | \ : ;"
         }
     }
 
 
-    const [formState, setFormState] = useState(defaultFormState);
+    const [formState, setFormState] = useLocalStorage("contactInfo", defaultFormState);
     const [requestSuccess, setRequestSuccess] = useState<boolean>();
     const [showMessage, setShowMessage] = useState<boolean>();
     const [LoadingSpinner, contactSubmitHandlerWithLoading, isLoading] = useLoadingSpinner(contactSubmitHandler);
@@ -69,8 +70,6 @@ export default function Contact() {
         //     success && navigate("/");
         // }, 2000)
     }
-
-    useEffect(() => (console.table(validationErrors)), [validationErrors])
 
     return (
         <div className="outer-contact-wrap">

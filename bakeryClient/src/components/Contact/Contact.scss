@@ -23,6 +23,7 @@
             display: block;
             font-size: var(--fs-sm);
             color: $text-dark-grey;
+            white-space: pre-line;
         }
 
         form{
