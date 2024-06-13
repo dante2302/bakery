@@ -9,6 +9,10 @@
     width: 85%;
     color: white;
 
+    label {
+        margin-right: 8px;
+    }
+
     .heading-div {
         padding-top: 10px;
         text-align: center;
@@ -18,19 +22,16 @@
         border-top-left-radius: 10px;
     }
 
-    label {
-        margin-right: 8px;
+    img {
+        border-radius: 8px;
+        width: 70%;
+        margin-top: 10px;
     }
 
     .heading-div, .all-filters{
         background-color: $acc-pale-pink;
     }
 
-    img {
-        border-radius: 8px;
-        width: 70%;
-        margin-top: 10px;
-    }
 
     .all-filters {
         border-bottom-right-radius: 10px;
@@ -43,6 +44,11 @@
     .additionalMessage {
         padding: 15px;
         border-bottom: 3px solid white;
+    }
+
+    .lettering>label, .additionalMessage>label {
+        font-weight: bold;
+        font-size: var(--fs-reg);
     }
 
     .additionalMessage{
@@ -64,11 +70,6 @@
         }
     }
 
-    .lettering>label, .additionalMessage>label {
-        font-weight: bold;
-        font-size: var(--fs-reg);
-    }
-
     button{
         background-color: white;
         border: 3px solid $acc-pale-pink;
@@ -81,19 +82,23 @@
         font-weight: bold;
         transition: all .1s;
     }
+
     button:hover{
         background-color: $acc-pale-pink;
         color: white;
         border: 3px solid white;
     }
+
     @media(max-width: $tablet){
         &{
             grid-template-columns: 1fr;
             grid-template-rows: 20% 70% 10%;
         }
+
         .heading-div{
             @include flex();
         }
+
         svg{
             margin-left: 10px;
             width: 45px;
