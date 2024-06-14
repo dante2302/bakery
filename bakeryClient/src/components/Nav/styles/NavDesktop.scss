@@ -31,7 +31,7 @@ nav{
 
 .upper-nav{
     @include flex($place_horizontal: space-between);
-    padding-block: 15px;
+    padding-block: 10px;
     color: $text-white;
 
     svg{

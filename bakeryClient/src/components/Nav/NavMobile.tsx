@@ -4,13 +4,14 @@ import { CloseButton, Hamburger } from "../SVGs";
 import "./styles/NavMobile.scss";
 import NavLinkList from "./NavLinkList";
 import { Link } from "react-router-dom";
+import logo from "../../assets/logo.png";
 
 export default function NavMobile() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     return (
         <nav className="nav">
-            <div className="logo"></div>
+            <img src={logo} className="logo"/>
             <Hamburger
                 className="hamburger-btn"
                 onClick={() => setIsOpen(true)}

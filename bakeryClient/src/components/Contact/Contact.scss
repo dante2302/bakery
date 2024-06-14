@@ -9,7 +9,7 @@
     padding-block: 6em;
     h1{
         font-size: var(--fs-xl);
-        margin-bottom: 1.5em;
+        margin-bottom: 1em;
     }
     .inner-contact{
         @include flex($place-vertical: start);

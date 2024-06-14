@@ -5,6 +5,7 @@ import useValidate from "../../hooks/UseValidate";
 import GetDefaultErrorState from "../../services/validationService";
 import { OrderMode } from "./OrderPage";
 import useLocalStorage from "../../hooks/UseLocalStorage";
+import "./styles/OrderUserForm.scss";
 
 type props = 
 {
@@ -70,8 +71,10 @@ export default function OrderUserForm({changeMode, setOrderSubmissionState, setO
     }, [validationErrors])
 
     return (
-        <div>
-            <div className="input-container">
+        <div className="outer-user-wrap">
+        <form className="order-user-form">
+            <h1 className="z">Данни за потребител</h1>
+            <div className="input-container a">
                 <label htmlFor="firstName">Име</label>
                 <input
                     type="text"
@@ -81,11 +84,9 @@ export default function OrderUserForm({changeMode, setOrderSubmissionState, setO
                     onChange={(e) => formService.changeHandler(setUserFormState, e)}
                     onBlur={(e) => validate(e)}
                 />
-                {validationErrors.firstName.error &&
-                    <span>{validationErrors.firstName.message}</span>}
             </div>
 
-            <div className="input-container">
+            <div className="input-container b">
                 <label htmlFor="lastName">Фамилия</label>
                 <input
                     type="text"
@@ -95,25 +96,15 @@ export default function OrderUserForm({changeMode, setOrderSubmissionState, setO
                     onChange={(e) => formService.changeHandler(setUserFormState, e)}
                     onBlur={(e) => validate(e)}
                 />
+            </div>
+            <div className="specialErrors">
+                {validationErrors.firstName.error &&
+                    <span>{validationErrors.firstName.message}</span>}
                 {validationErrors.lastName.error &&
                     <span>{validationErrors.lastName.message}</span>}
             </div>
 
-            <div className="input-container">
-                <label htmlFor="phoneNumber">Телефон</label>
-                <input
-                    type="text"
-                    name="phoneNumber"
-                    id="phoneNumber"
-                    value={userFormState.phoneNumber}
-                    onChange={(e) => formService.changeHandler(setUserFormState, e)}
-                    onBlur={(e) => validate(e)}
-                />
-                {validationErrors.phoneNumber.error && 
-                    <span>{validationErrors.phoneNumber.message}</span>}
-            </div>
-
-            <div className="input-container">
+            <div className="input-container c">
                 <label htmlFor="email">Имейл</label>
                 <input
                     type="email"
@@ -126,8 +117,22 @@ export default function OrderUserForm({changeMode, setOrderSubmissionState, setO
                 {validationErrors.email.error &&
                     <span>{validationErrors.email.message}</span>}
             </div>
-            <button onClick={() => changeMode("order")}>Nazad</button>
-            <button onClick={FinishOrderClickHandler} disabled={hasGotError}>Завърши Поръчка</button>
-        </div>
+
+            <div className="input-container d">
+                <label htmlFor="phoneNumber">Телефон</label>
+                <input
+                    type="text"
+                    name="phoneNumber"
+                    id="phoneNumber"
+                    value={userFormState.phoneNumber}
+                    onChange={(e) => formService.changeHandler(setUserFormState, e)}
+                    onBlur={(e) => validate(e)}
+                />
+                {validationErrors.phoneNumber.error && 
+                    <span>{validationErrors.phoneNumber.message}</span>}
+            </div>
+            <button className="e" onClick={() => changeMode("order")}>Назад</button>
+            <button className="f" onClick={FinishOrderClickHandler} disabled={hasGotError}>Завърши Поръчка</button>
+        </form></div>
     )
 }
