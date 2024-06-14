@@ -14,7 +14,7 @@
     }
 
     .heading-div {
-        padding-top: 10px;
+        padding-top: 30px;
         text-align: center;
         @include flex($direction: column, $place-horizontal: start);
         border: 3px solid white;
@@ -83,10 +83,16 @@
         transition: all .1s;
     }
 
-    button:hover{
+    button:not(:disabled):hover{
         background-color: $acc-pale-pink;
         color: white;
         border: 3px solid white;
+    }
+
+    button:disabled{
+        background-color: grey;
+        color: lightgrey;
+        cursor: default;
     }
 
     @media(max-width: $tablet){

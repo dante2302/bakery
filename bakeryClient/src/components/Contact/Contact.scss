@@ -78,6 +78,11 @@
                     background-color: $acc-pale-pink;
                 }
             }
+
+            button:disabled{
+                background-color: grey;
+                cursor: default;
+            }
             
             .contact-message-block{
                 margin-top: 15px;

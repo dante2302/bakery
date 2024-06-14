@@ -62,7 +62,7 @@ public abstract class BasicEntityControllerBase<T>
 
         catch (ArgumentException ex)
         {
-            return BadRequest(ex);
+            return BadRequest(ex.Message);
         }
 
         catch (Exception)

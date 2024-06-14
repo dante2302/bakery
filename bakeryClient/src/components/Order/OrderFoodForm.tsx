@@ -10,10 +10,9 @@ import { OrderMode } from "./OrderPage";
 import useLoadingSpinner from "../../hooks/UseLoadingSpinner";
 import useLocalStorage from "../../hooks/UseLocalStorage";
 
-import "./styles/OrderFoodPage.scss";
+import "./styles/OrderFoodForm.scss";
 import { changeHandler } from "../../services/formService";
 import useWindowDimensions from "../../hooks/UseWindowDimensions";
-import { Cake } from "../SVGs";
 
 export type FilterCategory = {
         [filterId: string]: boolean,

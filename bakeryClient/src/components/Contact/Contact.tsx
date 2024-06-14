@@ -58,18 +58,27 @@ export default function Contact() {
     const [LoadingSpinner, contactSubmitHandlerWithLoading, isLoading] = useLoadingSpinner(contactSubmitHandler);
     const [validationErrors, setValidationErrors] = useState(defaultValidationErrors);
     const validate = useValidate(setValidationErrors, regexValidator);
-    // const navigate  = useNavigate();
+    const [hasError, setHasError] = useState(true);
 
     async function contactSubmitHandler(e: React.FormEvent<HTMLButtonElement>) {
         e.preventDefault();
         const success = await contactService.sendMessage(formState);
         setRequestSuccess(success);
         setShowMessage(true);
-        // setTimeout(() => {
-        //     setShowMessage(false);
-        //     success && navigate("/");
-        // }, 2000)
     }
+
+    useEffect(() => {
+        console.log(validationErrors);
+        const a = Object.values(validationErrors).some((v) => v.error);
+        const b  = Object.values(formState).some((v) => v.length == 0)
+        console.log(a);
+        console.log(b);
+        if(a || b)
+        {
+            setHasError(true);
+        }
+        else {setHasError(false)};
+    }, [formState, validationErrors])
 
     return (
         <div className="outer-contact-wrap">
@@ -116,13 +125,13 @@ export default function Contact() {
                         {validationErrors.message.error &&
                             <span>{validationErrors.message.message}</span>}
                     </div>
-                    <button onClick={(e) => contactSubmitHandlerWithLoading(e)}>
+                    <button onClick={(e) => contactSubmitHandlerWithLoading(e)} disabled={hasError}>
                         {isLoading ? <LoadingSpinner color={"#ffffff"} size={25}/>: "Изпрати"}</button>
                     {
                         showMessage && 
                         <MessageBlock 
-                            heading={requestSuccess ? "Success! " : "Something Went Wrong..."} 
-                            message={requestSuccess ? "Your Message was sent." : "An Error Happened"}
+                            heading={requestSuccess ? "Съобщението ви беше изпратено успешно" : "Нещо се обърка..."} 
+                            message={requestSuccess ? "" : "Съобщението ви не беше изпратено"}
                             isSuccess={requestSuccess}
                             additionalStyles="contact-message-block"
                         />

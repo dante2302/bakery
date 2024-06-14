@@ -7,7 +7,7 @@ namespace WebApi.Controllers;
 [ApiController]
 [Route("[controller]")]
 public class ContactMessagesController
-    (IEntityService<Filling> service) : BasicEntityControllerBase<Filling>(service) 
+    (IEntityService<ContactMessage> service) : BasicEntityControllerBase<ContactMessage>(service) 
 {
 }
 

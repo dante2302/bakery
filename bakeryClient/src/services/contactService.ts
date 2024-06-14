@@ -1,11 +1,14 @@
 import { ContactFormState } from "../components/Contact/Contact";
-const BASE_URL = "localhost:5279/all";
+const BASE_URL = "http://localhost:5279/contactmessages";
 
 export async function sendMessage(formState: ContactFormState)
 {
     try{
         await fetch(BASE_URL, { 
             method: "POST",
+            headers:{
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify(formState),
             mode: "cors"
         });
