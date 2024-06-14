@@ -4,6 +4,7 @@ import { Cardboard, Email, FacebookLogo, InstagramLogo } from "../SVGs";
 import NavLinkList from "./NavLinkList";
 import "./styles/NavDesktop.scss";
 import UseScroll from "../../hooks/UseScroll";
+import logo from "../../assets/logo.png";
 
 export default function NavDesktop() {
     const [verticalOffset] = UseScroll();
@@ -32,7 +33,7 @@ export default function NavDesktop() {
             <div className="lower-nav-wrap">
                 <div className="lower-nav">
                     <div>
-                        <div className="logo" onClick={() => navigate("/")}></div>
+                        <img src={logo} onClick={() => navigate("/")} className="logo"/>
                         <NavLinkList />
                     </div>
                     <Link to="./order" className="order-btn">Поръчай</Link>
