@@ -124,6 +124,8 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState, setO
         const orderView = MapFoodFormToClientView(foodForm, foodTypeData, name);
         setOrderSubmissionState(o => ({ ...o, order }));
         setOrderView(o => ({ ...o, order: orderView }))
+        console.log(order);
+        console.log(orderView);
         changeMode("user")
     }
 
@@ -216,6 +218,7 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState, setO
                         <textarea 
                             id="additionalMessage" 
                             name="additionalMessage"
+                            value={foodForm.additionalMessage}
                             onChange={(e) => changeHandler(setFoodForm, e)}
                             maxLength={500}
                         />

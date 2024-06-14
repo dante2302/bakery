@@ -14,22 +14,22 @@ export default function ProductShowcase(){
                     <li>
                         <img src={cupcake} />
                         <span>Ягодов Къпкейк</span>
-                        <Link to="/order/cake">Поръчай</Link>
+                        {/* <Link to="/order/cake">Поръчай</Link> */}
                     </li>
                     <li>
                         <img src={weddingCake} />
                         <span>Сватбена Торта</span>
-                        <Link to="/order/cake">Поръчай</Link>
+                        {/* <Link to="/order/cake">Поръчай</Link> */}
                     </li>
                     <li>
                         <img src={loveCandy} />
                         <span>Романтични Бонбони</span>
-                        <Link to="/order/candy">Поръчай</Link>
+                        {/* <Link to="/order/candy">Поръчай</Link> */}
                     </li>
                     <li>
                         <img src={keks} />
                         <span>Какаов Кекс</span>
-                        <Link to="/order/cake">Поръчай</Link>
+                        {/* <Link to="/order/cake">Поръчай</Link> */}
                     </li>
                </ul>
             </div>

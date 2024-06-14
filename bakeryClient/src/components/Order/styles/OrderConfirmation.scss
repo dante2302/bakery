@@ -1,0 +1,64 @@
+@import "../../styles_partials/flex";
+@import "../../styles_partials/colors";
+
+.order-confirmation-outer {
+    @include flex();
+    width: 100%;
+.order-detail-heading-div{
+    @include flex($place-horizontal: flex-start);
+    padding: 5px;
+    gap: 10px;
+}
+    svg {
+        width: 35px;
+        height: 35px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+    .after, .before{
+        display: block;
+        width: 100%;
+        height: 1px;
+        background-color: grey;
+        content:"";
+    }
+    h2{
+        margin-block: 10px;
+    }
+    background-color: $bg-white;
+    padding: 20px;
+    h3{
+        font-size: calc(var(--fs-reg) + .1rem);
+        text-align: center;
+    }
+        h4,label{
+            font-size: var(--fs-reg);
+            font-weight: bold;
+        }
+    input, textarea{
+        pointer-events: none;
+        cursor: default;
+    }
+    textarea{
+        margin-top: 10px;
+        resize: none;
+        padding: 10px;
+        min-height: 250px;
+        font-size: var(--fs-sm);
+    }
+    &>div{
+        min-width: 70%;
+        background: white;
+        box-shadow: 0 24px 30px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+    }
+    .additionalMessage-container{
+        display: flex;
+        flex-direction: column;
+        width: 70%;
+        margin-top: 10px;
+    }
+}

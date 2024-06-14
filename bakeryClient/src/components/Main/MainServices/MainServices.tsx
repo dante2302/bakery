@@ -5,7 +5,7 @@ export default function MainServices() {
     return (
         <div className="main-service-wrap">
             <div className="container">
-                <h1>Основни услуги</h1>
+                <h1>Какво Предлагаме</h1>
                 <div className="inner">
                     <div className="food-type-container">
                         <Cookie />

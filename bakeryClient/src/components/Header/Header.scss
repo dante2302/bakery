@@ -29,6 +29,9 @@ header {
             gap: 20px;
         }
 
+        .link-div{
+            @include flex();
+        }
          a{
             color: white;
             background-color: $acc-pale-pink;
@@ -38,6 +41,8 @@ header {
             cursor: pointer;
             padding: 10px 20px;
             font-weight: $fw-bold;
+            font-size: calc(var(--fs-sm) + .15rem);
+            text-align: center;
 
             &:hover{
                 color: $acc-pale-pink;
@@ -54,6 +59,7 @@ header {
         .wrap{
             @include flex($direction: column);
             text-align: center;
+            padding-block: 1em;
 
             div {
                 @include flex($direction: column);
@@ -62,6 +68,15 @@ header {
 
             .img-temp{
                 max-width: 80vw;
+            }
+            a{
+                min-width: 150px;
+            }
+            .link-div{
+                flex-direction: column;
+            }
+            p{
+                padding-inline: 20px;
             }
         }
     }
