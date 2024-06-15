@@ -1,6 +1,7 @@
 @import "../../styles_partials/flex";
 @import "../../styles_partials/colors";
 
+
 .order-confirmation-outer {
     @include flex();
     width: 100%;
@@ -17,12 +18,13 @@
         margin-block: 10px 20px;
 
         svg {
-                width: 35px;
-                height: 35px;
-                flex-shrink: 0;
+            width: 35px;
+            height: 35px;
+            flex-shrink: 0;
         }
     }
-    .user-detail-heading-div{
+
+    .user-detail-heading-div {
         margin-top: 20px;
     }
 
@@ -48,10 +50,11 @@
         font-weight: bold;
     }
 
-    .containsLettering-container{
-        label{
+    .containsLettering-container {
+        label {
             margin-right: 15px;
         }
+
         input {
             accent-color: green;
             pointer-events: none;
@@ -60,7 +63,7 @@
 
     &>div {
         min-width: 70%;
-        background: linear-gradient(to bottom right, white,80%, lightgrey);
+        background: linear-gradient(to bottom right, white, 80%, lightgrey);
         box-shadow: 0 24px 30px rgba(0, 0, 0, 0.1);
         padding: 30px;
         padding-top: 20px;
@@ -83,7 +86,60 @@
         }
     }
 
-    h6{
+    h6 {
         font-size: calc(var(--fs-reg) - .2rem);
+    }
+
+    .user-data-container {
+        @include flex($place-horizontal: start);
+        margin-bottom: 20px;
+        gap: 10px;
+
+        svg {
+            flex-shrink: 0;
+            width: 35px;
+            height: auto;
+        }
+
+        .user-id-card {
+            width: 40px;
+        }
+    }
+
+    button {
+        color: white;
+        background: linear-gradient(to bottom right, $acc-purple, $acc-purple-intense);
+        padding: 10px 15px;
+        border-radius: 7px;
+        border: none;
+        display: block;
+        margin: auto;
+        font-size: calc(var(--fs-sm) + .2rem);
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform .2s ease-in-out;
+    }
+
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 $acc-purple, 0 0 0 0 $acc-purple;
+        }
+
+        40% {
+            box-shadow: 0 0 0 0 rgba(255, 4, 0, 0), 0 0 0 10px $acc-purple;
+        }
+
+        80% {
+            box-shadow: 0 0 0 0 rgba(255, 4, 0, 0), 0 0 0 20px rgba(255, 4, 0, 0);
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 $acc-purple-intense, 0 0 0 10px rgba(255, 4, 0, 0);
+        }
+    }
+
+    button:hover {
+        animation: pulse .5s linear;
+        transform: scale(1.05);
     }
 }
