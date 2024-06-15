@@ -15,7 +15,7 @@
 
     .heading-div {
         color: black;
-        background: linear-gradient(to bottom,white,80%,$bg-white);
+        background: linear-gradient(to bottom,white,20%,$bg-white);
         border-block: 3px solid white;
         padding-top: 30px;
         text-align: center;
@@ -25,13 +25,16 @@
     }
 
     img {
-        border-radius: 8px;
+        border-radius: 10px;
         width: 70%;
         margin-top: 10px;
     }
 
     .all-filters{
         background: linear-gradient(to right,  $acc-purple-intense,20%,$acc-pale-pink );
+        input{
+            accent-color: yellow;
+        }
     }
 
 

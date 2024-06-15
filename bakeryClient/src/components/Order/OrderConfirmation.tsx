@@ -1,5 +1,6 @@
 import { OrderSubmission, OrderSubmissionClientView } from "../../services/orderService"
-import SvgShoppingBag from "../SVGs/ShoppingBag";
+import ShoppingBag from "../SVGs/ShoppingBag";
+import UserCircle from "../SVGs/UserCircle";
 import "./styles/OrderConfirmation.scss";
 
 interface props{
@@ -12,14 +13,13 @@ export default function OrderConfirmation({orderView, orderState}: props)
     return (
         <div className="order-confirmation-outer">
             <div>
-                <div className="before"></div>
                 <div className="order-detail-heading-div">
-                    <h2>Данни За Поръчка</h2>
-                    <SvgShoppingBag />
+                    <ShoppingBag />
+                    <h2>Данни за Поръчка</h2>
                 </div>
-                <div className="after"></div>
                 
                 <div>
+                    <h3>{orderView.order.name}</h3>
                     {
                         orderView.order.bases.length > 0 &&
                         <div>
@@ -54,13 +54,11 @@ export default function OrderConfirmation({orderView, orderState}: props)
                     }
                     {
                         orderView.order.containsLettering && 
-                        <div> 
+                        <div className="containsLettering-container"> 
                             <label htmlFor="containsLetteringView">Изписване на букви</label>
                             <input 
                                 type="checkbox" 
                                 checked={true} 
-                                disabled={true}
-                                className="no-after"
                             />
                         </div>    
                     }
@@ -78,22 +76,14 @@ export default function OrderConfirmation({orderView, orderState}: props)
                     }
                 </div> 
             <div>
-                <div className="before"></div>
-                <h2>Данни за потребител</h2>
-                <div className="after"></div>
+                <div className="user-detail-heading-div">
+                    <h2>Данни за Потребител</h2>
+                    <UserCircle />
+                </div>
                 <div>
-                    <h6>
-                        Имена:
-                        <span> {orderView.user.firstName} {orderView.user.lastName}</span>
-                    </h6>
-                    <h6>
-                        Имейл:
-                        <span> {orderView.user.email}</span>
-                    </h6>
-                    <h6>
-                        Телефон:
-                        <span> {orderView.user.phoneNumber}</span>
-                    </h6>
+                    <h6>{orderView.user.firstName} {orderView.user.lastName}</h6>
+                    <h6>{orderView.user.email}</h6>
+                    <h6>{orderView.user.phoneNumber}</h6>
                 </div>
             </div>
             </div>

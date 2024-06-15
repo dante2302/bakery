@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Cake, Candy, Cookie } from "../../SVGs"
 import "./MainServices.scss";
 
@@ -23,6 +24,7 @@ export default function MainServices() {
                         <p>Изискани сладки изкушения, които разтварят в устата с вкусове</p>
                     </div>
                 </div>
+                    <Link to="/order">Поръчай Сега</Link>
             </div>
         </div>
     )

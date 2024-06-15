@@ -211,7 +211,7 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState, setO
                             name={"containsLettering"}
                             checked={foodForm.containsLettering}
                             onChange={() => setFoodForm((o) => ({ ...o, containsLettering: !o.containsLettering }))}
-                        />
+                        ></input>
                     </div>
                     <div className="additionalMessage">
                         <label htmlFor="additionalMessage">Допълнения</label>
