@@ -2,11 +2,13 @@
 using Models;
 using Exceptions;
 using Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class FoodTypesController(
         IEntityService<FoodType> foodService,
         IEntityService<Filling> fillingService,
@@ -20,6 +22,7 @@ namespace WebApi.Controllers
         private readonly IEntityService<Base> _baseService = baseService;
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("{id}/detailed")]
         public async Task<IActionResult> GetOneDetailed(int id)
         {
@@ -45,6 +48,7 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [Route("withName/{name}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetOneByName(string name)
         {
             try

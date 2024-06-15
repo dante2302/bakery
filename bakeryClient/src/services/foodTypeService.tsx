@@ -31,8 +31,6 @@ export interface Base{
 
 // FUNCTIONS
 const BASE_URL = "http://localhost:5279/foodtypes"
-// const alternative = "http://localhost:5279/foodtypes/2/detailed" ;
-// const updateUrl = "http://localhost:5279/foodtypes/dto";
 
 export type NameMapName = "cake" | "candy" | "cookie";
 

@@ -33,19 +33,22 @@ export interface Order{
 }
 
 export interface User{
-    phoneNumber: string,
     firstName: string,
     lastName: string,
     email?: string
+    phoneNumber: string,
 }
 
 // FUNCTIONS
-const BASE_URL = "localhost:5279/orders";
+const BASE_URL = "http://localhost:5279/orders/submit";
 
 export async function SubmitOrder(os: OrderSubmission){
     const response = await fetch(`${BASE_URL}`,
     {
         method: "POST",
+        headers:{
+            "Content-Type": "application/json"
+        },
         body: JSON.stringify(os)
     })
     console.log(await response.json());
@@ -60,7 +63,8 @@ export function FormToOrder(orderFormState: FoodFormState, foodTypeData: FoodTyp
         toppings: [],
         bases: [],
         containsLettering: false,
-        additionalMessage: ""
+        additionalMessage: "",
+        date: new Date()
     }
 
     order.fillings = Object.entries(orderFormState.fillings)

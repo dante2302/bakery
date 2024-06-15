@@ -1,16 +1,38 @@
-import { OrderSubmission, OrderSubmissionClientView } from "../../services/orderService"
+import { useEffect, useState } from "react";
+import { OrderSubmission, OrderSubmissionClientView, SubmitOrder } from "../../services/orderService"
 import { EmailColored, Phone, UserIdCard } from "../SVGs";
 import ShoppingBag from "../SVGs/ShoppingBag";
 import UserCircle from "../SVGs/UserCircle";
 import "./styles/OrderConfirmation.scss";
+import ConfirmationMessage from "../Messages/ConfirmationMessage";
 
 interface props {
     orderState: OrderSubmission
     orderView: OrderSubmissionClientView
 }
 export default function OrderConfirmation({ orderView, orderState }: props) {
+    const [showConfirmation, setShowConfirmation] = useState(false);
+    const [isConfirmed, setIsConfirmed] = useState(false);
+
+    useEffect(() => {console.log(isConfirmed)}, [isConfirmed])
+
+    function submitClickHandler(){
+        setShowConfirmation(true);
+    }
+
+    async function confirmationHandler(confirmation: boolean){
+        if (!confirmation) return;
+        await SubmitOrder(orderState);
+    }
 
     return (
+        <>
+        {showConfirmation && 
+            <ConfirmationMessage 
+                message="sigurne?" 
+                setShow={setShowConfirmation} 
+                confirmCallback={confirmationHandler}/>
+        }
         <div className="order-confirmation-outer">
             <div>
                 <div className="order-detail-heading-div">
@@ -95,8 +117,9 @@ export default function OrderConfirmation({ orderView, orderState }: props) {
                         </div>
                     </div>
                 </div>
-                <button className="submit-button">Завършване на поръчка</button>
+                <button className="submit-button" onClick={submitClickHandler}>Завършване на поръчка</button>
             </div>
         </div>
+        </>
     )
 }

@@ -9,7 +9,7 @@ public class Order : IEntity
 
     [ForeignKey("FoodType")]
     public required int FoodId { get; set; }
-    public required DateTime Date { get; set; }
+    public DateTime Date { get; set; }
 
     public int[] Fillings { get; set; }
     public int[] Toppings { get; set; }
@@ -17,8 +17,8 @@ public class Order : IEntity
 
     public string AdditionalMessage { get; set; }
     public required bool ContainsLettering { get; set; }
-    public required bool IsCompleted { get; set; }
+    public bool IsCompleted { get; set; }
 
     [ForeignKey("User")]
-    public required int UserId { get; set; }
+    public int UserId { get; set; }
 }

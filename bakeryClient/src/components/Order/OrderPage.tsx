@@ -4,6 +4,7 @@ import OrderUserForm from "./OrderUserForm";
 import { Order, OrderClientView, OrderSubmission,  OrderSubmissionClientView,  User } from "../../services/orderService";
 import OrderConfirmation from "./OrderConfirmation";
 import ErrorPage from "../ErrorBoundaries/ErrorPage";
+import ScrollToTop from "../ScrollToTop";
 
 export type OrderMode = "order" | "user" | "final";
 
@@ -22,20 +23,26 @@ export default function OrderPage() {
 
     switch(mode){
         case "order":
-            return <OrderFoodForm 
-                    changeMode={setMode} 
-                    setOrderSubmissionState={setOrderState}
-                    setOrderView={setOrderView}
-                    />;
+            return <ScrollToTop>
+                        <OrderFoodForm
+                            changeMode={setMode}
+                            setOrderSubmissionState={setOrderState}
+                            setOrderView={setOrderView}
+                        />
+                    </ScrollToTop>
         case "user": 
-            return <OrderUserForm 
-                    changeMode={setMode} 
-                    setOrderSubmissionState={setOrderState}
-                    setOrderView={setOrderView}/>;
+            return <ScrollToTop>
+                        <OrderUserForm 
+                        changeMode={setMode} 
+                        setOrderSubmissionState={setOrderState}
+                        setOrderView={setOrderView}/>
+                    </ScrollToTop>
         case "final":
-            return <OrderConfirmation 
-                    orderState={orderState}
-                    orderView={orderView}/>;
+            return  <ScrollToTop> 
+                        <OrderConfirmation 
+                        orderState={orderState}
+                        orderView={orderView}/>
+                    </ScrollToTop>
         default: return <ErrorPage />;
     }
 }

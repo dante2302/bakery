@@ -2,14 +2,23 @@ import { PropsWithChildren } from "react"
 
 type props = PropsWithChildren & {
     message: string
-    setConfirmation: React.Dispatch<React.SetStateAction<boolean>>
+    confirmCallback: (confirmation: boolean) => any
+    setShow: React.Dispatch<React.SetStateAction<boolean>>
 }
-export default function ConfirmationMessage({ message, setConfirmation }: props) {
+export default function ConfirmationMessage({ message, setShow, confirmCallback }: props) {
     return (
             <div>
                 {message}
-                <button onClick={() => setConfirmation(true)}>Да</button>
-                <button onClick={() => setConfirmation(false)}>Не</button>
+                <button onClick={() => 
+                    {
+                        confirmCallback(true)
+                        setShow(false);
+                    }}>Да</button>
+                <button onClick={() => 
+                    {
+                        confirmCallback(false)
+                        setShow(false);
+                    }}>Ne</button>
             </div>
     )
 }

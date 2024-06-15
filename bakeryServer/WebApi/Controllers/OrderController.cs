@@ -2,11 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using Models;
 using Exceptions;
 using Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class OrdersController(
         IEntityService<Order> orderService,
         IUserService userService,
@@ -59,8 +61,30 @@ namespace WebApi.Controllers
             }
         }
 
-
+        [AllowAnonymous]
         [HttpPost]
+        public async override Task<IActionResult> Create([FromBody] Order o)
+        {
+            const string message =
+                    @"Endpoint does not work!
+                    Send a request to /submit 
+                    Note: requires an OrderSubmission Input: 
+                    {
+                        Order Order { get; set; }
+                        User User { get; set; }
+                    }";
+            try
+            {
+                return BadRequest(message);
+            }
+            catch
+            {
+                return BadRequest(message);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost("submit")]
         public async Task<IActionResult> Create([FromBody] OrderSubmission orderSubmission)
         {
             try
@@ -100,8 +124,9 @@ namespace WebApi.Controllers
 
                 orderSubmission.Order.UserId = newOrderUserId;
                 orderSubmission.Order.IsCompleted = false;
+                orderSubmission.Order.Date = DateTime.Now;
                 Order result = await _orderService.Create(orderSubmission.Order);
-                return CreatedAtAction(nameof(GetOne), new { id = result.Id }, result);
+                return Ok();
             }
 
             catch(ArgumentException ex)
@@ -109,9 +134,9 @@ namespace WebApi.Controllers
                 return BadRequest(ex);
             }
 
-            catch(Exception ex)
+            catch
             {
-                return StatusCode(500, ex);
+                return StatusCode(500);
             }
         }
     }

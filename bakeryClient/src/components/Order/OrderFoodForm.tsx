@@ -124,8 +124,6 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState, setO
         const orderView = MapFoodFormToClientView(foodForm, foodTypeData, name);
         setOrderSubmissionState(o => ({ ...o, order }));
         setOrderView(o => ({ ...o, order: orderView }))
-        console.log(order);
-        console.log(orderView);
         changeMode("user")
     }
 
