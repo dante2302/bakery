@@ -18,7 +18,7 @@ export default class GlobalErrorBoundary extends Component {
 
   render(){
     if(this.state.hasError){
-      <ErrorPage />
+      return <ErrorPage />
     }
     return this.props.children
   }
