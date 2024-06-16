@@ -34,7 +34,7 @@
         border-top-right-radius: 10px;
         border-left: 1px solid #f1f1f1;
         input{
-            accent-color: yellow;
+            accent-color: $acc-purple-intense;
         }
     }
 
@@ -113,6 +113,7 @@
         background-color: grey;
         color: lightgrey;
         cursor: default;
+        border: 3px solid grey;
     }
 
     @media(max-width: $tablet){
