@@ -1,3 +1,11 @@
+/**
+ * A custom React hook that tracks the dimensions of the browser window.
+ * 
+ * @returns {{ width: number, height: number }} 
+ * An object containing the width and height of the browser window.
+ * 
+ **/
+
 import { useState, useEffect } from 'react';
 
 function getWindowDimensions() {

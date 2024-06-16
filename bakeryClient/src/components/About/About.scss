@@ -1,0 +1,78 @@
+@import "../styles_partials/flex";
+@import "../styles_partials/breakpoints";
+@import "../styles_partials/colors";
+
+.about-wrap
+{
+    @include flex($direction: column);
+    .about-header
+    {
+        @include flex($direction: column);
+        width: 70%;
+        padding: 3em 1em;
+        text-align: center;
+
+        h1{
+            font-size: var(--fs-xl);
+        }
+        h1::after
+        {
+            margin: auto;
+            margin-top: 1em;
+            display: block;
+            content: "";
+            width: 50px;
+            height: 1px;
+            background-color: grey;
+        }
+        p{
+            font-size: calc(var(--fs-sm) + .2rem);
+            margin-top:3em;
+        }
+        .img-grid{
+            @include flex();
+            gap: 20px;
+            margin-block: 3em;
+            img{
+                width: 30vw;
+                height: 40vh;
+                border-radius: 10px;
+            }
+        }
+        @media(max-width: $phone)
+        {
+            .img-grid{
+                flex-direction: column;
+                img{
+                    width: 80vw;
+                    height: 20vh;
+                }
+            }
+        }
+    }
+
+    .taste{
+        background-image: url("../../assets/about-bg.jpg");
+        background-repeat: no-repeat;
+        color: $text-white;
+        text-align: center;
+        @include flex();
+        padding: 7em;
+        div{
+            width: 80%;
+        }
+        h1{
+            font-size: calc(var(--fs-xl) + .8rem);
+        }
+        p{
+            margin-top: 1em;
+            font-size: calc(var(--fs-reg) - 0rem);
+        }
+    }
+    @media(max-width: $phone)
+    {
+        .taste{
+            padding: 3em 1em;
+        }
+    }
+}

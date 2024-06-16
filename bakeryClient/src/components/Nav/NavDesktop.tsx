@@ -1,14 +1,19 @@
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Cardboard, Email, FacebookLogo, InstagramLogo } from "../SVGs";
 import NavLinkList from "./NavLinkList";
 import "./styles/NavDesktop.scss";
+import UseScroll from "../../hooks/UseScroll";
+import logo from "../../assets/logo.png";
 
 export default function NavDesktop() {
+    const [verticalOffset] = UseScroll();
+    const navigate = useNavigate();
+
     return (
         <nav>
-            <div className="upper-nav-wrap">
-                <div className="upper-nav">
+            <div className={`upper-nav-wrap ${verticalOffset > 0 ? "disabled" : ""}`}>
+                <div className={"upper-nav"}>
                     <div>
                         <div>
                             <Cardboard/>
@@ -16,19 +21,19 @@ export default function NavDesktop() {
                         </div>
                         <div className="email-div">
                             <Email />
-                            <span>bakery123@bkr.com</span>
+                            <span>bakery123@gmail.com</span>
                         </div>
                     </div>
                     <div>
-                        <InstagramLogo className="svgHover"/>
-                        <FacebookLogo className="svgHover"/>
+                        <a><InstagramLogo className="svg-hover"/></a>
+                        <a><FacebookLogo className="svg-hover"/></a>
                     </div>
                 </div>
             </div>
             <div className="lower-nav-wrap">
                 <div className="lower-nav">
                     <div>
-                        <div className="logo"></div>
+                        <img src={logo} onClick={() => navigate("/")} className="logo"/>
                         <NavLinkList />
                     </div>
                     <Link to="./order" className="order-btn">Поръчай</Link>

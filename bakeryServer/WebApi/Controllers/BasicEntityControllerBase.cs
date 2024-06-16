@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using bakeryServer.Models;
+using Models;
 using Exceptions;
 using Services;
 
@@ -28,8 +28,8 @@ public abstract class BasicEntityControllerBase<T>
         }
     }
 
-    [HttpGet]
-    public virtual async Task<IActionResult> GetOne([FromQuery] int id)
+    [HttpGet("{id}")]
+    public virtual async Task<IActionResult> GetOne(int id)
     {
         try
         {
@@ -62,7 +62,7 @@ public abstract class BasicEntityControllerBase<T>
 
         catch (ArgumentException ex)
         {
-            return BadRequest(ex);
+            return BadRequest(ex.Message);
         }
 
         catch (Exception)

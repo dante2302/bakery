@@ -1,0 +1,25 @@
+@import "../../styles_partials/flex";
+
+.message-block{
+    @include flex($place-horizontal: space-around);
+        text-align: center;
+    gap: 20px;
+    svg{
+        width: 40px;
+        height: auto;
+    }
+
+    h3{
+        font-size: var(--fs-sm);
+    }
+
+    p{
+        font-size: calc(var(--fs-sm) - .2rem);
+    }
+    padding: 15px;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    div{
+        @include flex($direction: column);
+    }
+}

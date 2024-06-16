@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Cake, Candy, Cookie } from "../../SVGs"
 import "./MainServices.scss";
 
@@ -5,24 +6,25 @@ export default function MainServices() {
     return (
         <div className="main-service-wrap">
             <div className="container">
-                <h1>Main Services We Provide</h1>
+                <h1>Какво Предлагаме</h1>
                 <div className="inner">
                     <div className="food-type-container">
-                        <Candy />
-                        <h2>Candies</h2>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem, alias.</p>
+                        <Cookie />
+                        <h2>Бисквити</h2>
+                        <p>Хрупкави бисквити, направени с висококачествени съставки</p>
                     </div>
                     <div className="food-type-container">
                         <Cake />
-                        <h2>Cakes</h2>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem, alias.</p>
+                        <h2>Торти</h2>
+                        <p>Ръчно изработени торти с уникален вкус и дизайн</p>
                     </div>
                     <div className="food-type-container">
-                        <Cookie />
-                        <h2>Cookies</h2>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem, alias.</p>
+                        <Candy />
+                        <h2>Бонбони</h2>
+                        <p>Изискани сладки изкушения, които разтварят в устата с вкусове</p>
                     </div>
                 </div>
+                    <Link to="/order">Поръчай Сега</Link>
             </div>
         </div>
     )

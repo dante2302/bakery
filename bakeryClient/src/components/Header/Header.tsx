@@ -1,17 +1,23 @@
 import "./Header.scss";
-import temp from "../../assets/temp.jpg"
+import bon from "../../assets/bon1.jpg"
+import { Link } from "react-router-dom";
+import useWindowDimensions from "../../hooks/UseWindowDimensions";
 export default function Header(){
+    const {width} = useWindowDimensions();
+    const widthBoundary = 768;
     return (
         <header>
             <div className="wrap">
                 <div>
-                    <h1>Welcome to our Bakery</h1>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+                    <h1>Добре дошли в <br></br>Сладкарницата на Боби</h1>
+                    <p>Сладкарница, която предлага ръчно изработени шоколадови бонбони, бисквити и торти по поръчка. Всеки продукт е направен с внимание към детайла и използване на висококачествени съставки. Ние създаваме уникални вкусове и дизайни за специални поводи, които ще задоволят и най-изисканите вкусове.
 </p>
-                    <button>Know more about us</button>
+                <div className="link-div">
+                    {width < widthBoundary && <Link to="/order">Поръчай</Link>}
+                    <Link to="/about">Повече за нас</Link>
                 </div>
-                <img src={temp} className="img-temp" />
+                </div>
+                <img src={bon} className="img-temp" />
             </div>
         </header>
     )

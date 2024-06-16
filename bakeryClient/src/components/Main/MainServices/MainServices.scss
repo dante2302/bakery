@@ -28,7 +28,18 @@
         }
     }
 
-
+    a{
+        background: none;
+        border: 3px solid white;
+        padding: 10px;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: .3s;
+    }
+    a:hover{
+        color: black;
+        background: white;
+    }
     .inner {
         @include flex;
         gap: 2em;
@@ -44,6 +55,7 @@
 
         p {
             font-size: calc(var(--fs-reg) - .2rem);
+            margin-top: .5rem;
         }
 
         svg {

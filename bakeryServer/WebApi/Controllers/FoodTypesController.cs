@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using bakeryServer.Models;
+using Models;
 using Exceptions;
-using Microsoft.AspNetCore.Authorization;
 using Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class FoodTypesController(
         IEntityService<FoodType> foodService,
         IEntityService<Filling> fillingService,
@@ -21,7 +22,9 @@ namespace WebApi.Controllers
         private readonly IEntityService<Base> _baseService = baseService;
 
         [HttpGet]
-        public override async Task<IActionResult> GetOne([FromQuery] int id)
+        [AllowAnonymous]
+        [Route("{id}/detailed")]
+        public async Task<IActionResult> GetOneDetailed(int id)
         {
             try
             {
@@ -44,7 +47,9 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetOneByName([FromQuery] string name)
+        [Route("withName/{name}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetOneByName(string name)
         {
             try
             {
@@ -66,6 +71,14 @@ namespace WebApi.Controllers
             {
                 return StatusCode(500);
             }
+        }
+
+        [HttpPut]
+        [Route("dto")]
+        public async Task<IActionResult> UpdateByDTO([FromBody] FoodTypeDTO fDto)
+        {
+            FoodType ft = new(fDto);
+            return await Update(ft);
         }
 
         private async Task<List<T>> MapExternalEntity<T>(IEntityService<T> _service, List<int> ids)

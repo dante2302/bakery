@@ -4,6 +4,14 @@
 
 nav{
     border-bottom: 1px solid lightgray;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    .disabled{
+        opacity: 0;
+        position: absolute;
+        z-index: -10;
+    }
 }
 
 .upper-nav-wrap, .lower-nav-wrap{
@@ -11,6 +19,7 @@ nav{
 }
 
 .upper-nav-wrap{
+    transition: .5s all ease;
     background-color: $acc-pale-pink;
 }
 
@@ -22,13 +31,17 @@ nav{
 
 .upper-nav{
     @include flex($place_horizontal: space-between);
-    padding-block: 15px;
+    padding-block: 10px;
     color: $text-white;
 
     svg{
         width: 25px;
         height: auto;
         fill: white;
+    }
+
+    .svg-hover:hover{
+        fill: violet;
     }
 
     .email-div{
@@ -47,12 +60,11 @@ nav{
 
 .lower-nav{
     @include flex($place_horizontal: space-between);
-    padding-block: 25px;
+    padding-block: 18px;
 
     .logo{
-        width: 200px;
-        height: 50px;
-        background-color: $acc-pale-pink
+        width: 100px;
+        cursor: pointer;
     }
 
     div{

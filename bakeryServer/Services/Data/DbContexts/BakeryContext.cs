@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using bakeryServer.Models;
+using Models;
 
-namespace bakeryServer.Data.DbContexts
+namespace Data.DbContexts
 {
     public class BakeryContext : DbContext
     {
@@ -11,6 +11,7 @@ namespace bakeryServer.Data.DbContexts
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Base> Bases { get; set; }
+        public virtual DbSet<ContactMessage> ContactMessages { get; set; }
 
         public BakeryContext()
         {

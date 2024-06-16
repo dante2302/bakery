@@ -1,4 +1,5 @@
-﻿namespace Services.Tests;
+﻿
+namespace Services.Tests;
 
 public class OrderDTOMapperTests
 {
@@ -6,6 +7,7 @@ public class OrderDTOMapperTests
     private readonly Mock<IEntityService<Topping>> _mockToppingService;
     private readonly Mock<IEntityService<FoodType>> _mockFoodTypeService;
     private readonly Mock<IEntityService<User>> _mockUserService;
+    private readonly Mock<IEntityService<Base>> _mockBaseService;
     private readonly OrderDTOMapper _orderDTOMapper;
 
     public OrderDTOMapperTests()
@@ -14,12 +16,14 @@ public class OrderDTOMapperTests
         _mockToppingService = new Mock<IEntityService<Topping>>();
         _mockFoodTypeService = new Mock<IEntityService<FoodType>>();
         _mockUserService = new Mock<IEntityService<User>>();
+        _mockBaseService = new Mock<IEntityService<Base>>();
 
         _orderDTOMapper = new OrderDTOMapper(
             fs: _mockFillingService.Object,
             ts: _mockToppingService.Object,
             fts: _mockFoodTypeService.Object,
-            us: _mockUserService.Object
+            us: _mockUserService.Object,
+            bs: _mockBaseService.Object
         );
     }
 
@@ -34,10 +38,11 @@ public class OrderDTOMapperTests
             Toppings = [ 3, 4 ],
             UserId = 1,
             ContainsLettering = false,
+            IsCompleted = false,
             Date = new DateTime()
         };
 
-        var foodType = new FoodType { Id = 1, Name = "Cake", Fillings = [], Toppings = [] };
+        var foodType = new FoodType { Id = 1, Name = "Cake", Fillings = [], Toppings = [], Bases = []};
         var filling1 = new Filling { Id = 1, Name = "Chocolate" };
         var filling2 = new Filling { Id = 2, Name = "Vanilla" };
         var topping3 = new Topping { Id = 3, Name = "Sprinkles" };
@@ -79,7 +84,8 @@ public class OrderDTOMapperTests
             FoodId = 1,
             ContainsLettering = false,
             Date =  new DateTime(),
-            UserId = 999
+            UserId = 999,
+            IsCompleted = false
         }; // Non-existent user id
 
         _mockUserService.Setup(m => m.ReadOne(order.UserId)).ReturnsAsync((User)null);
@@ -98,7 +104,8 @@ public class OrderDTOMapperTests
             ContainsLettering = false,
             Date =  new DateTime(),
             UserId = 1,
-            Toppings = [ 1, 2 ]
+            Toppings = [ 1, 2 ],
+            IsCompleted = false
         };
         _mockToppingService.Setup(m => m.ReadOne(1)).ReturnsAsync((Topping)null);
 
@@ -116,7 +123,8 @@ public class OrderDTOMapperTests
             ContainsLettering = false,
             Date =  new DateTime(),
             UserId = 1,
-            Fillings = [ 1, 2 ]
+            Fillings = [ 1, 2 ],
+            IsCompleted = false
         };
         _mockFillingService.Setup(m => m.ReadOne(2)).ReturnsAsync((Filling)null);
 

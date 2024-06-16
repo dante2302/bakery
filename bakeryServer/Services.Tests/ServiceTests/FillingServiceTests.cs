@@ -1,35 +1,37 @@
-
 using Exceptions;
-namespace Services.Tests
+using Models;
+using Data.DbContexts;
+using Repositories;
+
+namespace Services.Tests;
+
+public class FillingServiceTests
 {
-    public class FillingServiceTests
+    private readonly EntityService<Filling> srv = ArrangeService();
+
+    [Fact]
+    public async Task ReadOne_ShouldReturnAnEntityOrNull()
     {
-        private readonly EntityService<Filling> srv = ArrangeService();
+        Filling tempFilling = new() { Id = 1, Name = "Test" };
+        await srv.Create(tempFilling);
 
-        [Fact]
-        public async Task ReadOne_ShouldReturnAnEntityOrNull()
-        {
-            Filling tempFilling = new() { Id = 1, Name = "Test" };
-            await srv.Create(tempFilling);
+        var inDatabaseFilling = await srv.ReadOne(1);
+        int nonExistentId = 0;
 
-            var inDatabaseFilling = await srv.ReadOne(1);
-            int nonExistentId = 0;
+        Assert.Same(inDatabaseFilling, tempFilling);
+        await Assert.ThrowsAsync<NotFoundException>(async () =>
+            await srv.ReadOne(nonExistentId));
+    }
 
-            Assert.Same(inDatabaseFilling, tempFilling);
-            await Assert.ThrowsAsync<NotFoundException>(async () =>
-                await srv.ReadOne(nonExistentId));
-        }
+    private static EntityService<Filling> ArrangeService()
+    {
+        DbContextOptionsBuilder<BakeryContext> builder = new();
+        builder.UseInMemoryDatabase(databaseName: "Test");
 
-        private static EntityService<Filling> ArrangeService()
-        {
-            DbContextOptionsBuilder<BakeryContext> builder = new();
-            builder.UseInMemoryDatabase(databaseName: "Test");
+        var context = new BakeryContext(options: builder.Options);
 
-            var context = new BakeryContext(options: builder.Options);
-
-            Repo<Filling> repo = new(context);
-            EntityService<Filling> srv = new(repo);
-            return srv;
-        }
+        Repo<Filling> repo = new(context);
+        EntityService<Filling> srv = new(repo);
+        return srv;
     }
 }
