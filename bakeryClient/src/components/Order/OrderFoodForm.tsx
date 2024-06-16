@@ -13,16 +13,18 @@ import useLocalStorage from "../../hooks/UseLocalStorage";
 import "./styles/OrderFoodForm.scss";
 import { changeHandler } from "../../services/formService";
 import useWindowDimensions from "../../hooks/UseWindowDimensions";
+import { Link } from "react-router-dom";
+import { BackArrow } from "../SVGs";
 
 export type FilterCategory = {
-        [filterId: string]: boolean,
-    }
+    [filterId: string]: boolean,
+}
 
 type FilterCategoryName = "toppings" | "fillings" | "bases";
 
 export type FoodFormState = {
-        [fcn in FilterCategoryName]: FilterCategory
-    }
+    [fcn in FilterCategoryName]: FilterCategory
+}
     & {
         containsLettering: boolean
         additionalMessage: string
@@ -37,23 +39,23 @@ const defaultOrderState: FoodFormState =
     additionalMessage: "",
 }
 
-const defaultFoodData: FoodType = 
+const defaultFoodData: FoodType =
 {
     id: -1,
     name: "",
     fillings: [],
     toppings: [],
     bases: [],
-    canContainLettering:false, 
+    canContainLettering: false,
 }
 
-interface FoodFormProps{
+interface FoodFormProps {
     changeMode: React.Dispatch<React.SetStateAction<OrderMode>>
     setOrderSubmissionState: React.Dispatch<React.SetStateAction<OrderSubmission>>
     setOrderView: React.Dispatch<React.SetStateAction<OrderSubmissionClientView>>
 }
 
-export default function OrderFoodForm({changeMode, setOrderSubmissionState, setOrderView}: FoodFormProps){
+export default function OrderFoodForm({ changeMode, setOrderSubmissionState, setOrderView }: FoodFormProps) {
     const { name } = useParams();
     const navigate = useNavigate();
 
@@ -64,36 +66,35 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState, setO
     const [LoadingSpinner, InitialFetchWithLoading, isLoading] = useLoadingSpinner(InitialFetch);
     const [hasGotError, setHasGotError] = useState<boolean>();
 
-    const {width} = useWindowDimensions();
+    const { width } = useWindowDimensions();
     const widthBoundary = 768;
 
-    async function InitialFetch(){
+    async function InitialFetch() {
 
         //if there's already a valid data in localStorage and its the same food, dont do anything
-        if(foodTypeData.id >= 0 && lastFood == name)return;
+        if (foodTypeData.id >= 0 && lastFood == name) return;
 
-        if(!name || Object.keys(foodTypeService.nameMap).indexOf(name) == -1)
-        {
+        if (!name || Object.keys(foodTypeService.nameMap).indexOf(name) == -1) {
             navigate("/404");
             return;
         }
 
-        try{
+        try {
             const foodData: FoodType = await foodTypeService.ReadOneByName(name);
             const [fillings, toppings, bases] = foodTypeService.MapFilterFromData(foodData);
             if (lastFood != name) {
-                setFoodForm({ fillings, toppings, bases, containsLettering: false, additionalMessage: ""});
+                setFoodForm({ fillings, toppings, bases, containsLettering: false, additionalMessage: "" });
                 setLastFood(name);
             }
             setFoodTypeData(foodData);
         }
-        catch{
+        catch {
             navigate("/error");
             return;
         }
     };
 
-    useEffect(() => {InitialFetchWithLoading()}, []);
+    useEffect(() => { InitialFetchWithLoading() }, []);
 
     useEffect(() => {
         //check for errors for button disabling
@@ -117,8 +118,8 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState, setO
             }
         ))
     }
- 
-    function handleForwardClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
+
+    function handleForwardClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         e.preventDefault();
         const order = FormToOrder(foodForm, foodTypeData)
         const orderView = MapFoodFormToClientView(foodForm, foodTypeData, name);
@@ -128,10 +129,10 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState, setO
     }
 
     return (
-            isLoading ?
-                <div className="order-spinner-box">
-                    <LoadingSpinner size={200} />
-                </div> :
+        isLoading ?
+            <div className="order-spinner-box">
+                <LoadingSpinner size={200} />
+            </div> :
             <form className="order-food-container">
                 <div className="heading-div">
                     <h1>{foodTypeData.name}</h1>
@@ -155,7 +156,7 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState, setO
                             {foodTypeData.bases?.map((f) =>
                                 <div key={f.id}>
                                     <label htmlFor={`${f.id}`}>{f.name}</label>
-                                    <input                                  
+                                    <input
                                         type="checkbox"
                                         name={f.id.toString()}
                                         checked={foodForm.bases[f.id]}
@@ -213,17 +214,27 @@ export default function OrderFoodForm({changeMode, setOrderSubmissionState, setO
                     </div>
                     <div className="additionalMessage">
                         <label htmlFor="additionalMessage">Допълнения</label>
-                        <textarea 
-                            id="additionalMessage" 
+                        <textarea
+                            id="additionalMessage"
                             name="additionalMessage"
                             value={foodForm.additionalMessage}
                             onChange={(e) => changeHandler(setFoodForm, e)}
                             maxLength={500}
                         />
                     </div>
-                    {width >= widthBoundary &&  <button onClick={e => handleForwardClick(e)} disabled={hasGotError}>Напред</button>}
-               </div>
-                    {width < widthBoundary && <button onClick={e => handleForwardClick(e)} disabled={hasGotError}>Напред</button>}
-        </form>
+                    {width >= widthBoundary &&
+                        <div className="buttons-div">
+                            <Link to="/order"><BackArrow /></Link>
+                            <button onClick={e => handleForwardClick(e)} disabled={hasGotError}>Напред</button>
+                        </div>
+                    }
+                </div>
+                {width < widthBoundary &&
+                    <div className="buttons-div">
+                        <Link to="/order"><BackArrow /></Link>
+                        <button onClick={e => handleForwardClick(e)} disabled={hasGotError}>Напред</button>
+                    </div>
+                }
+            </form>
     )
 }

@@ -68,11 +68,8 @@ export default function Contact() {
     }
 
     useEffect(() => {
-        console.log(validationErrors);
         const a = Object.values(validationErrors).some((v) => v.error);
         const b  = Object.values(formState).some((v) => v.length == 0)
-        console.log(a);
-        console.log(b);
         if(a || b)
         {
             setHasError(true);

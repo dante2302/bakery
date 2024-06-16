@@ -43,15 +43,21 @@ export interface User{
 const BASE_URL = "http://localhost:5279/orders/submit";
 
 export async function SubmitOrder(os: OrderSubmission){
-    const response = await fetch(`${BASE_URL}`,
-    {
-        method: "POST",
-        headers:{
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(os)
-    })
-    console.log(await response.json());
+    try{
+        const response = await fetch(`${BASE_URL}`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(os)
+            })
+        return response.ok;
+    }
+    catch(e){
+        console.log(e);
+        return false;
+    }
 }
 
 export function FormToOrder(orderFormState: FoodFormState, foodTypeData: FoodType)
@@ -62,9 +68,8 @@ export function FormToOrder(orderFormState: FoodFormState, foodTypeData: FoodTyp
         fillings: [],
         toppings: [],
         bases: [],
-        containsLettering: false,
+        containsLettering: orderFormState.containsLettering,
         additionalMessage: "",
-        date: new Date()
     }
 
     order.fillings = Object.entries(orderFormState.fillings)

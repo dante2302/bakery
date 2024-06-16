@@ -39,7 +39,7 @@ import { LoaderSizeMarginProps, LoaderSizeProps } from "react-spinners/helpers/p
 
 type Callback = (...args: any[]) => Promise<void>
 type ErrorCallback = (error: any | unknown) => void;
-type LoadingSpinner = ({ color, size }: LoaderSizeProps) => JSX.Element;
+export type LoadingSpinner = ({ color, size }: LoaderSizeProps) => JSX.Element;
 
 function useLoadingSpinner(callback: Callback, errorCallback?: ErrorCallback): [LoadingSpinner, Callback, boolean]
 {
@@ -54,7 +54,7 @@ function useLoadingSpinner(callback: Callback, errorCallback?: ErrorCallback): [
       if(errorCallback)errorCallback(error)
     }
     finally{
-      setLoading(false);
+        setLoading(false);
     }
   }
   

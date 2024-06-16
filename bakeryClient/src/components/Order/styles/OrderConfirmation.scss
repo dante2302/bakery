@@ -1,5 +1,6 @@
 @import "../../styles_partials/flex";
 @import "../../styles_partials/colors";
+@import "../../styles_partials/breakpoints";
 
 
 .order-confirmation-outer {
@@ -38,16 +39,16 @@
         font-size: calc(var(--fs-reg) + .2rem);
     }
 
-    h3 {
-        margin-bottom: 20px;
-        font-size: var(--fs-reg);
-        text-align: center;
-    }
-
     h4,
     label {
         font-size: var(--fs-reg);
         font-weight: bold;
+    }
+
+    .food-name{
+        font-size: calc(var(--fs-reg) + .2rem);
+        margin: 5px;
+        text-align: center;
     }
 
     .containsLettering-container {
@@ -106,40 +107,94 @@
         }
     }
 
-    button {
-        color: white;
-        background: linear-gradient(to bottom right, $acc-purple, $acc-purple-intense);
-        padding: 10px 15px;
-        border-radius: 7px;
-        border: none;
-        display: block;
+    .submit-div{
+        @include flex();
+        gap: 10px;
+        .svg-button{
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        svg{
+            width: 45px;
+            height: auto;
+            background: linear-gradient(to bottom right, $acc-purple, $acc-purple-intense);
+            path{
+                fill: white;
+            }
+        }
+        .submit-button {
+            color: white;
+            background: linear-gradient(to bottom right, $acc-purple, $acc-purple-intense);
+            padding: 10px 15px;
+            border-radius: 7px;
+            border: none;
+            font-size: calc(var(--fs-sm) + .2rem);
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform .2s ease-in-out;
+        }
+
+        @keyframes pulse-submit{
+            0% {
+                box-shadow: 0 0 0 0 $acc-purple, 0 0 0 0 $acc-purple;
+            }
+
+            40% {
+                box-shadow: 0 0 0 0 rgba(255, 4, 0, 0), 0 0 0 15px $acc-purple;
+            }
+
+            80% {
+                box-shadow: 0 0 0 0 rgba(255, 4, 0, 0), 0 0 0 25px rgba(255, 4, 0, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 $acc-purple-intense, 0 0 0 15px rgba(255, 4, 0, 0);
+            }
+        }
+
+        @keyframes pulse-svg{
+            0% {
+                box-shadow: 0 0 0 0 $acc-purple, 0 0 0 0 $acc-purple;
+            }
+
+            40% {
+                box-shadow: 0 0 0 0 rgba(255, 4, 0, 0), 0 0 0 5px $acc-purple;
+            }
+
+            80% {
+                box-shadow: 0 0 0 0 rgba(255, 4, 0, 0), 0 0 0 10px rgba(255, 4, 0, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 $acc-purple-intense, 0 0 0 5px rgba(255, 4, 0, 0);
+            }
+
+        }
+
+        .submit-button:hover {
+            animation: pulse-submit .5s linear;
+        }
+        .svg-button:hover{
+            animation: pulse-svg .5s linear;
+        }
+    }
+
+    .none{
+        display: none;
+    }
+    .order-message-block{
+        width: 50%;
         margin: auto;
-        font-size: calc(var(--fs-sm) + .2rem);
-        font-weight: bold;
-        cursor: pointer;
-        transition: transform .2s ease-in-out;
-    }
-
-    @keyframes pulse {
-        0% {
-            box-shadow: 0 0 0 0 $acc-purple, 0 0 0 0 $acc-purple;
-        }
-
-        40% {
-            box-shadow: 0 0 0 0 rgba(255, 4, 0, 0), 0 0 0 10px $acc-purple;
-        }
-
-        80% {
-            box-shadow: 0 0 0 0 rgba(255, 4, 0, 0), 0 0 0 20px rgba(255, 4, 0, 0);
-        }
-
-        100% {
-            box-shadow: 0 0 0 0 $acc-purple-intense, 0 0 0 10px rgba(255, 4, 0, 0);
+        svg{
+            flex-shrink: 0;
         }
     }
-
-    button:hover {
-        animation: pulse .5s linear;
-        transform: scale(1.05);
+    @media(max-width: $tablet)
+    {
+        .order-message-block{
+            width: 90%;
+        }
     }
 }

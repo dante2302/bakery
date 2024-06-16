@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import OrderFoodForm from "./OrderFoodForm";
 import OrderUserForm from "./OrderUserForm";
 import { Order, OrderClientView, OrderSubmission,  OrderSubmissionClientView,  User } from "../../services/orderService";
@@ -40,6 +40,7 @@ export default function OrderPage() {
         case "final":
             return  <ScrollToTop> 
                         <OrderConfirmation 
+                        changeMode={setMode}
                         orderState={orderState}
                         orderView={orderView}/>
                     </ScrollToTop>

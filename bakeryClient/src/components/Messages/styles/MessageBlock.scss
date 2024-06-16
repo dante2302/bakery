@@ -1,7 +1,8 @@
 @import "../../styles_partials/flex";
 
 .message-block{
-    @include flex($direction: row, $place-horizontal: space-around);
+    @include flex($place-horizontal: space-around);
+        text-align: center;
     gap: 20px;
     svg{
         width: 40px;
@@ -18,4 +19,7 @@
     padding: 15px;
     border: 1px solid lightgrey;
     border-radius: 10px;
+    div{
+        @include flex($direction: column);
+    }
 }
