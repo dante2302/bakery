@@ -7,7 +7,6 @@
     grid-template-columns: 40% 60%;
     margin: 20px auto;
     width: 85%;
-    color: white;
 
     label {
         margin-right: 8px;
@@ -15,8 +14,7 @@
 
     .heading-div {
         color: black;
-        background: linear-gradient(to bottom,white,20%,$bg-white);
-        border-block: 3px solid white;
+        background: linear-gradient(to bottom left,white,50%,$bg-white);
         padding-top: 30px;
         text-align: center;
         @include flex($direction: column, $place-horizontal: start);
@@ -31,7 +29,10 @@
     }
 
     .all-filters{
-        background: linear-gradient(to right,  $acc-purple-intense,20%,$acc-pale-pink );
+        background: linear-gradient(to bottom right, white, 50%, $bg-white);
+        border-bottom-right-radius: 10px;
+        border-top-right-radius: 10px;
+        border-left: 1px solid #f1f1f1;
         input{
             accent-color: yellow;
         }
@@ -47,27 +48,22 @@
             height: auto;
             border-radius: 2px;
             path{
-                fill:$acc-pale-pink; 
+                fill:black; 
                 transition: .2s;
             }
         }
         svg:hover{
             path{
-                fill: black;
+                fill: $acc-purple-intense;
             }
         }
-    }
-    .all-filters {
-        border-bottom-right-radius: 10px;
-        border-top-right-radius: 10px;
-        border: 3px solid white;
     }
 
     .filter-container,
     .lettering,
     .additionalMessage {
         padding: 15px;
-        border-bottom: 3px solid white;
+        border-bottom: 1px solid white;
     }
 
     .lettering>label, .additionalMessage>label {
@@ -82,6 +78,7 @@
             margin-block: 10px;
             padding: 10px;
             border: none;
+            border: 1px solid grey;
             width: 85%;
             resize: none;
             height: 200px;
@@ -96,11 +93,11 @@
 
     button{
         background-color: white;
-        border: none;
-        color: $acc-pale-pink;
+        color: black;
+        border: 3px solid black;
         // display: block;
         // margin: 10px auto;
-        padding: 8px 15px;
+        padding: 5px 12px;
         border-radius: 3px;
         cursor: pointer;
         font-weight: bold;
@@ -108,8 +105,8 @@
     }
 
     button:not(:disabled):hover{
-        background-color: black;
-        color: white;
+        color: $acc-purple-intense;
+        border: 3px solid $acc-purple-intense;;
     }
 
     button:disabled{

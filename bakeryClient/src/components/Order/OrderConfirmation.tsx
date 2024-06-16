@@ -130,14 +130,14 @@ export default function OrderConfirmation({ orderView, orderState, changeMode }:
                     <div className={`submit-div ${requestSuccess ? "none" : ""}`}>
                         <button className="svg-button" onClick={() => changeMode("user")}><BackArrow /></button>
                         <button className="submit-button" onClick={submitClickHandler}>
-                            "Завършване на поръчка"
+                            Завършване на поръчка
                         </button>
                     </div>
                     {
                         showMessage &&
                         <MessageBlock
                             heading={requestSuccess ? "Поръчката ви беше изпратена успешно" : ""}
-                            message={requestSuccess ? "Благодарим, че бяхте наши клиенти!" : "Съобщението ви не беше изпратено"}
+                            message={requestSuccess ? "Благодарим, че бяхте наш клиент!" : "Съобщението ви не беше изпратено"}
                             isSuccess={requestSuccess}
                             additionalStyles="order-message-block"
                         />
