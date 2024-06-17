@@ -2,7 +2,6 @@ import "./About.scss";
 import yc from "../../assets/yellowCupcake.jpg";
 import ap from "../../assets/applePie.jpg";
 import bc from "../../assets/berryCake].jpg";
-import bg from "../../assets/about-bg.jpg";
 
 export default function About(){
     return (

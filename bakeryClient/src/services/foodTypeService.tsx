@@ -57,7 +57,7 @@ export const nameMap =
     cookie: "Бисквита",
 }
 
-export async function ReadOneByName(name: string | undefined)
+export async function ReadOneByName(name: NameMapName)
 {
     const response = await fetch(`${BASE_URL}/withName/${nameMap[name]}`);
     const a = await response.json();
