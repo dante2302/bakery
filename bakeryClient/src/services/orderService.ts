@@ -103,15 +103,15 @@ export function MapFoodFormToClientView(form: FoodFormState, f: FoodType, name: 
 
     const fillings = Object.entries(form.fillings)
         .filter(e => e[1])
-        .map((e) => f.fillings.find(o => o.id == Number(e[0]))?.name);
+        .map((e) => f.fillings.find(o => o.id == Number(e[0])).name);
 
     const toppings = Object.entries(form.toppings)
         .filter(e => e[1])
-        .map((e) => f.toppings.find(o => o.id == Number(e[0]))?.name);
+        .map((e) => f.toppings.find(o => o.id == Number(e[0])).name);
 
     const bases = Object.entries(form.bases)
         .filter(e => e[1])
-        .map((e) => f.bases.find(o => o.id == Number(e[0]))?.name);
+        .map((e) => f.bases.find(o => o.id == Number(e[0])).name);
 
     orderClientView.fillings = fillings;
     orderClientView.toppings = toppings;

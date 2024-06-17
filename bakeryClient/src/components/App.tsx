@@ -7,7 +7,7 @@ import "./index.scss";
 import Footer from "./Footer/Footer";
 import OrderAll from "./Order/OrderAll";
 import OrderPage from "./Order/OrderPage";
-import GlobalErrorBoundary from "./ErrorBoundaries/GlobalErrorBoundary";
+import GlobalErrorBoundary from "./ErrorBoundaries/GlobalErrorBoundary.jsx";
 import Page404 from "./ErrorBoundaries/Page404";
 import ScrollToTop from "./ScrollToTop";
 import ErrorPage from "./ErrorBoundaries/ErrorPage";

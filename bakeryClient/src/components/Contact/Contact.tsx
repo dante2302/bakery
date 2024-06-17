@@ -74,7 +74,7 @@ export default function Contact() {
         {
             setHasError(true);
         }
-        else {setHasError(false)};
+        else {setHasError(false)}
     }, [formState, validationErrors])
 
     return (

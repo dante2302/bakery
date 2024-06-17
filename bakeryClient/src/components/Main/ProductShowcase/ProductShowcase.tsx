@@ -3,7 +3,7 @@ import cupcake from "../../../assets/straw-cupcake.jpg";
 import weddingCake from "../../../assets/wedding-cake.jpg";
 import keks from "../../../assets/keks.jpg";
 import loveCandy from "../../../assets/love-candy.jpg";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 export default function ProductShowcase(){
     return(
