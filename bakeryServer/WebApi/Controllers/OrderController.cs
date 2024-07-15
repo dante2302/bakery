@@ -117,7 +117,7 @@ namespace WebApi.Controllers
 
                 orderSubmission.Order.UserId = newOrderUserId;
                 orderSubmission.Order.IsCompleted = false;
-                orderSubmission.Order.Date = DateTime.Now;
+                orderSubmission.Order.Date = DateTime.UtcNow;
                 Order result = await _orderService.Create(orderSubmission.Order);
                 return Ok();
             }
