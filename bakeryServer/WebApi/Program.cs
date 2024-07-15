@@ -6,40 +6,68 @@ using Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.IdentityModel.Protocols.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ***      AUTH        ***
-builder.Services.AddAuthentication(o => {
+try
+{
+    // ***      AUTH        ***
+    builder.Services.AddAuthentication(o =>
+    {
         o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
         o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     })
-    .AddJwtBearer(x => {
-        x.TokenValidationParameters = new TokenValidationParameters(){
-            ValidIssuer = Configuration.Manager["JwtSettings:Issuer"],
-            ValidAudience = Configuration.Manager["JwtSettings:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(Configuration.Manager["JwtSettings:Key"])
-            ),
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = false,
-            ValidateIssuerSigningKey = true
-        };
+        .AddJwtBearer(x =>
+        {
+            string issuer = Configuration.Manager["JwtSettings:Issuer"]
+                ?? throw new InvalidConfigurationException("No JWT Issuer");
+
+            string audience = Configuration.Manager["JwtSettings:Audience"]
+                ?? throw new InvalidConfigurationException("No JWT Audience");
+
+            string key = Configuration.Manager["JwtSettings:Key"]
+                ?? throw new InvalidConfigurationException("No JWT Signing Key");
+
+            byte[]? keyBytes = Encoding.UTF8.GetBytes(key);
+            x.TokenValidationParameters = new TokenValidationParameters()
+            {
+                ValidIssuer = issuer,
+                ValidAudience = audience,
+                IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = false,
+                ValidateIssuerSigningKey = true
+            };
+        });
+
+    builder.Services.AddAuthorization();
+
+    builder.Services.AddControllers().AddNewtonsoftJson();
+    builder.Services.AddDbContext<BakeryContext>(options =>
+    {
+        string? connectionString = Configuration.Manager["ConnectionString"]
+            ?? throw new InvalidConfigurationException("Connection String is null");
+        // Needs this migrations assembly to manage migrations 
+        options.UseNpgsql(connectionString, b => b.MigrationsAssembly("WebApi"));
     });
-
-builder.Services.AddAuthorization();
-
-builder.Services.AddControllers().AddNewtonsoftJson();
-builder.Services.AddDbContext<BakeryContext>(options =>
+    var context = builder.Services.BuildServiceProvider().GetService<BakeryContext>();
+    context.Database.EnsureCreated();
+    context.Database.Migrate();
+}
+catch (InvalidConfigurationException e)
 {
-    string connectionString = Configuration.Manager.GetConnectionString("bakery");
-
-    // Needs this migrations assembly to manage migrations 
-    options.UseNpgsql(connectionString, b => b.MigrationsAssembly("WebApi"));
-});
-
+    Console.Write("Invalid Configuration: ");
+    Console.WriteLine(e.Message);
+    return;
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.Message);
+    return;
+}
 
 // ***      SERVICES        ***
 builder.Services.AddScoped<IRepo<Filling>, Repo<Filling>>();
@@ -62,12 +90,9 @@ builder.Services.AddScoped<IEntityService<ContactMessage>, EntityService<Contact
 builder.Services.AddScoped<OrderDTOMapper, OrderDTOMapper>();
 
 var app = builder.Build();
-
 // ***      OTHER MIDDLEWARE      ***
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
 app.Run();

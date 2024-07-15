@@ -3,7 +3,7 @@ using Models;
 using Exceptions;
 using Services;
 
-namespace WebApi;
+namespace WebApi.Controllers;
 
 public abstract class BasicEntityControllerBase<T>
     (IEntityService<T> service) : ControllerBase where T : class, IEntity
