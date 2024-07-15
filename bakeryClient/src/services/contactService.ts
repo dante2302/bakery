@@ -1,5 +1,5 @@
 import { ContactFormState } from "../components/Contact/Contact";
-const BASE_URL = "http://localhost:5279/contactmessages";
+const BASE_URL = "https://bakery-backend-d.azurewebsites.net/contactmessages";
 
 export async function sendMessage(formState: ContactFormState)
 {

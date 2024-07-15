@@ -40,7 +40,8 @@ export interface User{
 }
 
 // FUNCTIONS
-const BASE_URL = "http://localhost:5279/orders/submit";
+const BASE_URL = "https://bakery-backend-d.azurewebsites.net/orders/submit";
+
 
 export async function SubmitOrder(os: OrderSubmission){
     try{

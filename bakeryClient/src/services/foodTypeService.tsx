@@ -30,7 +30,7 @@ export interface Base{
 }
 
 // FUNCTIONS
-const BASE_URL = "http://localhost:5279/foodtypes"
+const BASE_URL = "https://bakery-backend-d.azurewebsites.net/foodtypes"
 
 export type NameMapName = "cake" | "candy" | "cookie";
 
