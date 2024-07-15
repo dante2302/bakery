@@ -36,9 +36,9 @@ namespace WebApi.Controllers
             {
                 return NoContent();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -55,9 +55,9 @@ namespace WebApi.Controllers
             {
                 return NotFound();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -73,14 +73,7 @@ namespace WebApi.Controllers
                         Order Order { get; set; }
                         User User { get; set; }
                     }";
-            try
-            {
-                return BadRequest(message);
-            }
-            catch
-            {
-                return BadRequest(message);
-            }
+            return BadRequest(message);
         }
 
         [AllowAnonymous]
@@ -134,9 +127,9 @@ namespace WebApi.Controllers
                 return BadRequest(ex);
             }
 
-            catch
+            catch(Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex);
             }
         }
     }
