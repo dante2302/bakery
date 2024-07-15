@@ -13,7 +13,7 @@ using Data.DbContexts;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(BakeryContext))]
-    [Migration("20240508160322_bases -> order")]
+    [Migration("20240508160322_bases_order")]
     partial class basesorder
     {
         /// <inheritdoc />
